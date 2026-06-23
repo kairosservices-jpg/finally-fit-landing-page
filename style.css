@@ -554,7 +554,15 @@ span.highlight {
 
 .results-header-box h2 {
     font-size: clamp(1.8rem, 4vw, 2.6rem);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
+}
+
+.coach-summary-subtitle {
+    font-family: var(--font-primary);
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 24px;
+    font-weight: 500;
 }
 
 .macro-box-grid {

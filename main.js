@@ -4,25 +4,42 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 0. Food & Meal Databases (Macros per cooked oz, price per oz)
+    // 0. Cooked Food & Meal Databases (Macros per cooked oz, price per oz)
     const INGREDIENTS = {
-        'tri_tip': { name: "Tri-Tip", category: "protein", price_per_oz: 0.606, protein_per_oz: 7.5, carbs_per_oz: 0, fat_per_oz: 5.0, calories_per_oz: 75 },
-        'ground_turkey': { name: "Ground Turkey", category: "protein", price_per_oz: 0.271, protein_per_oz: 7.5, carbs_per_oz: 0, fat_per_oz: 2.3, calories_per_oz: 51 },
+        // proteins
+        'tri_tip': { name: "Tri-Tip", category: "protein", price_per_oz: 0.606, protein_per_oz: 7.5, carbs_per_oz: 0, fat_per_oz: 4.0, calories_per_oz: 66 },
+        'ground_turkey': { name: "Ground Turkey", category: "protein", price_per_oz: 0.271, protein_per_oz: 7.0, carbs_per_oz: 0, fat_per_oz: 2.5, calories_per_oz: 51 },
         'chicken_breast': { name: "Chicken Breast", category: "protein", price_per_oz: 0.165, protein_per_oz: 8.5, carbs_per_oz: 0, fat_per_oz: 1.0, calories_per_oz: 43 },
-        'pork_shoulder': { name: "Pork Shoulder", category: "protein", price_per_oz: 0.118, protein_per_oz: 7.5, carbs_per_oz: 0, fat_per_oz: 4.5, calories_per_oz: 70 },
-        'chicken_thigh': { name: "Chicken Thigh", category: "protein", price_per_oz: 0.107, protein_per_oz: 7.0, carbs_per_oz: 0, fat_per_oz: 2.5, calories_per_oz: 52 },
+        'pork_shoulder': { name: "Pork Shoulder", category: "protein", price_per_oz: 0.118, protein_per_oz: 7.5, carbs_per_oz: 0, fat_per_oz: 4.5, calories_per_oz: 71 },
+        'chicken_thigh': { name: "Chicken Thigh", category: "protein", price_per_oz: 0.107, protein_per_oz: 7.0, carbs_per_oz: 0, fat_per_oz: 3.0, calories_per_oz: 55 },
+        'eggs': { name: "Whole Eggs", category: "protein", price_per_oz: 0.180, protein_per_oz: 3.6, carbs_per_oz: 0.3, fat_per_oz: 2.8, calories_per_oz: 41 },
+        'greek_yogurt': { name: "Greek Yogurt", category: "protein", price_per_oz: 0.150, protein_per_oz: 3.0, carbs_per_oz: 1.0, fat_per_oz: 0, calories_per_oz: 16 },
+        'cottage_cheese': { name: "Cottage Cheese", category: "protein", price_per_oz: 0.120, protein_per_oz: 3.5, carbs_per_oz: 1.0, fat_per_oz: 0.5, calories_per_oz: 23 },
         
-        'chopped_potato': { name: "Chopped Potato", category: "carb", price_per_oz: 0.150, protein_per_oz: 0.7, carbs_per_oz: 6.0, fat_per_oz: 0.5, calories_per_oz: 32 },
-        'mashed_potato': { name: "Mashed Potato", category: "carb", price_per_oz: 0.103, protein_per_oz: 0.6, carbs_per_oz: 4.5, fat_per_oz: 1.0, calories_per_oz: 30 },
+        // carbs
+        'chopped_potato': { name: "Chopped Potato", category: "carb", price_per_oz: 0.150, protein_per_oz: 0.7, carbs_per_oz: 6.0, fat_per_oz: 0.5, calories_per_oz: 31 },
+        'mashed_potato': { name: "Mashed Potato", category: "carb", price_per_oz: 0.103, protein_per_oz: 0.6, carbs_per_oz: 5.0, fat_per_oz: 1.0, calories_per_oz: 31 },
         'sweet_potato': { name: "Sweet Potato", category: "carb", price_per_oz: 0.083, protein_per_oz: 0.6, carbs_per_oz: 6.0, fat_per_oz: 0, calories_per_oz: 26 },
         'jasmine_rice': { name: "Jasmine Rice", category: "carb", price_per_oz: 0.021, protein_per_oz: 0.7, carbs_per_oz: 8.0, fat_per_oz: 0, calories_per_oz: 35 },
-        'pasta': { name: "Spaghetti Pasta", category: "carb", price_per_oz: 0.036, protein_per_oz: 1.5, carbs_per_oz: 7.0, fat_per_oz: 0.2, calories_per_oz: 35 },
+        'pasta': { name: "Spaghetti Pasta", category: "carb", price_per_oz: 0.036, protein_per_oz: 1.5, carbs_per_oz: 8.0, fat_per_oz: 0.2, calories_per_oz: 40 },
+        'granola': { name: "Granola/Fruit", category: "carb", price_per_oz: 0.100, protein_per_oz: 0.5, carbs_per_oz: 6.0, fat_per_oz: 1.0, calories_per_oz: 35 },
         
-        'broccoli': { name: "Broccoli", category: "veg", price_per_oz: 0.133, protein_per_oz: 0.8, carbs_per_oz: 2.0, fat_per_oz: 0.1, calories_per_oz: 10 },
+        // veggies
+        'broccoli': { name: "Broccoli", category: "veg", price_per_oz: 0.133, protein_per_oz: 0.8, carbs_per_oz: 2.0, fat_per_oz: 0, calories_per_oz: 11 },
         'green_beans': { name: "Green Beans", category: "veg", price_per_oz: 0.099, protein_per_oz: 0.5, carbs_per_oz: 2.0, fat_per_oz: 0, calories_per_oz: 10 }
     };
 
     const MEAL_TEMPLATES = {
+        // Breakfasts
+        'Steak and Eggs': { protein_id: 'tri_tip', carb_id: 'chopped_potato', veg_id: 'broccoli' },
+        'Yogurt Parfait': { protein_id: 'greek_yogurt', carb_id: 'granola', veg_id: 'broccoli' },
+        'Honey Sweet Cottage Cheese': { protein_id: 'cottage_cheese', carb_id: 'granola', veg_id: 'green_beans' },
+        'Morning Grand Slam': { protein_id: 'eggs', carb_id: 'sweet_potato', veg_id: 'broccoli' },
+        
+        // Snacks
+        'Meat & Cheese-To-Go': { protein_id: 'pork_shoulder', carb_id: 'mashed_potato', veg_id: 'green_beans' },
+
+        // Lunches / Dinners
         'Steak n Mash': { protein_id: 'tri_tip', carb_id: 'mashed_potato', veg_id: 'broccoli' },
         'Teriyaki Chicken': { protein_id: 'chicken_breast', carb_id: 'jasmine_rice', veg_id: 'broccoli' },
         'Chicken Fried Rice': { protein_id: 'chicken_breast', carb_id: 'jasmine_rice', veg_id: 'green_beans' },
@@ -34,58 +51,33 @@ document.addEventListener('DOMContentLoaded', () => {
         'Chicken Pesto Pasta': { protein_id: 'chicken_breast', carb_id: 'pasta', veg_id: 'broccoli' }
     };
 
-    const STATIC_MEALS = {
-        'Steak and Eggs': { price: 8.50, protein: 35, carbs: 5, fat: 15, calories: 295, desc: "4oz Steak, 2 Eggs" },
-        'Yogurt Parfait': { price: 6.50, protein: 20, carbs: 30, fat: 5, calories: 245, desc: "Greek Yogurt, Berries, Honey" },
-        'Honey Sweet Cottage Cheese': { price: 6.00, protein: 25, carbs: 15, fat: 4, calories: 196, desc: "Low-fat Cottage Cheese, Honey" },
-        'Morning Grand Slam': { price: 8.00, protein: 30, carbs: 25, fat: 12, calories: 328, desc: "Egg Whites, Turkey Bacon, Sweet Potato Hash" },
-        'Meat & Cheese-To-Go': { price: 5.00, protein: 20, carbs: 3, fat: 14, calories: 218, desc: "Turkey Breast, Cheddar Cheese" }
-    };
-
     const BASE_PREP_FEE = 5.00;
     const INGREDIENT_MARKUP = 1.0; // 1.0 = raw cost, 1.5 = 50% markup, etc.
 
-    function calculateMealPortionsAndPricing(mealName, targetDailyProtein, targetDailyCarbs, targetDailyFat) {
-        if (STATIC_MEALS[mealName]) {
-            const sm = STATIC_MEALS[mealName];
-            return {
-                name: mealName,
-                price: sm.price,
-                protein: sm.protein,
-                carbs: sm.carbs,
-                fat: sm.fat,
-                calories: sm.calories,
-                detailsHtml: sm.desc
-            };
-        }
-
+    function calculateMealPortionsAndPricing(mealName, targetMealProtein, targetMealCarbs, targetMealFat) {
         const template = MEAL_TEMPLATES[mealName];
         if (!template) {
-            return { name: mealName, price: 12.95, protein: 35, carbs: 30, fat: 8, calories: 330, detailsHtml: "" };
+            return { name: mealName, price: 9.95, protein: 30, carbs: 30, fat: 10, calories: 330, detailsHtml: "" };
         }
 
         const pIng = INGREDIENTS[template.protein_id];
         const cIng = INGREDIENTS[template.carb_id];
         const vIng = INGREDIENTS[template.veg_id];
 
-        // Allocate 35% of daily targets per meal
-        const targetP = targetDailyProtein * 0.35;
-        const targetC = targetDailyCarbs * 0.35;
+        // Determine required ounces by dividing target meal macros by the ingredient macros per cooked ounce
+        let pOz = Math.round(targetMealProtein / pIng.protein_per_oz);
+        let cOz = Math.round(targetMealCarbs / cIng.carbs_per_oz);
+        let vOz = 4; // standard serving of 4 oz
 
-        // Calculate Ounces required (rounded to 1 decimal place)
-        let pOz = Math.round((targetP / pIng.protein_per_oz) * 10) / 10;
-        let cOz = Math.round((targetC / cIng.carbs_per_oz) * 10) / 10;
-        let vOz = 4.0; // standard veg portion
+        // Use min/max guardrails only *after* macro division and rounding are complete
+        pOz = Math.max(4, Math.min(8, pOz));
+        cOz = Math.max(3, Math.min(10, cOz));
 
-        // Clamp to reasonable ranges
-        pOz = Math.max(4.0, Math.min(8.5, pOz));
-        cOz = Math.max(3.0, Math.min(10.0, cOz));
-
-        // Recompute actual meal macros
+        // Recompute actual meal macros using these clamped whole ounces
         const mealP = Math.round((pOz * pIng.protein_per_oz) + (cOz * cIng.protein_per_oz) + (vOz * vIng.protein_per_oz));
         const mealC = Math.round((pOz * pIng.carbs_per_oz) + (cOz * cIng.carbs_per_oz) + (vOz * vIng.carbs_per_oz));
         const mealF = Math.round((pOz * pIng.fat_per_oz) + (cOz * cIng.fat_per_oz) + (vOz * vIng.fat_per_oz));
-        const mealCal = Math.round((pOz * pIng.calories_per_oz) + (cOz * cIng.calories_per_oz) + (vOz * vIng.calories_per_oz));
+        const mealCal = Math.round((mealP * 4) + (mealC * 4) + (mealF * 9));
 
         // Pricing formula: Base Prep Fee + (Ounces * Cost/oz * Markup)
         const pCost = pOz * pIng.price_per_oz * INGREDIENT_MARKUP;
@@ -394,9 +386,14 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Calculating Plan & Opening Offers...';
 
             try {
+                // Deduct 25g protein shake and divide remaining daily macros across 4 meals
+                const mealTargetP = (proteinGrams - 25) / 4;
+                const mealTargetC = carbGrams / 4;
+                const mealTargetF = fatGrams / 4;
+
                 // Calculate dynamic portions for signature meals for webhook mapping
-                const steakDetails = calculateMealPortionsAndPricing('Steak n Mash', proteinGrams, carbGrams, fatGrams);
-                const chickenDetails = calculateMealPortionsAndPricing('Teriyaki Chicken', proteinGrams, carbGrams, fatGrams);
+                const steakDetails = calculateMealPortionsAndPricing('Steak n Mash', mealTargetP, mealTargetC, mealTargetF);
+                const chickenDetails = calculateMealPortionsAndPricing('Teriyaki Chicken', mealTargetP, mealTargetC, mealTargetF);
 
                 // Execute webhook submission
                 const payload = {
@@ -480,6 +477,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (proteinNode) proteinNode.textContent = `${plan.protein}g`;
         if (carbNode) carbNode.textContent = `${plan.carbs}g`;
         if (fatNode) fatNode.textContent = `${plan.fat}g`;
+
+        const coachSummaryNode = document.getElementById('result-coach-summary');
+        if (coachSummaryNode) {
+            coachSummaryNode.textContent = `This person needs ${plan.protein}P / ${plan.carbs}C / ${plan.fat}F (Distributed across 4 meals + 1 protein shake).`;
+        }
 
         // Render dynamic Client Weekly Meal Plan metadata
         const planClientNameNode = document.getElementById('plan-client-name');
@@ -647,7 +649,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="day-header-bar">${dayObj.day}</div>
                 <table class="day-meals-table">
                     ${dayObj.meals.map(meal => {
-                        const d = calculateMealPortionsAndPricing(meal.name, targetP, targetC, targetF);
+                        const mealTargetP = (targetP - 25) / 4;
+                        const mealTargetC = targetC / 4;
+                        const mealTargetF = targetF / 4;
+                        const d = calculateMealPortionsAndPricing(meal.name, mealTargetP, mealTargetC, mealTargetF);
                         return `
                         <tr>
                             <td class="meal-tag-cell ${meal.class}">
