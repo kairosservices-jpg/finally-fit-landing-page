@@ -489,11 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (carbNode) carbNode.textContent = `${plan.carbs}g`;
         if (fatNode) fatNode.textContent = `${plan.fat}g`;
 
-        const coachSummaryNode = document.getElementById('result-coach-summary');
-        if (coachSummaryNode) {
-            coachSummaryNode.textContent = `This person needs ${plan.protein}P / ${plan.carbs}C / ${plan.fat}F (Distributed across 4 meals + 1 protein shake).`;
-        }
-
         // Render dynamic Client Weekly Meal Plan metadata
         const planClientNameNode = document.getElementById('plan-client-name');
         const planWeekDateNode = document.getElementById('plan-week-date');
@@ -668,11 +663,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         <tr>
                             <td class="meal-tag-cell ${meal.class}">
                                 <span class="meal-tag-label">${meal.tag}</span>
-                                <span class="meal-price-badge">$${d.price.toFixed(2)}</span>
                             </td>
                             <td class="meal-name-cell">
                                 <div class="meal-main-name">${d.name}</div>
-                                <div class="meal-desc-details">${d.detailsHtml}</div>
                                 <div class="meal-macro-sub">${d.protein}g P / ${d.carbs}g C / ${d.fat}g F | ${d.calories} cal</div>
                             </td>
                         </tr>
