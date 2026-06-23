@@ -70,15 +70,22 @@
                         </div>
                     </div>
 
-                    <!-- STEP 2: Studio Location Selector -->
+                    <!-- STEP 2: Gym Selector -->
                     <div class="quiz-step-pane" id="quiz-step-2" data-step-index="2">
-                        <h3 class="quiz-question-title">2. Which Orange Theory studio do you attend?</h3>
-                        <div class="quiz-options-group">
-                            <button class="quiz-btn-option" data-question="Studio" data-val="North Spokane">North Spokane (Division St)</button>
-                            <button class="quiz-btn-option" data-question="Studio" data-val="South Hill">South Hill (29th Ave)</button>
+                        <h3 class="quiz-question-title">2. What gym do you train at?</h3>
+                        <div class="quiz-options-group" style="margin-bottom: 20px;">
+                            <button class="quiz-btn-option" data-question="Gym" data-val="At Home">At Home</button>
+                            <button class="quiz-btn-option" data-question="Gym" data-val="I Currently Don't Have One">I Currently Don't Have One</button>
                         </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <span style="font-family: var(--font-primary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; display: block;">Or enter your gym:</span>
+                            <input type="text" id="quiz-gym-input" class="quiz-input-field" placeholder="e.g. YMCA, MUV Fitness, Orange Theory, etc." data-question="Gym">
+                        </div>
+
                         <div class="quiz-nav-row">
                             <button class="quiz-back-btn">Back</button>
+                            <button class="brutalist-btn quiz-next-btn">Next Step</button>
                         </div>
                     </div>
 

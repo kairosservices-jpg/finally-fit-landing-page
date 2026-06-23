@@ -25,6 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Progress
     updateProgress();
 
+    // Clear selected buttons in Step 2 if user starts typing in custom gym input
+    const gymInput = document.getElementById('quiz-gym-input');
+    if (gymInput) {
+        gymInput.addEventListener('input', () => {
+            const pane = gymInput.closest('.quiz-step-pane');
+            if (pane) {
+                pane.querySelectorAll('.quiz-btn-option').forEach(b => {
+                    b.classList.remove('selected');
+                });
+                delete userAnswers['Gym'];
+            }
+        });
+    }
+
     // 1. Navigation Functions
     function updateProgress() {
         if (fillBar && progressNum) {
@@ -52,9 +66,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const pane = document.getElementById(`quiz-step-${stepNum}`);
         if (!pane) return true;
 
-        const inputs = pane.querySelectorAll('input[required]');
         let isValid = true;
 
+        // Custom validation for step 2 (Gym step)
+        if (stepNum === 2) {
+            const selectedOpt = pane.querySelector('.quiz-btn-option.selected');
+            const customGym = pane.querySelector('#quiz-gym-input');
+            const textVal = customGym ? customGym.value.trim() : '';
+            if (!selectedOpt && !textVal) {
+                isValid = false;
+                if (customGym) {
+                    customGym.style.borderColor = '#FF5E00';
+                    setTimeout(() => {
+                        customGym.style.borderColor = '';
+                    }, 2000);
+                }
+            }
+            return isValid;
+        }
+
+        const inputs = pane.querySelectorAll('input[required]');
         inputs.forEach(input => {
             if (!input.value.trim()) {
                 isValid = false;
@@ -87,6 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 b.classList.remove('selected');
             });
             btn.classList.add('selected');
+
+            // Clear text input if any in the same pane
+            const textInput = parentPane.querySelector('input[type="text"]');
+            if (textInput) {
+                textInput.value = '';
+            }
 
             // Auto-advance with slight delay for click feeling (only if the step doesn't require further input/Next button)
             const hasNextBtn = parentPane.querySelector('.quiz-next-btn');
@@ -123,7 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 textInputs.forEach(input => {
                     const key = input.getAttribute('data-question');
                     if (key) {
-                        userAnswers[key] = input.value.trim();
+                        const val = input.value.trim();
+                        // Only save if it's not empty, OR if we don't have a value for it yet
+                        if (val !== "" || !userAnswers[key]) {
+                            userAnswers[key] = val;
+                        }
                     }
                 });
 
@@ -253,7 +294,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     ...userAnswers,
                     ...calculatedPlan,
                     source: "Orange Theory Spokane Pilot Landing Page",
-                    studio: userAnswers['Studio'] || 'North Spokane'
+                    studio: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home',
+                    gym: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home'
                 };
 
                 await fetch(MAKE_WEBHOOK_URL, {
