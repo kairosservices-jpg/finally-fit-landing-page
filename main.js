@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cOz = Math.ceil(cOzRaw);
         }
         
-        let vOz = 4; // standard serving of 4 oz
+        let vOz = 2; // standard serving of 2 oz
 
         // Use min/max guardrails only *after* macro division and rounding are complete
         pOz = Math.max(4, Math.min(8, pOz));
