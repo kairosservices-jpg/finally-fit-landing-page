@@ -66,7 +66,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Determine required ounces by dividing target meal macros by the ingredient macros per cooked ounce
         let pOz = Math.round(targetMealProtein / pIng.protein_per_oz);
-        let cOz = Math.round(targetMealCarbs / cIng.carbs_per_oz);
+        
+        // Carb rounding based on fitness goal (floor for Fat Loss, ceil for Muscle Gain, round for Maintain)
+        const answers = JSON.parse(localStorage.getItem('ffp_user_answers')) || userAnswers;
+        const fitnessGoal = answers['Goal'] || 'Maintain';
+        const cOzRaw = targetMealCarbs / cIng.carbs_per_oz;
+        let cOz = Math.round(cOzRaw);
+        if (fitnessGoal === 'Fat Loss') {
+            cOz = Math.floor(cOzRaw);
+        } else if (fitnessGoal === 'Muscle Gain') {
+            cOz = Math.ceil(cOzRaw);
+        }
+        
         let vOz = 4; // standard serving of 4 oz
 
         // Use min/max guardrails only *after* macro division and rounding are complete
