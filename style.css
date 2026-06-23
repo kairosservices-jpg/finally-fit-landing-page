@@ -1466,6 +1466,55 @@ span.highlight {
     color: #d90429; /* Crimson Red */
 }
 
+.meal-tag-cell {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.meal-tag-label {
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+}
+
+.meal-price-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    font-family: var(--font-primary);
+}
+
+.meal-main-name {
+    font-weight: 750;
+    font-size: 0.9rem;
+    color: var(--color-white);
+}
+
+.meal-desc-details {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 2px;
+    font-family: var(--font-primary);
+    font-weight: 300;
+}
+
+.meal-macro-sub {
+    font-size: 0.7rem;
+    color: #2ec4b6; /* Teal accent */
+    font-weight: 600;
+    margin-top: 4px;
+    letter-spacing: 0.3px;
+    font-family: var(--font-primary);
+}
+
+
 /* Responsive updates for the Weekly Plan Grid */
 @media (max-width: 1200px) {
     .plan-days-grid {

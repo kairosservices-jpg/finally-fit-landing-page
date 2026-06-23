@@ -4,6 +4,111 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 0. Food & Meal Databases (Macros per cooked oz, price per oz)
+    const INGREDIENTS = {
+        'tri_tip': { name: "Tri-Tip", category: "protein", price_per_oz: 0.606, protein_per_oz: 7.5, carbs_per_oz: 0, fat_per_oz: 5.0, calories_per_oz: 75 },
+        'ground_turkey': { name: "Ground Turkey", category: "protein", price_per_oz: 0.271, protein_per_oz: 7.5, carbs_per_oz: 0, fat_per_oz: 2.3, calories_per_oz: 51 },
+        'chicken_breast': { name: "Chicken Breast", category: "protein", price_per_oz: 0.165, protein_per_oz: 8.5, carbs_per_oz: 0, fat_per_oz: 1.0, calories_per_oz: 43 },
+        'pork_shoulder': { name: "Pork Shoulder", category: "protein", price_per_oz: 0.118, protein_per_oz: 7.5, carbs_per_oz: 0, fat_per_oz: 4.5, calories_per_oz: 70 },
+        'chicken_thigh': { name: "Chicken Thigh", category: "protein", price_per_oz: 0.107, protein_per_oz: 7.0, carbs_per_oz: 0, fat_per_oz: 2.5, calories_per_oz: 52 },
+        
+        'chopped_potato': { name: "Chopped Potato", category: "carb", price_per_oz: 0.150, protein_per_oz: 0.7, carbs_per_oz: 6.0, fat_per_oz: 0.5, calories_per_oz: 32 },
+        'mashed_potato': { name: "Mashed Potato", category: "carb", price_per_oz: 0.103, protein_per_oz: 0.6, carbs_per_oz: 4.5, fat_per_oz: 1.0, calories_per_oz: 30 },
+        'sweet_potato': { name: "Sweet Potato", category: "carb", price_per_oz: 0.083, protein_per_oz: 0.6, carbs_per_oz: 6.0, fat_per_oz: 0, calories_per_oz: 26 },
+        'jasmine_rice': { name: "Jasmine Rice", category: "carb", price_per_oz: 0.021, protein_per_oz: 0.7, carbs_per_oz: 8.0, fat_per_oz: 0, calories_per_oz: 35 },
+        'pasta': { name: "Spaghetti Pasta", category: "carb", price_per_oz: 0.036, protein_per_oz: 1.5, carbs_per_oz: 7.0, fat_per_oz: 0.2, calories_per_oz: 35 },
+        
+        'broccoli': { name: "Broccoli", category: "veg", price_per_oz: 0.133, protein_per_oz: 0.8, carbs_per_oz: 2.0, fat_per_oz: 0.1, calories_per_oz: 10 },
+        'green_beans': { name: "Green Beans", category: "veg", price_per_oz: 0.099, protein_per_oz: 0.5, carbs_per_oz: 2.0, fat_per_oz: 0, calories_per_oz: 10 }
+    };
+
+    const MEAL_TEMPLATES = {
+        'Steak n Mash': { protein_id: 'tri_tip', carb_id: 'mashed_potato', veg_id: 'broccoli' },
+        'Teriyaki Chicken': { protein_id: 'chicken_breast', carb_id: 'jasmine_rice', veg_id: 'broccoli' },
+        'Chicken Fried Rice': { protein_id: 'chicken_breast', carb_id: 'jasmine_rice', veg_id: 'green_beans' },
+        'Chili Margarita': { protein_id: 'chicken_breast', carb_id: 'jasmine_rice', veg_id: 'green_beans' },
+        'BBQ Chicken Thigh': { protein_id: 'chicken_thigh', carb_id: 'mashed_potato', veg_id: 'green_beans' },
+        'Sweet Chili Chicken Thigh': { protein_id: 'chicken_thigh', carb_id: 'jasmine_rice', veg_id: 'green_beans' },
+        'Asian Zing Chicken Thigh': { protein_id: 'chicken_thigh', carb_id: 'jasmine_rice', veg_id: 'green_beans' },
+        'Spaghetti and Meatballs': { protein_id: 'ground_turkey', carb_id: 'pasta', veg_id: 'broccoli' },
+        'Chicken Pesto Pasta': { protein_id: 'chicken_breast', carb_id: 'pasta', veg_id: 'broccoli' }
+    };
+
+    const STATIC_MEALS = {
+        'Steak and Eggs': { price: 8.50, protein: 35, carbs: 5, fat: 15, calories: 295, desc: "4oz Steak, 2 Eggs" },
+        'Yogurt Parfait': { price: 6.50, protein: 20, carbs: 30, fat: 5, calories: 245, desc: "Greek Yogurt, Berries, Honey" },
+        'Honey Sweet Cottage Cheese': { price: 6.00, protein: 25, carbs: 15, fat: 4, calories: 196, desc: "Low-fat Cottage Cheese, Honey" },
+        'Morning Grand Slam': { price: 8.00, protein: 30, carbs: 25, fat: 12, calories: 328, desc: "Egg Whites, Turkey Bacon, Sweet Potato Hash" },
+        'Meat & Cheese-To-Go': { price: 5.00, protein: 20, carbs: 3, fat: 14, calories: 218, desc: "Turkey Breast, Cheddar Cheese" }
+    };
+
+    const BASE_PREP_FEE = 5.00;
+    const INGREDIENT_MARKUP = 1.0; // 1.0 = raw cost, 1.5 = 50% markup, etc.
+
+    function calculateMealPortionsAndPricing(mealName, targetDailyProtein, targetDailyCarbs, targetDailyFat) {
+        if (STATIC_MEALS[mealName]) {
+            const sm = STATIC_MEALS[mealName];
+            return {
+                name: mealName,
+                price: sm.price,
+                protein: sm.protein,
+                carbs: sm.carbs,
+                fat: sm.fat,
+                calories: sm.calories,
+                detailsHtml: sm.desc
+            };
+        }
+
+        const template = MEAL_TEMPLATES[mealName];
+        if (!template) {
+            return { name: mealName, price: 12.95, protein: 35, carbs: 30, fat: 8, calories: 330, detailsHtml: "" };
+        }
+
+        const pIng = INGREDIENTS[template.protein_id];
+        const cIng = INGREDIENTS[template.carb_id];
+        const vIng = INGREDIENTS[template.veg_id];
+
+        // Allocate 35% of daily targets per meal
+        const targetP = targetDailyProtein * 0.35;
+        const targetC = targetDailyCarbs * 0.35;
+
+        // Calculate Ounces required (rounded to 1 decimal place)
+        let pOz = Math.round((targetP / pIng.protein_per_oz) * 10) / 10;
+        let cOz = Math.round((targetC / cIng.carbs_per_oz) * 10) / 10;
+        let vOz = 4.0; // standard veg portion
+
+        // Clamp to reasonable ranges
+        pOz = Math.max(4.0, Math.min(8.5, pOz));
+        cOz = Math.max(3.0, Math.min(10.0, cOz));
+
+        // Recompute actual meal macros
+        const mealP = Math.round((pOz * pIng.protein_per_oz) + (cOz * cIng.protein_per_oz) + (vOz * vIng.protein_per_oz));
+        const mealC = Math.round((pOz * pIng.carbs_per_oz) + (cOz * cIng.carbs_per_oz) + (vOz * vIng.carbs_per_oz));
+        const mealF = Math.round((pOz * pIng.fat_per_oz) + (cOz * cIng.fat_per_oz) + (vOz * vIng.fat_per_oz));
+        const mealCal = Math.round((pOz * pIng.calories_per_oz) + (cOz * cIng.calories_per_oz) + (vOz * vIng.calories_per_oz));
+
+        // Pricing formula: Base Prep Fee + (Ounces * Cost/oz * Markup)
+        const pCost = pOz * pIng.price_per_oz * INGREDIENT_MARKUP;
+        const cCost = cOz * cIng.price_per_oz * INGREDIENT_MARKUP;
+        const vCost = vOz * vIng.price_per_oz * INGREDIENT_MARKUP;
+        const totalPrice = Math.round((BASE_PREP_FEE + pCost + cCost + vCost) * 100) / 100;
+
+        return {
+            name: mealName,
+            price: totalPrice,
+            protein: mealP,
+            carbs: mealC,
+            fat: mealF,
+            calories: mealCal,
+            portions: {
+                protein: { name: pIng.name, oz: pOz },
+                carb: { name: cIng.name, oz: cOz },
+                veg: { name: vIng.name, oz: vOz }
+            },
+            detailsHtml: `${pOz}oz ${pIng.name}, ${cOz}oz ${cIng.name}, ${vOz}oz ${vIng.name}`
+        };
+    }
+
     // State Variables
     let currentStep = 1;
     const totalSteps = 7;
@@ -289,13 +394,33 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Calculating Plan & Opening Offers...';
 
             try {
+                // Calculate dynamic portions for signature meals for webhook mapping
+                const steakDetails = calculateMealPortionsAndPricing('Steak n Mash', proteinGrams, carbGrams, fatGrams);
+                const chickenDetails = calculateMealPortionsAndPricing('Teriyaki Chicken', proteinGrams, carbGrams, fatGrams);
+
                 // Execute webhook submission
                 const payload = {
                     ...userAnswers,
                     ...calculatedPlan,
                     source: "Orange Theory Spokane Pilot Landing Page",
                     studio: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home',
-                    gym: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home'
+                    gym: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home',
+                    // Portion & Pricing details for Make/Google Sheets integration
+                    steak_meal_name: steakDetails.name,
+                    steak_meal_price: steakDetails.price,
+                    steak_meal_portions: steakDetails.detailsHtml,
+                    steak_meal_protein: steakDetails.protein,
+                    steak_meal_carbs: steakDetails.carbs,
+                    steak_meal_fat: steakDetails.fat,
+                    steak_meal_calories: steakDetails.calories,
+                    
+                    chicken_meal_name: chickenDetails.name,
+                    chicken_meal_price: chickenDetails.price,
+                    chicken_meal_portions: chickenDetails.detailsHtml,
+                    chicken_meal_protein: chickenDetails.protein,
+                    chicken_meal_carbs: chickenDetails.carbs,
+                    chicken_meal_fat: chickenDetails.fat,
+                    chicken_meal_calories: chickenDetails.calories
                 };
 
                 await fetch(MAKE_WEBHOOK_URL, {
@@ -446,6 +571,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('plan-days-grid-container');
         if (!container) return;
 
+        const plan = JSON.parse(localStorage.getItem('ffp_macro_plan')) || calculatedPlan;
+        const targetP = plan.protein || 160;
+        const targetC = plan.carbs || 140;
+        const targetF = plan.fat || 55;
+
         const daysData = [
             {
                 day: "MONDAY",
@@ -516,12 +646,22 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="plan-day-column">
                 <div class="day-header-bar">${dayObj.day}</div>
                 <table class="day-meals-table">
-                    ${dayObj.meals.map(meal => `
+                    ${dayObj.meals.map(meal => {
+                        const d = calculateMealPortionsAndPricing(meal.name, targetP, targetC, targetF);
+                        return `
                         <tr>
-                            <td class="meal-tag-cell ${meal.class}">${meal.tag}</td>
-                            <td class="meal-name-cell">${meal.name}</td>
+                            <td class="meal-tag-cell ${meal.class}">
+                                <span class="meal-tag-label">${meal.tag}</span>
+                                <span class="meal-price-badge">$${d.price.toFixed(2)}</span>
+                            </td>
+                            <td class="meal-name-cell">
+                                <div class="meal-main-name">${d.name}</div>
+                                <div class="meal-desc-details">${d.detailsHtml}</div>
+                                <div class="meal-macro-sub">${d.protein}g P / ${d.carbs}g C / ${d.fat}g F | ${d.calories} cal</div>
+                            </td>
                         </tr>
-                    `).join('')}
+                        `;
+                    }).join('')}
                 </table>
             </div>
         `).join('');
