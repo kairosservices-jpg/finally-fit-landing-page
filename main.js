@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressNum = document.getElementById('progress-num');
     
     // Webhook Configuration (matching user's verified Kairos Make integration)
-    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/3jgfgdufxl5k485zgecvwwbg7b3rjmxt';
+    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/eea8ov2st5ojsgx48reqwz0841b20qwh';
     
     // Stripe Checkout link for the $200 8-Week Program (User replaces this with live link)
     const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/28EbJ14Mh3lRg7g0na1ck07';
