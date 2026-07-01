@@ -210,6 +210,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const testBtn = document.getElementById('settings-test-btn');
         const modeSelect = document.getElementById('settings-connection-mode');
         
+        // Hide API settings trigger button unless URL contains debug=true or admin=true
+        const urlParams = new URLSearchParams(window.location.search);
+        const isDebug = urlParams.get('debug') === 'true' || urlParams.get('admin') === 'true';
+        if (openBtn) {
+            if (isDebug) {
+                openBtn.style.display = 'flex';
+            } else {
+                openBtn.style.display = 'none';
+            }
+        }
+        
         if (openBtn && drawer && overlay) {
             openBtn.addEventListener('click', () => {
                 drawer.classList.add('active');
