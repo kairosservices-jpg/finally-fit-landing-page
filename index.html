@@ -141,24 +141,64 @@
                         </div>
                     </div>
 
-                    <!-- STEP 6: Lead Magnet Contact Capture -->
+                    <!-- STEP 6: Goal Timeline -->
                     <div class="quiz-step-pane" id="quiz-step-6" data-step-index="6">
-                        <h3 class="quiz-question-title">6. Lock in your results & member offers:</h3>
+                        <h3 class="quiz-question-title">6. What is your goal timeline?</h3>
+                        <div class="quiz-options-group">
+                            <button class="quiz-btn-option" data-question="Timeline" data-val="4 Weeks">4 Weeks (Intense / Quick Results)</button>
+                            <button class="quiz-btn-option" data-question="Timeline" data-val="8 Weeks">8 Weeks (Steady / Recommended)</button>
+                            <button class="quiz-btn-option" data-question="Timeline" data-val="12 Weeks">12 Weeks (Long-term Transformation)</button>
+                        </div>
+                        <div class="quiz-nav-row">
+                            <button class="quiz-back-btn">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 7: Contact Information -->
+                    <div class="quiz-step-pane" id="quiz-step-7" data-step-index="7">
+                        <h3 class="quiz-question-title">7. Lock in your results & member offers:</h3>
                         <p style="font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; color: rgba(255, 255, 255, 0.65); font-weight: 300;">
-                            Submit to instantly calculate your personal macro blueprint and unlock your meal plan.
+                            Enter your details to calculate your macros and secure your custom plan.
                         </p>
+                        <div class="quiz-input-grid" style="margin-bottom: 10px;">
+                            <input type="text" id="input-first" class="quiz-input-field" placeholder="First Name" required style="margin-bottom: 0;">
+                            <input type="text" id="input-last" class="quiz-input-field" placeholder="Last Name" required style="margin-bottom: 0;">
+                        </div>
+                        <input type="email" id="input-email" class="quiz-input-field" placeholder="Email Address" required>
+                        <input type="tel" id="input-phone" class="quiz-input-field" placeholder="Phone Number" required>
+                        
+                        <div class="quiz-nav-row">
+                            <button type="button" class="quiz-back-btn">Back</button>
+                            <button type="button" class="brutalist-btn quiz-next-btn" id="contact-step-next-btn" style="flex: 2;">Next: Preferences</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 8: Dietary Preferences -->
+                    <div class="quiz-step-pane" id="quiz-step-8" data-step-index="8">
+                        <h3 class="quiz-question-title">8. Select your dietary preferences:</h3>
+                        <div class="quiz-options-group">
+                            <button class="quiz-btn-option" data-question="Diet" data-val="Anything">No Restrictions (Anything)</button>
+                            <button class="quiz-btn-option" data-question="Diet" data-val="High Protein / Low Carb">High Protein / Low Carb</button>
+                            <button class="quiz-btn-option" data-question="Diet" data-val="Keto Friendly">Keto Friendly</button>
+                            <button class="quiz-btn-option" data-question="Diet" data-val="Vegetarian">Vegetarian</button>
+                        </div>
+                        <div class="quiz-nav-row">
+                            <button class="quiz-back-btn">Back</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 9: Food Allergies / Foods to Avoid -->
+                    <div class="quiz-step-pane" id="quiz-step-9" data-step-index="9">
+                        <h3 class="quiz-question-title">9. Any food allergies or foods to avoid?</h3>
+                        <p style="font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; color: rgba(255, 255, 255, 0.65); font-weight: 300;">
+                            List any foods to avoid (e.g. peanuts, dairy, gluten, fish). Leave blank if none.
+                        </p>
+                        <input type="text" id="quiz-allergies-input" class="quiz-input-field" placeholder="e.g. Peanuts, Gluten, Dairy" data-question="Allergies" style="margin-bottom: 25px;">
                         
                         <form id="lead-info-form">
-                            <div class="quiz-input-grid">
-                                <input type="text" id="input-first" class="quiz-input-field" placeholder="First Name" required>
-                                <input type="text" id="input-last" class="quiz-input-field" placeholder="Last Name" required>
-                            </div>
-                            <input type="email" id="input-email" class="quiz-input-field" placeholder="Email Address" required>
-                            <input type="tel" id="input-phone" class="quiz-input-field" placeholder="Phone Number" required>
-                            
                             <div class="quiz-nav-row">
                                 <button type="button" class="quiz-back-btn">Back</button>
-                                <button type="submit" class="brutalist-btn" style="flex: 2;">Get Your Plan</button>
+                                <button type="submit" class="brutalist-btn" style="flex: 2;">Calculate My Plan</button>
                             </div>
                         </form>
                     </div>
@@ -197,23 +237,29 @@
 
 
 
-                <!-- Interactive Weekly Meal Plan Document -->
+                <!-- Interactive Daily Meal Plan Document -->
                 <div class="weekly-plan-wrap" style="margin-top: 60px; margin-bottom: 80px;">
                     <div class="meal-showcase-title">
                         <span class="sec-tag">Your Custom Schedule</span>
-                        <h3>Your Weekly Meal Plan Blueprint</h3>
-                        <button id="print-meal-plan-btn" class="brutalist-btn" style="margin-top: 15px; display: inline-flex; align-items: center; gap: 8px;">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                            Print / Save Meal Plan
-                        </button>
+                        <h3>Your Daily Meal Plan Blueprint</h3>
+                        <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                            <button id="print-meal-plan-btn" class="brutalist-btn" style="display: inline-flex; align-items: center; gap: 8px;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                Print / Save Meal Plan
+                            </button>
+                            <button id="download-grocery-list-btn" class="brutalist-btn btn-charcoal" style="display: inline-flex; align-items: center; gap: 8px;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 2px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                Download Grocery List
+                            </button>
+                        </div>
                     </div>
 
                     <div class="weekly-plan-card brutalist-card">
                         <!-- Header of Plan Document -->
-                        <div class="plan-doc-header">
+                        <div class="plan-doc-header" style="border-bottom: 2px solid var(--color-border); margin-bottom: 25px; padding-bottom: 20px;">
                             <div class="plan-doc-brand">
-                                <h4 style="font-size: 1.6rem; letter-spacing: 1px; color: var(--brand-red);">KAIROS MEAL PREPS</h4>
-                                <span class="plan-doc-sub">Weekly Meal Plan</span>
+                                <h4 style="font-size: 1.6rem; letter-spacing: 1px; color: var(--brand-red); margin: 0;">FINALLY FIT SPOKANE</h4>
+                                <span class="plan-doc-sub">Personalized Daily Fuel Blueprint</span>
                             </div>
                             <div class="plan-doc-meta">
                                 <div class="meta-item">
@@ -221,15 +267,15 @@
                                     <span class="meta-value" id="plan-client-name">Lidiya Ervin</span>
                                 </div>
                                 <div class="meta-item">
-                                    <span class="meta-label">Week Of</span>
-                                    <span class="meta-value" id="plan-week-date">June 8, 2026</span>
+                                    <span class="meta-label">Date Generated</span>
+                                    <span class="meta-value" id="plan-week-date">July 1, 2026</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Days Grid -->
+                        <!-- Days Grid (Now rendering daily meal cards) -->
                         <div class="plan-days-grid" id="plan-days-grid-container">
-                            <!-- Populated dynamically via JS (Monday through Sunday) -->
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
                 </div>

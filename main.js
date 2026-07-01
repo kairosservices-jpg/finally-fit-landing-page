@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // State Variables
     let currentStep = 1;
-    const totalSteps = 7;
+    const totalSteps = 9;
     const userAnswers = {};
     const calculatedPlan = {};
 
@@ -149,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Progress
     updateProgress();
+    setupGroceryDownload();
 
     // Clear selected buttons in Step 2 if user starts typing in custom gym input
     const gymInput = document.getElementById('quiz-gym-input');
@@ -293,6 +294,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
+                if (currentStep === 7) {
+                    // Contact Info step: trigger background webhook for abandonment tracking
+                    const firstName = document.getElementById('input-first')?.value?.trim();
+                    const lastName = document.getElementById('input-last')?.value?.trim();
+                    const email = document.getElementById('input-email')?.value?.trim();
+                    const phone = document.getElementById('input-phone')?.value?.trim();
+                    
+                    if (firstName && lastName && email && phone) {
+                        userAnswers['First Name'] = firstName;
+                        userAnswers['Last Name'] = lastName;
+                        userAnswers['Email'] = email;
+                        userAnswers['Phone'] = phone;
+                        
+                        const payload = {
+                            ...userAnswers,
+                            partial: true,
+                            source: "Finally Fit Spokane Pilot Landing Page - Partial Lead"
+                        };
+                        fetch(MAKE_WEBHOOK_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        }).catch(err => console.warn('Partial lead tracking error:', err));
+                    }
+                }
+
                 const nextStepNum = currentStep + 1;
                 showStep(nextStepNum);
             }
@@ -321,6 +348,10 @@ document.addEventListener('DOMContentLoaded', () => {
             userAnswers['Last Name'] = lastName;
             userAnswers['Email'] = email;
             userAnswers['Phone'] = phone;
+
+            // Capture Step 9 Allergies input
+            const allergiesInput = document.getElementById('quiz-allergies-input');
+            userAnswers['Allergies'] = allergiesInput ? allergiesInput.value.trim() : '';
 
             // Extract numeric values from prior steps
             userAnswers['Age'] = parseInt(userAnswers['Age']) || 35;
@@ -527,8 +558,8 @@ document.addEventListener('DOMContentLoaded', () => {
             planWeekDateNode.textContent = monday.toLocaleDateString('en-US', options);
         }
 
-        // Render dynamic Weekly Days Schedule (Monday through Sunday)
-        renderWeeklyPlanDays();
+        // Render dynamic Daily Meal Plan Blueprint
+        renderDailyPlanDays();
 
 
         
@@ -557,8 +588,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // Render dynamic Weekly Days Schedule (Monday through Sunday) with rotated items
-    function renderWeeklyPlanDays() {
+    // Render dynamic Daily Meal Plan Blueprint cards
+    function renderDailyPlanDays() {
         const container = document.getElementById('plan-days-grid-container');
         if (!container) return;
 
@@ -567,105 +598,151 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetC = plan.carbs || 140;
         const targetF = plan.fat || 55;
 
-        const daysData = [
-            {
-                day: "MONDAY",
-                meals: [
-                    { tag: "BREAKFAST", name: "Steak and Eggs", class: "tag-breakfast" },
-                    { tag: "LUNCH #1", name: "Teriyaki Chicken", class: "tag-lunch" },
-                    { tag: "LUNCH #2", name: "Chicken Fried Rice", class: "tag-lunch" },
-                    { tag: "DINNER", name: "Steak n Mash", class: "tag-dinner" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
-                ]
-            },
-            {
-                day: "TUESDAY",
-                meals: [
-                    { tag: "BREAKFAST", name: "Yogurt Parfait", class: "tag-breakfast" },
-                    { tag: "LUNCH #1", name: "Chicken Fried Rice", class: "tag-lunch" },
-                    { tag: "LUNCH #2", name: "Teriyaki Chicken", class: "tag-lunch" },
-                    { tag: "DINNER", name: "Spaghetti and Meatballs", class: "tag-dinner" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
-                ]
-            },
-            {
-                day: "WEDNESDAY",
-                meals: [
-                    { tag: "BREAKFAST", name: "Honey Sweet Cottage Cheese", class: "tag-breakfast" },
-                    { tag: "LUNCH #1", name: "Chili Margarita", class: "tag-lunch" },
-                    { tag: "LUNCH #2", name: "Chicken Fried Rice", class: "tag-lunch" },
-                    { tag: "DINNER", name: "Chicken Pesto Pasta", class: "tag-dinner" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
-                ]
-            },
-            {
-                day: "THURSDAY",
-                meals: [
-                    { tag: "BREAKFAST", name: "Morning Grand Slam", class: "tag-breakfast" },
-                    { tag: "LUNCH #1", name: "Asian Zing Chicken Thigh", class: "tag-lunch" },
-                    { tag: "LUNCH #2", name: "Sweet Chili Chicken Thigh", class: "tag-lunch" },
-                    { tag: "DINNER", name: "BBQ Chicken Thigh", class: "tag-dinner" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
-                ]
-            },
-            {
-                day: "FRIDAY",
-                meals: [
-                    { tag: "BREAKFAST", name: "Steak and Eggs", class: "tag-breakfast" },
-                    { tag: "LUNCH #1", name: "Teriyaki Chicken", class: "tag-lunch" },
-                    { tag: "LUNCH #2", name: "Chili Margarita", class: "tag-lunch" },
-                    { tag: "DINNER", name: "Sweet Chili Chicken Thigh", class: "tag-dinner" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
-                ]
-            },
-            {
-                day: "SATURDAY",
-                meals: [
-                    { tag: "BREAKFAST", name: "Yogurt Parfait", class: "tag-breakfast" },
-                    { tag: "LUNCH #1", name: "Chicken Fried Rice", class: "tag-lunch" },
-                    { tag: "LUNCH #2", name: "Steak n Mash", class: "tag-lunch" },
-                    { tag: "DINNER", name: "Steak n Mash", class: "tag-dinner" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
-                ]
-            },
-            {
-                day: "SUNDAY",
-                meals: [
-                    { tag: "BREAKFAST", name: "Honey Sweet Cottage Cheese", class: "tag-breakfast" },
-                    { tag: "LUNCH #1", name: "Chili Margarita", class: "tag-lunch" },
-                    { tag: "LUNCH #2", name: "Chicken Pesto Pasta", class: "tag-lunch" },
-                    { tag: "DINNER", name: "Chicken Pesto Pasta", class: "tag-dinner" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
-                ]
-            }
+        const dayMeals = [
+            { tag: "BREAKFAST", name: "Steak and Eggs", img: "assets/steak_eggs.png", class: "tag-breakfast" },
+            { tag: "LUNCH #1", name: "Teriyaki Chicken", img: "assets/teriyaki_chicken.png", class: "tag-lunch" },
+            { tag: "LUNCH #2", name: "Chicken Fried Rice", img: "assets/chicken_fried_rice.png", class: "tag-lunch" },
+            { tag: "DINNER", name: "Steak n Mash", img: "assets/steak_n_mash.png", class: "tag-dinner" },
+            { tag: "SNACK", name: "Meat & Cheese-To-Go (Pack of 5)", img: "assets/meat_cheese_to_go.png", class: "tag-snack" }
         ];
 
-        container.innerHTML = daysData.map(dayObj => `
-            <div class="plan-day-column">
-                <div class="day-header-bar">${dayObj.day}</div>
-                <table class="day-meals-table">
-                    ${dayObj.meals.map(meal => {
-                        const isSnack = meal.tag === "SNACK";
-                        const mealTargetP = isSnack ? 25 : (targetP - 25) / 4;
-                        const mealTargetC = isSnack ? 20 : (targetC - 20) / 4;
-                        const mealTargetF = isSnack ? 10 : (targetF - 10) / 4;
-                        const d = calculateMealPortionsAndPricing(meal.name, mealTargetP, mealTargetC, mealTargetF);
-                        return `
-                        <tr>
-                            <td class="meal-tag-cell ${meal.class}">
-                                <span class="meal-tag-label">${meal.tag}</span>
-                            </td>
-                            <td class="meal-name-cell">
-                                <div class="meal-main-name">${d.name}</div>
-                                <div class="meal-macro-sub">${d.protein}g P / ${d.carbs}g C / ${d.fat}g F | ${d.calories} cal</div>
-                            </td>
-                        </tr>
-                        `;
-                    }).join('')}
-                </table>
+        // Format grid styles for visual daily layout
+        container.style.display = 'grid';
+        container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(200px, 1fr))';
+        container.style.gap = '20px';
+
+        container.innerHTML = dayMeals.map(meal => {
+            const isSnack = meal.tag === "SNACK";
+            const mealTargetP = isSnack ? 25 : (targetP - 25) / 4;
+            const mealTargetC = isSnack ? 20 : (targetC - 20) / 4;
+            const mealTargetF = isSnack ? 10 : (targetF - 10) / 4;
+            const d = calculateMealPortionsAndPricing(meal.name, mealTargetP, mealTargetC, mealTargetF);
+            
+            // Format details to display cooked specs cleanly
+            const portionsHtml = d.portions ? `
+                <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px; line-height: 1.4;">
+                    ${d.portions.protein.oz > 0 ? `<strong>${d.portions.protein.oz}oz</strong> ${d.portions.protein.name}` : ''}
+                    ${d.portions.carb.oz > 0 ? `<br><strong>${d.portions.carb.oz}oz</strong> ${d.portions.carb.name}` : ''}
+                    ${d.portions.veg.oz > 0 ? `<br><strong>${d.portions.veg.oz}oz</strong> ${d.portions.veg.name}` : ''}
+                </div>
+            ` : '';
+
+            return `
+            <div class="brutalist-card hover-lift" style="background: #111; border: 2px solid var(--color-border); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column;">
+                <div style="height: 140px; background: #222; overflow: hidden; border-bottom: 2px solid var(--color-border); position: relative;">
+                    <img src="${meal.img}" alt="${d.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                    <span class="meal-tag-label ${meal.class}" style="position: absolute; top: 10px; left: 10px; padding: 4px 8px; font-size: 0.7rem; font-weight: 700; border-radius: 2px;">${meal.tag}</span>
+                    <span style="position: absolute; top: 10px; right: 10px; background: #000; color: #fff; border: 1.5px solid var(--color-border); font-size: 0.8rem; font-weight: 700; padding: 3px 6px; border-radius: 2px;">$${d.price.toFixed(2)}</span>
+                </div>
+                <div style="padding: 15px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <h4 style="font-size: 1.05rem; font-family: var(--font-primary); margin: 0; color: #fff; line-height: 1.3;">${d.name}</h4>
+                        ${portionsHtml}
+                    </div>
+                    <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; color: #2ec4b6; font-weight: 700;">
+                        ${d.protein}g P / ${d.carbs}g C / ${d.fat}g F | ${d.calories} Cal
+                    </div>
+                </div>
             </div>
-        `).join('');
+            `;
+        }).join('');
     }
+
+    // Dynamic grocery list generator mapping client custom portions to 5-day prep targets (raw/cooked yields)
+    function generateGroceryListContent(plan) {
+        const targetP = plan.protein || 160;
+        const targetC = plan.carbs || 140;
+        const targetF = plan.fat || 55;
+
+        const meals = [
+            { name: "Steak and Eggs", isSnack: false },
+            { name: "Teriyaki Chicken", isSnack: false },
+            { name: "Chicken Fried Rice", isSnack: false },
+            { name: "Steak n Mash", isSnack: false },
+            { name: "Meat & Cheese-To-Go (Pack of 5)", isSnack: true }
+        ];
+
+        const totals = {}; // Map of ingredient name -> total ounces cooked
+
+        meals.forEach(m => {
+            const isSnack = m.isSnack;
+            const mealTargetP = isSnack ? 25 : (targetP - 25) / 4;
+            const mealTargetC = isSnack ? 20 : (targetC - 20) / 4;
+            const mealTargetF = isSnack ? 10 : (targetF - 10) / 4;
+            const d = calculateMealPortionsAndPricing(m.name, mealTargetP, mealTargetC, mealTargetF);
+            
+            if (d.portions) {
+                Object.keys(d.portions).forEach(key => {
+                    const item = d.portions[key];
+                    if (item && item.oz > 0 && item.name) {
+                        totals[item.name] = (totals[item.name] || 0) + (item.oz * 5); // 5-day supply
+                    }
+                });
+            }
+        });
+
+        let text = `=====================================================\n`;
+        text += `       FINALLY FIT SPOKANE - CUSTOM GROCERY LIST     \n`;
+        text += `=====================================================\n`;
+        text += `Calculated Target: ${plan.calories} Calories (${plan.tier} Tier)\n`;
+        text += `Daily Blueprint: ${plan.protein}g Protein | ${plan.carbs}g Carbs | ${plan.fat}g Fat\n`;
+        text += `Volume: 5-Day Meal Supply (25 Total Meal Containers)\n\n`;
+        text += `SHOPPING LIST (RAW INGREDIENTS TO PURCHASE):\n`;
+        text += `-----------------------------------------------------\n`;
+        
+        Object.keys(totals).forEach(name => {
+            const cookedOz = totals[name];
+            const cookedLbs = (cookedOz / 16).toFixed(1);
+            
+            // Map Raw Yield Metrics (MANDATORY SHRINKAGE RULES)
+            let yieldNote = "";
+            let rawOz = cookedOz;
+            if (name.includes("Sirloin")) {
+                rawOz = Math.ceil(cookedOz / 0.708);
+                const rawLbs = (rawOz / 16).toFixed(1);
+                yieldNote = ` (requires ${rawOz} oz / ${rawLbs} lbs RAW weight due to shrinkage)`;
+            } else if (name.includes("Chicken Breast")) {
+                rawOz = Math.ceil(cookedOz / 0.769);
+                const rawLbs = (rawOz / 16).toFixed(1);
+                yieldNote = ` (requires ${rawOz} oz / ${rawLbs} lbs RAW weight due to shrinkage)`;
+            } else if (name.includes("Chicken Thigh")) {
+                rawOz = Math.ceil(cookedOz / 0.727);
+                const rawLbs = (rawOz / 16).toFixed(1);
+                yieldNote = ` (requires ${rawOz} oz / ${rawLbs} lbs RAW weight due to shrinkage)`;
+            }
+
+            text += `- [ ] ${name}: ${cookedOz} oz (${cookedLbs} lbs) cooked${yieldNote}\n`;
+        });
+
+        text += `\n-----------------------------------------------------\n`;
+        text += `Tired of the shopping, portion prep, cooking, and clean up?\n`;
+        text += `Let us prepare and cook these exact scaled portions for you!\n`;
+        text += `Unlock twice-weekly gym delivery here:\n`;
+        text += `➔ https://thefinallyfitproject.com/\n`;
+        text += `=====================================================\n`;
+
+        return text;
+   }
+
+   // Initialize click listener to download custom grocery list as a client-side TXT file
+   function setupGroceryDownload() {
+       const btn = document.getElementById('download-grocery-list-btn');
+       if (btn) {
+           btn.addEventListener('click', (e) => {
+               e.preventDefault();
+               const plan = JSON.parse(localStorage.getItem('ffp_macro_plan')) || calculatedPlan;
+               const textContent = generateGroceryListContent(plan);
+               
+               const element = document.createElement('a');
+               element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(textContent));
+               element.setAttribute('download', `Finally_Fit_Grocery_List.txt`);
+               element.style.display = 'none';
+               document.body.appendChild(element);
+               element.click();
+               document.body.removeChild(element);
+           });
+       }
+   }
 
     // Check if user has already calculated macros in past session and load directly if wanted
     // We keep it clean to start quiz on load, but if they reload on results it can persist.
