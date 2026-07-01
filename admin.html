@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Management Dashboard | Finally Fit Spokane</title>
+    <meta name="description" content="Manage meal production sheets, calculate raw ingredient shopping weights, sort pickups/deliveries, and generate thermal box labels.">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=3.5">
+    
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Supabase Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Script defer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+    <script src="admin.js?v=3.5" defer></script>
+</head>
+<body class="portal-body admin-body">
+
+    <!-- ADMIN NAV HEADER -->
+    <header class="header-nav">
+        <div class="container nav-flex">
+            <a href="index.html" class="logo-link">
+                <img src="assets/kairos_logo.png" alt="Kairos Logo" class="logo-img" onerror="this.style.display='none'">
+            </a>
+            
+            <div class="portal-status-badge" style="background: rgba(217, 4, 41, 0.1); border-color: rgba(217, 4, 41, 0.25);">
+                <span class="status-indicator-dot" style="background-color: var(--brand-red); box-shadow: 0 0 10px var(--brand-red);"></span>
+                <span class="status-text" style="color: var(--brand-red);"><strong>KITCHEN OPERATIONS ADMIN</strong></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ADMIN CONTROL DASHBOARD -->
+    <main class="portal-main-sec">
+        <div class="container">
+            
+            <div class="admin-title-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; border-bottom: 1px solid var(--color-border); padding-bottom: 24px;">
+                <div>
+                    <span class="sec-tag">Kitchen Operator Console</span>
+                    <h2>Production Planner & Label Engine</h2>
+                </div>
+                <div class="week-picker-indicator">
+                    <span id="admin-production-week">Week of June 8, 2026</span>
+                </div>
+            </div>
+
+            <!-- TAB NAVIGATION CONTROLS -->
+            <div class="admin-tabs-nav" style="display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid var(--color-border); padding-bottom: 15px;">
+                <button class="brutalist-btn admin-tab-btn active-tab" data-tab="tab-production">Production Sheets</button>
+                <button class="brutalist-btn btn-charcoal admin-tab-btn" data-tab="tab-shopping">Shopping List</button>
+                <button class="brutalist-btn btn-charcoal admin-tab-btn" data-tab="tab-deliveries">Deliveries</button>
+                <button class="brutalist-btn btn-charcoal admin-tab-btn" data-tab="tab-labels" style="color: #2ec4b6; border-color: rgba(46, 196, 182, 0.2);">Box Label Generator</button>
+            </div>
+
+            <!-- ==================== TAB 1: PRODUCTION SHEETS ==================== -->
+            <section class="admin-tab-section brutalist-card" id="tab-production" style="padding: 36px;">
+                <h3>Total Meal Assembly Counts</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 24px;">Counts of chef-cooked meals scheduled for upcoming production, sorted by meal name.</p>
+                
+                <table class="admin-data-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--color-border); font-family: var(--font-primary); font-weight: 750; font-size: 0.85rem; text-transform: uppercase;">
+                            <th style="padding: 12px 16px;">Meal Name</th>
+                            <th style="padding: 12px 16px;">Category</th>
+                            <th style="padding: 12px 16px; text-align: center;">Total Scheduled</th>
+                            <th style="padding: 12px 16px; text-align: center;">Portion breakdown</th>
+                        </tr>
+                    </thead>
+                    <tbody id="production-list-tbody">
+                        <!-- Populated dynamically via admin.js -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ==================== TAB 2: SHOPPING LIST ==================== -->
+            <section class="admin-tab-section brutalist-card" id="tab-shopping" style="padding: 36px; display: none;">
+                <h3>Raw Ingredient Weights</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 24px;">Aggregated ounce values required to satisfy portion allocations for all active orders next week (clamped by Mifflin targets).</p>
+                
+                <table class="admin-data-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--color-border); font-family: var(--font-primary); font-weight: 750; font-size: 0.85rem; text-transform: uppercase;">
+                            <th style="padding: 12px 16px;">Ingredient</th>
+                            <th style="padding: 12px 16px;">Category</th>
+                            <th style="padding: 12px 16px; text-align: right;">Served (Cooked) Weight</th>
+                            <th style="padding: 12px 16px; text-align: right;">Prep (Raw) Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shopping-list-tbody">
+                        <!-- Populated dynamically via admin.js -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ==================== TAB 3: DELIVERIES ==================== -->
+            <section class="admin-tab-section brutalist-card" id="tab-deliveries" style="padding: 36px; display: none;">
+                <h3>Logistics & Pick-up Distribution</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 24px;">Customers sorted by pickup locations or shipping destinations.</p>
+                
+                <div class="delivery-tables-wrap" id="deliveries-tables-container">
+                    <!-- Populated dynamically via admin.js -->
+                </div>
+            </section>
+
+            <!-- ==================== TAB 4: LABELS ==================== -->
+            <section class="admin-tab-section" id="tab-labels" style="display: none;">
+                <div class="brutalist-card" style="padding: 36px; margin-bottom: 30px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                        <div>
+                            <h3>Print-Ready Thermal Labels</h3>
+                            <p style="font-size: 0.9rem; margin-top: 5px;">Perfectly scaled for thermal sticker printing. Shows name, macros, and warm-up instructions.</p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                            <!-- Printer/Label Size Selection -->
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <label for="label-size-select" style="font-size: 0.75rem; color: rgba(255,255,255,0.45); font-weight: 600;">Label Size / Printer</label>
+                                <select id="label-size-select" style="padding: 10px 14px; font-size: 0.85rem; cursor: pointer; background: #111; color: #fff; border: 2px solid var(--color-border); border-radius: 4px; font-family: var(--font-primary); font-weight: 600;">
+                                    <option value="brother-ql" selected>Brother QL (2.4" x 3.9" Portrait)</option>
+                                    <option value="wide-thermal">Standard Thermal (4.25" x 2.8" Landscape)</option>
+                                </select>
+                            </div>
+
+                            <div class="custom-logo-uploader" style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; margin-top: 15px;">
+                                <label for="label-logo-upload" class="brutalist-btn btn-charcoal" style="padding: 10px 16px; font-size: 0.85rem; cursor: pointer; text-align: center; margin: 0;">
+                                    Upload Custom Logo
+                                </label>
+                                <input type="file" id="label-logo-upload" accept="image/*" style="display: none;">
+                                <button id="reset-logo-btn" class="text-btn" style="background: none; border: none; color: #2ec4b6; font-size: 0.75rem; text-decoration: underline; cursor: pointer; display: none; padding: 0;">Reset to Default</button>
+                            </div>
+                            <button id="print-all-labels-btn" class="brutalist-btn" style="padding: 10px 24px; font-size: 0.9rem; margin-top: 15px;">Print All Labels</button>
+                            <button id="download-all-labels-btn" class="brutalist-btn btn-charcoal" style="padding: 10px 20px; font-size: 0.9rem; margin-top: 15px;">Download All PNGs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Labels Grid Container -->
+                <div class="admin-labels-grid" id="labels-print-container">
+                    <!-- Populated dynamically via admin.js -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- ==================== CONNECTION SETTINGS DRAWER ==================== -->
+    <button class="settings-trigger-btn no-print" id="settings-open-btn" title="API & Database Settings">⚙</button>
+    <div class="settings-drawer-overlay" id="settings-overlay"></div>
+    <div class="settings-drawer" id="settings-drawer">
+        <div class="drawer-header">
+            <h3>⚙ Connection Settings</h3>
+            <button class="drawer-close-btn" id="settings-close-btn">&times;</button>
+        </div>
+        <div class="drawer-body">
+            <p class="drawer-help-text">Configure where this app loads and saves its live data. Saved locally in your browser.</p>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label for="settings-connection-mode" style="display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 6px;">Connection Mode</label>
+                <select id="settings-connection-mode" style="width: 100%; padding: 10px 12px; background: #111; color: #fff; border: 2px solid var(--color-border); border-radius: 4px; font-family: var(--font-primary); font-weight: 600;">
+                    <option value="simulation" selected>Simulation Mode (Mock Data)</option>
+                    <option value="make">Make.com Webhooks</option>
+                    <option value="supabase">Direct Supabase Database</option>
+                </select>
+            </div>
+
+            <!-- MAKE.COM FIELDS -->
+            <div id="settings-fields-make" class="settings-fields-group" style="display: none; margin-top: 20px; border-top: 1px solid var(--color-border); padding-top: 15px;">
+                <h4 style="color: var(--brand-red); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px;">Make.com Webhooks</h4>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label for="settings-make-orders-url" style="display: block; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-bottom: 4px;">Get Active Orders Webhook URL</label>
+                    <input type="text" id="settings-make-orders-url" placeholder="https://hook.us2.make.com/..." style="width: 100%; padding: 10px; background: rgba(255,255,255,0.02); border: 2px solid var(--color-border); border-radius: 4px; color: #fff; font-family: var(--font-secondary); font-size: 0.85rem;">
+                </div>
+            </div>
+
+            <!-- SUPABASE FIELDS -->
+            <div id="settings-fields-supabase" class="settings-fields-group" style="display: none; margin-top: 20px; border-top: 1px solid var(--color-border); padding-top: 15px;">
+                <h4 style="color: var(--brand-red); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px;">Supabase Database</h4>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label for="settings-supabase-url" style="display: block; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-bottom: 4px;">Supabase API URL</label>
+                    <input type="text" id="settings-supabase-url" placeholder="https://xxxx.supabase.co" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.02); border: 2px solid var(--color-border); border-radius: 4px; color: #fff; font-family: var(--font-secondary); font-size: 0.85rem;">
+                </div>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label for="settings-supabase-key" style="display: block; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-bottom: 4px;">Supabase Anon Key</label>
+                    <input type="password" id="settings-supabase-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..." style="width: 100%; padding: 10px; background: rgba(255,255,255,0.02); border: 2px solid var(--color-border); border-radius: 4px; color: #fff; font-family: var(--font-secondary); font-size: 0.85rem;">
+                </div>
+            </div>
+
+            <div class="drawer-actions" style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px;">
+                <button id="settings-test-btn" class="brutalist-btn btn-charcoal" style="width: 100%; font-size: 0.9rem; padding: 10px; text-transform: uppercase;">Test Connection</button>
+                <button id="settings-save-btn" class="brutalist-btn" style="width: 100%; font-size: 0.9rem; padding: 10px; text-transform: uppercase;">Save Settings</button>
+                <span id="settings-status-message" style="display: block; font-size: 0.8rem; text-align: center; font-weight: 600; margin-top: 8px;"></span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

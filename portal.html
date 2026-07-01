@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Portal | Finally Fit Spokane</title>
+    <meta name="description" content="Manage your weekly meal selections, swap dishes, adjust portion configurations, and skip or pause your automated deliveries.">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=3.5">
+    
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Supabase Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Script defer -->
+    <script src="portal.js?v=3.5" defer></script>
+</head>
+<body class="portal-body">
+
+    <!-- PORTAL HEADER -->
+    <header class="header-nav">
+        <div class="container nav-flex">
+            <a href="index.html" class="logo-link">
+                <img src="assets/kairos_logo.png" alt="Kairos Logo" class="logo-img" onerror="this.style.display='none'">
+            </a>
+            
+            <div class="portal-status-badge">
+                <span class="status-indicator-dot active-pulse"></span>
+                <span class="status-text">Status: <strong>Active Member</strong></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- PORTAL CONTENT -->
+    <main class="portal-main-sec">
+        <div class="container">
+            
+            <!-- LOADING STATE (Hidden after JS initialization) -->
+            <div class="portal-loader-overlay" id="portal-loader">
+                <div class="portal-spinner"></div>
+                <p style="margin-top: 15px; font-weight: 500;">Loading your meal profile...</p>
+            </div>
+
+            <!-- MAIN PORTAL DASHBOARD (Revealed by JS) -->
+            <div class="portal-dashboard-grid" id="portal-dashboard" style="display: none;">
+                
+                <!-- 1. LEFT / TOP COLUMN: Welcome & Macro Info -->
+                <div class="portal-sidebar-col">
+                    <div class="brutalist-card portal-user-card">
+                        <span class="sec-tag">Member Dashboard</span>
+                        <h2 id="portal-welcome-title">Welcome back, Athlete!</h2>
+                        <p style="font-size: 0.95rem; margin-top: 5px;">Configure your custom meals and pickup choices for next week.</p>
+                        
+                        <div class="portal-meta-box">
+                            <span class="meta-label">Selected Pick-up Studio:</span>
+                            <span class="meta-value" id="portal-gym-name" style="font-size: 1.1rem; color: var(--brand-red);">Spokane Studio</span>
+                        </div>
+                    </div>
+
+                    <!-- Client Current Macros Box -->
+                    <div class="brutalist-card portal-macros-card">
+                        <h3>Your Calibrated Targets</h3>
+                        
+                        
+                        <div class="portal-macro-grid">
+                            <div class="p-macro-item">
+                                <span class="p-macro-val" id="portal-macro-calories">0</span>
+                                <span class="p-macro-label">Calories</span>
+                            </div>
+                            <div class="p-macro-item">
+                                <span class="p-macro-val" id="portal-macro-protein" style="color: var(--brand-red);">0g</span>
+                                <span class="p-macro-label">Protein</span>
+                            </div>
+                            <div class="p-macro-item">
+                                <span class="p-macro-val" id="portal-macro-carbs">0g</span>
+                                <span class="p-macro-label">Carbs</span>
+                            </div>
+                            <div class="p-macro-item">
+                                <span class="p-macro-val" id="portal-macro-fat">0g</span>
+                                <span class="p-macro-label">Fat</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Selector Card -->
+                    <div class="brutalist-card portal-delivery-card" style="padding: 30px; margin-bottom: 24px;">
+                        <h3>Delivery Preferences</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 15px;">Choose how you want to receive your meals next week.</p>
+                        
+                        <div class="delivery-toggle-group" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                            <button id="deliv-btn-pickup" class="quiz-btn-option selected" style="flex: 1; padding: 10px; text-align: center; justify-content: center; font-size: 0.85rem; margin-bottom: 0;">Studio Pickup</button>
+                            <button id="deliv-btn-delivery" class="quiz-btn-option" style="flex: 1; padding: 10px; text-align: center; justify-content: center; font-size: 0.85rem; margin-bottom: 0;">Home Delivery</button>
+                        </div>
+
+                        <!-- Studio Pickup Dropdown -->
+                        <div id="pickup-location-wrap">
+                            <span class="meta-label" style="font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.45);">Select Studio:</span>
+                            <select id="portal-pickup-select" class="quiz-input-field" style="margin-bottom: 0; background-color: rgba(255,255,255,0.02); height: auto; text-align-last: center;">
+                                <option value="Spokane Valley Center" style="background-color: var(--color-card-bg);">Spokane Valley Center</option>
+                                <option value="North Division Studio" style="background-color: var(--color-card-bg);">North Division Studio</option>
+                                <option value="South Hill Studio" style="background-color: var(--color-card-bg);">South Hill Studio</option>
+                            </select>
+                        </div>
+
+                        <!-- Home Delivery Address Inputs -->
+                        <div id="home-delivery-wrap" style="display: none;">
+                            <span class="meta-label" style="font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.45);">Shipping Address:</span>
+                            <input type="text" id="portal-address-street" class="quiz-input-field" placeholder="Street Address" style="font-size: 0.9rem; padding: 12px; margin-bottom: 10px;">
+                            <input type="text" id="portal-address-unit" class="quiz-input-field" placeholder="Apt / Suite (Optional)" style="font-size: 0.9rem; padding: 12px; margin-bottom: 10px;">
+                            <div class="quiz-input-grid" style="margin-bottom: 0; gap: 10px;">
+                                <input type="text" id="portal-address-city" class="quiz-input-field" placeholder="City" style="font-size: 0.9rem; padding: 12px; margin-bottom: 0;">
+                                <input type="text" id="portal-address-zip" class="quiz-input-field" placeholder="ZIP" style="font-size: 0.9rem; padding: 12px; margin-bottom: 0;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary & Confirm Card -->
+                    <div class="brutalist-card portal-checkout-card">
+                        <h3>Weekly Summary</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 15px;">Dynamic prices based on custom ingredient weights and prep assembly fees.</p>
+                        
+                        <div class="price-breakdown-list">
+                            <div class="price-break-row">
+                                <span>Chef-Prepped Meals (35 meals/wk)</span>
+                                <span id="portal-base-meals-price">$0.00</span>
+                            </div>
+                            <div class="price-break-row">
+                                <span>Access/Coaching Program Fee</span>
+                                <span>Included ($200/8wks)</span>
+                            </div>
+                            <div class="price-break-row">
+                                <span>Studio Delivery & Packaging</span>
+                                <span style="color: #2ec4b6; font-weight: 600;">FREE</span>
+                            </div>
+                            <div class="price-break-row total-row">
+                                <span>Est. Weekly Order Cost</span>
+                                <span id="portal-weekly-total">$0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 24px;">
+                            <button id="save-selections-btn" class="brutalist-btn" style="width: 100%; font-size: 1rem; padding: 14px;">Confirm Weekly Meals</button>
+                            <button id="skip-week-btn" class="brutalist-btn btn-charcoal" style="width: 100%; font-size: 1rem; padding: 14px;">Skip Upcoming Week</button>
+                        </div>
+                        
+                        <p id="portal-save-status" style="font-size: 0.85rem; text-align: center; margin-top: 12px; display: none;"></p>
+                    </div>
+                </div>
+
+                <!-- 2. RIGHT / BOTTOM COLUMN: Weekly Schedule Swapping Grid -->
+                <div class="portal-content-col">
+                    <div class="portal-week-header">
+                        <div>
+                            <span class="sec-tag">Schedule Editor</span>
+                            <h2 style="font-size: 1.8rem;">Weekly Menu Customizer</h2>
+                        </div>
+                        <div class="week-picker-indicator">
+                            <span id="portal-week-date-range">Week of June 8, 2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Skip alert if active -->
+                    <div id="skip-week-alert" class="skip-alert-box" style="display: none;">
+                        <span style="font-weight: 700; font-size: 1.1rem; color: #ffaa00; display: block; margin-bottom: 4px;">⚠️ Order Skipped</span>
+                        You have chosen to skip meal deliveries for next week. You will not be charged. Click "Confirm Weekly Meals" to re-enable.
+                    </div>
+
+                    <!-- Weekly Grid Calendar -->
+                    <div class="portal-days-list" id="portal-calendar-container">
+                        <!-- Populated dynamically via portal.js -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- INTERACTIVE SWAP MEAL MODAL -->
+    <div class="portal-modal-overlay" id="swap-modal" style="display: none;">
+        <div class="portal-modal-card brutalist-card">
+            
+            <div class="modal-header">
+                <div>
+                    <span class="sec-tag" id="modal-slot-tag">MONDAY - LUNCH</span>
+                    <h3 id="modal-title">Swap Meal Selection</h3>
+                </div>
+                <button class="modal-close-x" id="modal-close-btn">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <p style="margin-bottom: 20px; font-size: 0.95rem;">Choose one of our macro-calibrated chef favorites below. Ounce values and pricing adapt automatically to your targets.</p>
+                
+                <div class="modal-options-list" id="modal-meals-list">
+                    <!-- Populated dynamically via portal.js -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==================== CONNECTION SETTINGS DRAWER ==================== -->
+    <button class="settings-trigger-btn no-print" id="settings-open-btn" title="API & Database Settings">⚙</button>
+    <div class="settings-drawer-overlay" id="settings-overlay"></div>
+    <div class="settings-drawer" id="settings-drawer">
+        <div class="drawer-header">
+            <h3>⚙ Connection Settings</h3>
+            <button class="drawer-close-btn" id="settings-close-btn">&times;</button>
+        </div>
+        <div class="drawer-body">
+            <p class="drawer-help-text">Configure where this app loads and saves its live data. Saved locally in your browser.</p>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label for="settings-connection-mode" style="display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 6px;">Connection Mode</label>
+                <select id="settings-connection-mode" style="width: 100%; padding: 10px 12px; background: #111; color: #fff; border: 2px solid var(--color-border); border-radius: 4px; font-family: var(--font-primary); font-weight: 600;">
+                    <option value="simulation" selected>Simulation Mode (Mock Data)</option>
+                    <option value="make">Make.com Webhooks</option>
+                    <option value="supabase">Direct Supabase Database</option>
+                </select>
+            </div>
+
+            <!-- MAKE.COM FIELDS -->
+            <div id="settings-fields-make" class="settings-fields-group" style="display: none; margin-top: 20px; border-top: 1px solid var(--color-border); padding-top: 15px;">
+                <h4 style="color: var(--brand-red); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px;">Make.com Webhooks</h4>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label for="settings-make-get-url" style="display: block; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-bottom: 4px;">Get Profile Webhook URL</label>
+                    <input type="text" id="settings-make-get-url" placeholder="https://hook.us2.make.com/..." style="width: 100%; padding: 10px; background: rgba(255,255,255,0.02); border: 2px solid var(--color-border); border-radius: 4px; color: #fff; font-family: var(--font-secondary); font-size: 0.85rem;">
+                </div>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label for="settings-make-post-url" style="display: block; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-bottom: 4px;">Save Selections Webhook URL</label>
+                    <input type="text" id="settings-make-post-url" placeholder="https://hook.us2.make.com/..." style="width: 100%; padding: 10px; background: rgba(255,255,255,0.02); border: 2px solid var(--color-border); border-radius: 4px; color: #fff; font-family: var(--font-secondary); font-size: 0.85rem;">
+                </div>
+            </div>
+
+            <!-- SUPABASE FIELDS -->
+            <div id="settings-fields-supabase" class="settings-fields-group" style="display: none; margin-top: 20px; border-top: 1px solid var(--color-border); padding-top: 15px;">
+                <h4 style="color: var(--brand-red); font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 12px;">Supabase Database</h4>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label for="settings-supabase-url" style="display: block; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-bottom: 4px;">Supabase API URL</label>
+                    <input type="text" id="settings-supabase-url" placeholder="https://xxxx.supabase.co" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.02); border: 2px solid var(--color-border); border-radius: 4px; color: #fff; font-family: var(--font-secondary); font-size: 0.85rem;">
+                </div>
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label for="settings-supabase-key" style="display: block; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-bottom: 4px;">Supabase Anon Key</label>
+                    <input type="password" id="settings-supabase-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..." style="width: 100%; padding: 10px; background: rgba(255,255,255,0.02); border: 2px solid var(--color-border); border-radius: 4px; color: #fff; font-family: var(--font-secondary); font-size: 0.85rem;">
+                </div>
+            </div>
+
+            <div class="drawer-actions" style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px;">
+                <button id="settings-test-btn" class="brutalist-btn btn-charcoal" style="width: 100%; font-size: 0.9rem; padding: 10px; text-transform: uppercase;">Test Connection</button>
+                <button id="settings-save-btn" class="brutalist-btn" style="width: 100%; font-size: 0.9rem; padding: 10px; text-transform: uppercase;">Save Settings</button>
+                <span id="settings-status-message" style="display: block; font-size: 0.8rem; text-align: center; font-weight: 600; margin-top: 8px;"></span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1704,11 +1704,555 @@ span.highlight {
     color: rgba(255, 255, 255, 0.4);
 }
 
-.est-savings {
-    font-family: var(--font-secondary);
+}
+
+/* ==========================================================================
+   PORTAL DASHBOARD SYSTEM - Clean, Premium Dark Mode UI Elements
+   ========================================================================== */
+.portal-body {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.portal-status-badge {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    padding: 8px 16px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-primary);
+    font-size: 0.85rem;
+}
+
+.status-indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #2ec4b6;
+}
+
+.status-indicator-dot.active-pulse {
+    box-shadow: 0 0 10px #2ec4b6;
+    animation: statusPulse 1.8s infinite;
+}
+
+@keyframes statusPulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.portal-main-sec {
+    padding: 48px 0 80px 0;
+}
+
+.portal-loader-overlay {
+    text-align: center;
+    padding: 100px 0;
+}
+
+.portal-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.05);
+    border-top: 4px solid var(--brand-red);
+    border-radius: 50%;
+    margin: 0 auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Dashboard Grid Layout */
+.portal-dashboard-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.portal-sidebar-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.portal-user-card, .portal-macros-card, .portal-checkout-card {
+    padding: 30px;
+}
+
+.portal-meta-box {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed var(--color-border);
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.portal-meta-box .meta-label {
     font-size: 0.75rem;
-    color: #2ec4b6;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+}
+
+.portal-meta-box .meta-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* Macros Card inside Sidebar */
+.tier-indicator {
+    display: inline-block;
+    background: var(--brand-red-light);
+    color: var(--brand-red);
+    border: 1px solid var(--brand-red-glow);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 4px;
+    margin-bottom: 20px;
+}
+
+.portal-macro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.p-macro-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 14px 8px;
+    text-align: center;
+}
+
+.p-macro-val {
+    font-family: var(--font-primary);
+    font-size: 1.4rem;
+    font-weight: 850;
+    display: block;
+    line-height: 1.2;
+}
+
+.p-macro-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Pricing Bill Breakdown */
+.price-breakdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.price-break-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.price-break-row.total-row {
+    border-top: 1px solid var(--color-border);
+    padding-top: 14px;
+    margin-top: 4px;
+    font-family: var(--font-primary);
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: var(--color-white);
+}
+
+.price-break-row.total-row span:last-child {
+    color: var(--brand-red);
+    text-shadow: 0 0 10px var(--brand-red-glow);
+}
+
+/* Content Columns and Week Selector */
+.portal-week-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 24px;
+    margin-bottom: 30px;
+}
+
+.week-picker-indicator {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.skip-alert-box {
+    background: rgba(255, 170, 0, 0.05);
+    border: 1px dashed rgba(255, 170, 0, 0.35);
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Calendar Day Custom Card Row */
+.portal-days-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.portal-day-row {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.portal-day-row.skipped-day {
+    opacity: 0.45;
+}
+
+.portal-day-header {
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--color-border);
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.portal-day-title {
+    font-family: var(--font-primary);
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.portal-day-meta {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
     font-weight: 500;
+}
+
+.portal-day-meals-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.portal-meal-slot {
+    padding: 24px;
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 190px;
+    transition: var(--transition-fast);
+}
+
+.portal-meal-slot:last-child {
+    border-right: none;
+}
+
+.portal-meal-slot:hover {
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.portal-meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.portal-slot-label {
+    font-family: var(--font-primary);
+    font-weight: 850;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+}
+
+.portal-price-badge {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: var(--font-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.portal-meal-name {
+    font-family: var(--font-primary);
+    font-weight: 750;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: var(--color-white);
+}
+
+.portal-meal-weights {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 4px;
+    font-family: var(--font-secondary);
+    font-weight: 300;
+}
+
+.portal-meal-macros {
+    color: #2ec4b6;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-top: 6px;
+    font-family: var(--font-primary);
+}
+
+.portal-swap-btn {
+    width: 100%;
+    margin-top: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.75);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.portal-swap-btn:hover {
+    background: var(--brand-red);
+    border-color: var(--brand-red);
+    color: var(--color-white);
+    box-shadow: 0 0 10px var(--brand-red-glow);
+}
+
+/* Interactive Modal System */
+.portal-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 24px;
+}
+
+.portal-modal-card {
+    width: 100%;
+    max-width: 600px;
+    padding: 36px;
+    position: relative;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+}
+
+.modal-close-x {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 2rem;
+    line-height: 0.7;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.modal-close-x:hover {
+    color: var(--color-white);
+}
+
+.modal-body {
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 8px;
+}
+
+.modal-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-meal-option {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    gap: 16px;
+}
+
+.modal-meal-option:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.modal-meal-option.active-selection {
+    background: var(--brand-red-light);
+    border-color: var(--brand-red);
+}
+
+.opt-left-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.opt-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 6px;
+    object-fit: contain;
+    border: 1px solid var(--color-border);
+    background: #ffffff;
+    flex-shrink: 0;
+    cursor: zoom-in;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s, box-shadow 0.2s;
+}
+
+.opt-img:hover {
+    transform: scale(1.08);
+    border-color: var(--brand-red);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.opt-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.opt-title {
+    font-family: var(--font-primary);
+    font-weight: 750;
+    font-size: 1.05rem;
+    color: var(--color-white);
+}
+
+.opt-weights {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.opt-macros {
+    color: #2ec4b6;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 4px;
+    font-family: var(--font-primary);
+}
+
+.opt-price-block {
+    text-align: right;
+}
+
+.opt-price {
+    font-family: var(--font-primary);
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.opt-price-diff {
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: block;
+    margin-top: 2px;
+}
+
+.diff-equal { color: rgba(255, 255, 255, 0.4); }
+.diff-up { color: var(--brand-red); }
+.diff-down { color: #2ec4b6; }
+
+/* Responsive adjustments for Portal */
+@media (max-width: 991px) {
+    .portal-dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .portal-day-meals-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .portal-meal-slot {
+        border-bottom: 1px solid var(--color-border);
+        border-right: 1px solid var(--color-border);
+        min-height: 170px;
+    }
+    
+    .portal-meal-slot:nth-child(2n) {
+        border-right: none;
+    }
+    
+    .portal-meal-slot:last-child {
+        border-bottom: none;
+        border-right: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .portal-day-meals-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .portal-meal-slot {
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+    }
+    
+    .portal-meal-slot:last-child {
+        border-bottom: none;
+    }
+    
+    .portal-week-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
 }
 
 /* Responsive updates for pricing grid */
@@ -1718,3 +2262,762 @@ span.highlight {
         gap: 24px;
     }
 }
+
+/* ==========================================================================
+   ADMIN DASHBOARD SYSTEM - Kitchen Operations Planner
+   ========================================================================== */
+.admin-body {
+    background-color: var(--color-black);
+}
+
+.admin-tab-btn {
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 0.85rem;
+    transition: var(--transition-fast);
+}
+
+.admin-tab-btn.active-tab {
+    background-color: var(--brand-red);
+    color: var(--color-white);
+    box-shadow: 0 0 15px var(--brand-red-glow);
+    border-color: var(--brand-red);
+}
+
+/* Admin Data Table */
+.admin-data-table th, .admin-data-table td {
+    padding: 16px 20px;
+}
+
+.admin-data-table tbody tr {
+    transition: var(--transition-fast);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.admin-data-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.admin-data-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* Box Thermal Labels Styling on Screen */
+.admin-labels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.admin-labels-grid.brother-ql {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.box-thermal-label {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    position: relative; /* relative anchor for download icon positioning */
+}
+
+/* Individual label download button */
+.label-download-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    z-index: 15;
+}
+
+.label-download-btn:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* Wide Thermal screen adjustments */
+.box-thermal-label.wide-thermal {
+    padding: 14px 18px;
+}
+
+/* Brother QL Portrait screen adjustments */
+.box-thermal-label.brother-ql {
+    padding: 12px 14px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.box-thermal-label.brother-ql .label-logo-svg {
+    width: 80px;
+    height: 44px;
+}
+
+.box-thermal-label.brother-ql .label-custom-logo {
+    max-width: 120px;
+    max-height: 44px;
+}
+
+.box-thermal-label.brother-ql .label-meal-title {
+    font-size: 1.5rem;
+}
+
+.box-thermal-label.brother-ql .label-calories {
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+}
+
+.box-thermal-label.brother-ql .label-macro-table th {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-indent: 2px;
+}
+
+.box-thermal-label.brother-ql .label-macro-table td {
+    font-size: 1.15rem;
+}
+
+.box-thermal-label.brother-ql .label-ingredients-row,
+.box-thermal-label.brother-ql .label-instructions-row {
+    font-size: 0.65rem;
+    line-height: 1.25;
+}
+
+.label-logo-area {
+    text-align: center;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #000000;
+}
+
+.label-logo-svg {
+    width: 60px;
+    height: 48px;
+    margin-bottom: 2px;
+}
+
+.label-brand-sub {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-indent: 5px;
+    color: #000000;
+    text-transform: uppercase;
+    margin-top: -6px;
+    margin-bottom: 6px;
+}
+
+.label-custom-logo {
+    max-width: 150px;
+    max-height: 55px;
+    object-fit: contain;
+    margin-bottom: 6px;
+}
+
+.label-meal-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 4px 0 0 0;
+    color: #000000;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+}
+
+.label-calories {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    color: #000000;
+    letter-spacing: 0.5px;
+}
+
+/* Label Macro Table - Minimal borders matching mockup */
+.label-macro-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+}
+
+.label-macro-table th, .label-macro-table td {
+    text-align: center;
+    color: #000000;
+    padding: 6px 4px;
+    border: none;
+}
+
+.label-macro-table th {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 6px;
+    text-indent: 6px;
+    border-bottom: 2px solid #000000;
+}
+
+.label-macro-table td {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    padding: 6px 4px;
+}
+
+/* Vertical dividers only between columns */
+.label-macro-table th:not(:last-child),
+.label-macro-table td:not(:last-child) {
+    border-right: 2px solid #000000;
+}
+
+.label-ingredients-row {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: #000000;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.label-instructions-row {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: #000000;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.label-sorting-tag {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.52rem;
+    font-weight: 600;
+    color: #666666;
+    border-top: 1px dashed #cccccc;
+    padding-top: 6px;
+    margin-top: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   PRINT LAYOUT STYLES - Optimizes the Meal Plan Card for PDF / Physical Print
+   ========================================================================== */
+@media print {
+    /* Hide all landing page layout elements */
+    .top-bar,
+    .header-nav,
+    .hero-content,
+    .quiz-widget,
+    #print-meal-plan-btn,
+    .results-header-box,
+    .meal-showcase-title,
+    .meal-showcase-wrap,
+    .pricing-title-wrap,
+    .program-checkout-grid,
+    .promise-sec,
+    .reviews-sec,
+    .footer-sec,
+    .partner-sec,
+    .loc-tag,
+    #studio-info-card {
+        display: none !important;
+    }
+
+    /* Force a clean, ink-saving light theme */
+    html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 10pt !important;
+        line-height: 1.5 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .hero-sec {
+        padding: 0 !important;
+        background: #ffffff !important;
+        border: none !important;
+    }
+
+    .results-pane {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .weekly-plan-wrap {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Format the Plan document layout */
+    .weekly-plan-card.brutalist-card {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border: 2px solid #000000 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 24px !important;
+        width: 100% !important;
+        page-break-inside: avoid !important;
+    }
+
+    .plan-doc-header {
+        border-bottom: 2px solid #000000 !important;
+        padding-bottom: 12px !important;
+        margin-bottom: 20px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    .plan-doc-brand h4 {
+        color: #d90429 !important;
+        font-size: 1.6rem !important;
+        margin: 0 !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 800 !important;
+    }
+
+    .plan-doc-sub {
+        color: #444444 !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+    }
+
+    .plan-doc-meta {
+        text-align: right !important;
+        display: flex !important;
+        gap: 20px !important;
+    }
+
+    .meta-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-end !important;
+    }
+
+    .meta-label {
+        color: #666666 !important;
+        font-size: 0.7rem !important;
+        text-transform: uppercase !important;
+    }
+
+    .meta-value {
+        color: #000000 !important;
+        font-size: 1rem !important;
+        font-weight: 750 !important;
+    }
+
+    /* Display grid as 2 columns for ideal Portrait print formatting */
+    .plan-days-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+        width: 100% !important;
+    }
+
+    .plan-day-column {
+        background: #ffffff !important;
+        border: 1.5px solid #000000 !important;
+        border-radius: 4px !important;
+        page-break-inside: avoid !important;
+        overflow: hidden !important;
+    }
+
+    .day-header-bar {
+        background: #f0f0f0 !important;
+        color: #000000 !important;
+        border-bottom: 1.5px solid #000000 !important;
+        padding: 8px 12px !important;
+        font-weight: 800 !important;
+        font-size: 0.85rem !important;
+    }
+
+    .day-meals-table {
+        width: 100% !important;
+    }
+
+    .day-meals-table tr {
+        border-bottom: 1px solid #cccccc !important;
+    }
+
+    .meal-tag-cell {
+        width: 30% !important;
+        padding: 8px 8px 8px 12px !important;
+        border-right: 1px solid #cccccc !important;
+    }
+
+    .meal-tag-label {
+        font-size: 0.65rem !important;
+        font-weight: 800 !important;
+    }
+
+    /* Keep simple, clean semantic colors for printed meal slots */
+    .tag-breakfast { color: #1b5e20 !important; } /* Dark green text */
+    .tag-lunch { color: #0d47a1 !important; }     /* Dark blue text */
+    .tag-snack { color: #e65100 !important; }     /* Dark orange text */
+    .tag-dinner { color: #b71c1c !important; }    /* Dark red text */
+
+    .meal-name-cell {
+        width: 70% !important;
+        padding: 8px 12px 8px 8px !important;
+    }
+
+    .meal-main-name {
+        color: #000000 !important;
+        font-weight: 750 !important;
+        font-size: 0.8rem !important;
+    }
+
+    .meal-macro-sub {
+        color: #555555 !important;
+        font-weight: 600 !important;
+        font-size: 0.68rem !important;
+        margin-top: 2px !important;
+    }
+
+    .meal-desc-details {
+        color: #666666 !important;
+        font-size: 0.68rem !important;
+    }
+
+    /* Box Thermal Labels Print Overrides */
+    .admin-tab-btn, 
+    .admin-tabs-nav, 
+    .week-picker-indicator, 
+    .admin-title-row, 
+    .admin-body .header-nav, 
+    .admin-tab-section,
+    #print-all-labels-btn,
+    #download-all-labels-btn,
+    .no-print {
+        display: none !important;
+    }
+
+    .admin-labels-grid {
+        display: block !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .box-thermal-label {
+        display: flex !important;
+        float: none !important;
+        margin: 0 auto 30px auto !important;
+        page-break-after: always !important;
+        page-break-inside: avoid !important;
+        border: 2px solid #000000 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+    }
+
+    /* Standard Wide Thermal (Landscape: 4.25" x 2.8") */
+    .box-thermal-label.wide-thermal {
+        width: 4.25in !important;
+        height: 2.8in !important;
+        padding: 10px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-logo-svg {
+        width: 90px !important;
+        height: 50px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-custom-logo {
+        max-width: 120px !important;
+        max-height: 45px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-brand-sub {
+        font-size: 0.55rem !important;
+        letter-spacing: 4px !important;
+        text-indent: 4px !important;
+        margin-top: -4px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-meal-title {
+        font-size: 1.7rem !important;
+        margin: 2px 0 0 0 !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-calories {
+        font-size: 1.05rem !important;
+        margin-bottom: 4px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-macro-table {
+        margin-bottom: 6px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-macro-table th, 
+    .box-thermal-label.wide-thermal .label-macro-table td {
+        padding: 4px 2px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-macro-table th {
+        font-size: 0.75rem !important;
+        letter-spacing: 4px !important;
+        text-indent: 4px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-macro-table td {
+        font-size: 1.15rem !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-ingredients-row {
+        font-size: 0.62rem !important;
+        line-height: 1.25 !important;
+        margin-bottom: 4px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-instructions-row {
+        font-size: 0.62rem !important;
+        line-height: 1.25 !important;
+        margin-bottom: 4px !important;
+    }
+
+    .box-thermal-label.wide-thermal .label-sorting-tag {
+        font-size: 0.45rem !important;
+        padding-top: 4px !important;
+        margin-top: auto !important;
+    }
+
+    /* Brother QL Series (Portrait: 2.4" x 3.9") */
+    .box-thermal-label.brother-ql {
+        width: 2.4in !important;
+        height: 3.9in !important;
+        padding: 10px 8px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-logo-svg {
+        width: 70px !important;
+        height: 38px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-custom-logo {
+        max-width: 90px !important;
+        max-height: 38px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-brand-sub {
+        font-size: 0.52rem !important;
+        letter-spacing: 3px !important;
+        text-indent: 3px !important;
+        margin-top: -4px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-meal-title {
+        font-size: 1.25rem !important;
+        margin: 2px 0 1px 0 !important;
+        line-height: 1.1 !important;
+    }
+
+    .box-thermal-label.brother-ql .label-calories {
+        font-size: 0.9rem !important;
+        margin-bottom: 4px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-macro-table {
+        margin-bottom: 6px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-macro-table th, 
+    .box-thermal-label.brother-ql .label-macro-table td {
+        padding: 3px 1px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-macro-table th {
+        font-size: 0.62rem !important;
+        letter-spacing: 2px !important;
+        text-indent: 2px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-macro-table td {
+        font-size: 0.95rem !important;
+    }
+
+    .box-thermal-label.brother-ql .label-ingredients-row {
+        font-size: 0.58rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 4px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-instructions-row {
+        font-size: 0.58rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 4px !important;
+    }
+
+    .box-thermal-label.brother-ql .label-sorting-tag {
+        font-size: 0.42rem !important;
+        padding-top: 4px !important;
+        margin-top: auto !important;
+    }
+}
+
+/* ==========================================================================
+   API & DATABASE CONNECTION SETTINGS DRAWER (Brutalist Style)
+   ========================================================================== */
+.settings-trigger-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--brand-red);
+    color: var(--color-white);
+    border: 3px solid var(--color-white);
+    border-radius: 4px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-weight: bold;
+    box-shadow: 4px 4px 0px #000;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    z-index: 200;
+}
+
+.settings-trigger-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #000;
+}
+
+.settings-trigger-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #000;
+}
+
+/* Drawer overlay */
+.settings-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 250;
+}
+
+.settings-drawer-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Slide-out Drawer Panel */
+.settings-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    max-width: 90vw;
+    height: 100vh;
+    background: var(--color-bg-dark);
+    border-left: 4px solid var(--color-border);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 300;
+    color: var(--color-white);
+    box-sizing: border-box;
+}
+
+.settings-drawer.active {
+    right: 0;
+}
+
+.drawer-header {
+    padding: 24px;
+    border-bottom: 2px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drawer-header h3 {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-weight: 850;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+.drawer-close-btn {
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 5px;
+    transition: color 0.2s;
+}
+
+.drawer-close-btn:hover {
+    color: var(--brand-red);
+}
+
+.drawer-body {
+    padding: 24px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.drawer-help-text {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 24px;
+    line-height: 1.45;
+}
+

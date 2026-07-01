@@ -1,5 +1,5 @@
 /**
- * Finally Fit - Orange Theory Spokane Pilot (main.js)
+ * Finally Fit - Spokane Pilot (main.js)
  * Calculates Mifflin-St Jeor Macros and reveals customized pricing/meals.
  */
 
@@ -55,6 +55,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const INGREDIENT_MARKUP = 1.0; // 1.0 = raw cost, 1.5 = 50% markup, etc.
 
     function calculateMealPortionsAndPricing(mealName, targetMealProtein, targetMealCarbs, targetMealFat) {
+        if (mealName === 'Homemade Meal') {
+            return {
+                name: "Homemade Meal",
+                price: 0.00,
+                protein: Math.round(targetMealProtein),
+                carbs: Math.round(targetMealCarbs),
+                fat: Math.round(targetMealFat),
+                calories: Math.round((targetMealProtein * 4) + (targetMealCarbs * 4) + (targetMealFat * 9)),
+                portions: {
+                    protein: { name: "Prepare at home", oz: 0 },
+                    carb: { name: "", oz: 0 },
+                    veg: { name: "", oz: 0 }
+                },
+                detailsHtml: "Prepare at home"
+            };
+        }
+
         const template = MEAL_TEMPLATES[mealName];
         if (!template) {
             return { name: mealName, price: 9.95, protein: 30, carbs: 30, fat: 10, calories: 330, detailsHtml: "" };
@@ -125,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressNum = document.getElementById('progress-num');
     
     // Webhook Configuration (matching user's verified Kairos Make integration)
-    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/eea8ov2st5ojsgx48reqwz0841b20qwh';
+    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/634ao2dslkl43sfihn02hn9quq9s6pml';
     
     // Stripe Checkout link for the $200 8-Week Program (User replaces this with live link)
     const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/28EbJ14Mh3lRg7g0na1ck07';
@@ -397,10 +414,11 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Calculating Plan & Opening Offers...';
 
             try {
-                // Deduct 25g protein shake and divide remaining daily macros across 4 meals
+                // Calculate targets for the 4 main meals (Breakfast, Lunch #1, Lunch #2, Dinner)
+                // Deducting snack (25g Protein, 20g Carbs, 10g Fat) and dividing the rest by 4
                 const mealTargetP = (proteinGrams - 25) / 4;
-                const mealTargetC = carbGrams / 4;
-                const mealTargetF = fatGrams / 4;
+                const mealTargetC = (carbGrams - 20) / 4;
+                const mealTargetF = (fatGrams - 10) / 4;
 
                 // Calculate dynamic portions for signature meals for webhook mapping
                 const steakDetails = calculateMealPortionsAndPricing('Steak n Mash', mealTargetP, mealTargetC, mealTargetF);
@@ -410,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const payload = {
                     ...userAnswers,
                     ...calculatedPlan,
-                    source: "Orange Theory Spokane Pilot Landing Page",
+                    source: "Finally Fit Spokane Pilot Landing Page",
                     studio: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home',
                     gym: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home',
                     // Portion & Pricing details for Make/Google Sheets integration
@@ -524,55 +542,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = `${STRIPE_CHECKOUT_URL}${emailParam}`;
             });
         }
+
+        // Print / Save Meal Plan PDF button listener
+        const printBtn = document.getElementById('print-meal-plan-btn');
+        if (printBtn) {
+            printBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.print();
+            });
+        }
     }
 
 
 
-    // 5. Studio Interactive Map Selector (Orange Theory North Spokane vs South Hill)
-    const studioTags = document.querySelectorAll('.partner-sec .loc-tag');
-    const studioNameNode = document.getElementById('studio-display-name');
-    const studioAddressNode = document.getElementById('studio-display-address');
-    
-    // Spokane Orange Theory Address Data
-    const studioLocations = {
-        'North Spokane': {
-            name: "Orange Theory - North Spokane",
-            address: "9312 N Division St, Spokane, WA 99218"
-        },
-        'South Hill': {
-            name: "Orange Theory - Spokane South Hill",
-            address: "2525 E 29th Ave, Spokane, WA 99223"
-        }
-    };
 
-    studioTags.forEach(tag => {
-        tag.addEventListener('click', () => {
-            // Remove active style from siblings
-            studioTags.forEach(t => t.classList.remove('active'));
-            tag.classList.add('active');
-
-            const selectedStudioKey = tag.getAttribute('data-studio');
-            const data = studioLocations[selectedStudioKey];
-            
-            if (data && studioNameNode && studioAddressNode) {
-                // Fade effect
-                const card = document.getElementById('studio-info-card');
-                if (card) {
-                    card.style.opacity = '0.5';
-                    card.style.transform = 'scale(0.98)';
-                }
-                
-                setTimeout(() => {
-                    studioNameNode.textContent = data.name;
-                    studioAddressNode.textContent = data.address;
-                    if (card) {
-                        card.style.opacity = '1';
-                        card.style.transform = 'scale(1)';
-                    }
-                }, 150);
-            }
-        });
-    });
 
     // Render dynamic Weekly Days Schedule (Monday through Sunday) with rotated items
     function renderWeeklyPlanDays() {
@@ -589,63 +572,70 @@ document.addEventListener('DOMContentLoaded', () => {
                 day: "MONDAY",
                 meals: [
                     { tag: "BREAKFAST", name: "Steak and Eggs", class: "tag-breakfast" },
-                    { tag: "LUNCH", name: "Teriyaki Chicken", class: "tag-lunch" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" },
-                    { tag: "DINNER", name: "Steak n Mash", class: "tag-dinner" }
+                    { tag: "LUNCH #1", name: "Teriyaki Chicken", class: "tag-lunch" },
+                    { tag: "LUNCH #2", name: "Chicken Fried Rice", class: "tag-lunch" },
+                    { tag: "DINNER", name: "Steak n Mash", class: "tag-dinner" },
+                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
                 ]
             },
             {
                 day: "TUESDAY",
                 meals: [
                     { tag: "BREAKFAST", name: "Yogurt Parfait", class: "tag-breakfast" },
-                    { tag: "LUNCH", name: "Chicken Fried Rice", class: "tag-lunch" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" },
-                    { tag: "DINNER", name: "Spaghetti and Meatballs", class: "tag-dinner" }
+                    { tag: "LUNCH #1", name: "Chicken Fried Rice", class: "tag-lunch" },
+                    { tag: "LUNCH #2", name: "Teriyaki Chicken", class: "tag-lunch" },
+                    { tag: "DINNER", name: "Spaghetti and Meatballs", class: "tag-dinner" },
+                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
                 ]
             },
             {
                 day: "WEDNESDAY",
                 meals: [
                     { tag: "BREAKFAST", name: "Honey Sweet Cottage Cheese", class: "tag-breakfast" },
-                    { tag: "LUNCH", name: "Chili Margarita", class: "tag-lunch" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" },
-                    { tag: "DINNER", name: "Chicken Pesto Pasta", class: "tag-dinner" }
+                    { tag: "LUNCH #1", name: "Chili Margarita", class: "tag-lunch" },
+                    { tag: "LUNCH #2", name: "Chicken Fried Rice", class: "tag-lunch" },
+                    { tag: "DINNER", name: "Chicken Pesto Pasta", class: "tag-dinner" },
+                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
                 ]
             },
             {
                 day: "THURSDAY",
                 meals: [
                     { tag: "BREAKFAST", name: "Morning Grand Slam", class: "tag-breakfast" },
-                    { tag: "LUNCH", name: "Asian Zing Chicken Thigh", class: "tag-lunch" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" },
-                    { tag: "DINNER", name: "BBQ Chicken Thigh", class: "tag-dinner" }
+                    { tag: "LUNCH #1", name: "Asian Zing Chicken Thigh", class: "tag-lunch" },
+                    { tag: "LUNCH #2", name: "Sweet Chili Chicken Thigh", class: "tag-lunch" },
+                    { tag: "DINNER", name: "BBQ Chicken Thigh", class: "tag-dinner" },
+                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
                 ]
             },
             {
                 day: "FRIDAY",
                 meals: [
                     { tag: "BREAKFAST", name: "Steak and Eggs", class: "tag-breakfast" },
-                    { tag: "LUNCH", name: "Teriyaki Chicken", class: "tag-lunch" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" },
-                    { tag: "DINNER", name: "Sweet Chili Chicken Thigh", class: "tag-dinner" }
+                    { tag: "LUNCH #1", name: "Teriyaki Chicken", class: "tag-lunch" },
+                    { tag: "LUNCH #2", name: "Chili Margarita", class: "tag-lunch" },
+                    { tag: "DINNER", name: "Sweet Chili Chicken Thigh", class: "tag-dinner" },
+                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
                 ]
             },
             {
                 day: "SATURDAY",
                 meals: [
                     { tag: "BREAKFAST", name: "Yogurt Parfait", class: "tag-breakfast" },
-                    { tag: "LUNCH", name: "Chicken Fried Rice", class: "tag-lunch" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" },
-                    { tag: "DINNER", name: "Steak n Mash", class: "tag-dinner" }
+                    { tag: "LUNCH #1", name: "Chicken Fried Rice", class: "tag-lunch" },
+                    { tag: "LUNCH #2", name: "Steak n Mash", class: "tag-lunch" },
+                    { tag: "DINNER", name: "Steak n Mash", class: "tag-dinner" },
+                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
                 ]
             },
             {
                 day: "SUNDAY",
                 meals: [
                     { tag: "BREAKFAST", name: "Honey Sweet Cottage Cheese", class: "tag-breakfast" },
-                    { tag: "LUNCH", name: "Chili Margarita", class: "tag-lunch" },
-                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" },
-                    { tag: "DINNER", name: "Chicken Pesto Pasta", class: "tag-dinner" }
+                    { tag: "LUNCH #1", name: "Chili Margarita", class: "tag-lunch" },
+                    { tag: "LUNCH #2", name: "Chicken Pesto Pasta", class: "tag-lunch" },
+                    { tag: "DINNER", name: "Chicken Pesto Pasta", class: "tag-dinner" },
+                    { tag: "SNACK", name: "Meat & Cheese-To-Go", class: "tag-snack" }
                 ]
             }
         ];
@@ -655,9 +645,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="day-header-bar">${dayObj.day}</div>
                 <table class="day-meals-table">
                     ${dayObj.meals.map(meal => {
-                        const mealTargetP = (targetP - 25) / 4;
-                        const mealTargetC = targetC / 4;
-                        const mealTargetF = targetF / 4;
+                        const isSnack = meal.tag === "SNACK";
+                        const mealTargetP = isSnack ? 25 : (targetP - 25) / 4;
+                        const mealTargetC = isSnack ? 20 : (targetC - 20) / 4;
+                        const mealTargetF = isSnack ? 10 : (targetF - 10) / 4;
                         const d = calculateMealPortionsAndPricing(meal.name, mealTargetP, mealTargetC, mealTargetF);
                         return `
                         <tr>
