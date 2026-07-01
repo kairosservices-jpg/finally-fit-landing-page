@@ -147,7 +147,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Stripe Checkout link for the $200 8-Week Program (User replaces this with live link)
     const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/28EbJ14Mh3lRg7g0na1ck07';
 
-    // Initialize Progress
+    // Capture UTM parameters from URL for GHL attribution tracking
+    function captureUTMs() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid'];
+        utms.forEach(param => {
+            if (urlParams.has(param)) {
+                userAnswers[param] = urlParams.get(param);
+            }
+        });
+    }
+
+    // Initialize Progress & UTMs
+    captureUTMs();
     updateProgress();
     setupGroceryDownload();
 
@@ -310,6 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         const payload = {
                             ...userAnswers,
                             partial: true,
+                            lead_status: "quiz-started",
+                            pipeline_stage: "New Lead (Quiz Started)",
                             source: "Finally Fit Spokane Pilot Landing Page - Partial Lead"
                         };
                         fetch(MAKE_WEBHOOK_URL, {
@@ -459,6 +473,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const payload = {
                     ...userAnswers,
                     ...calculatedPlan,
+                    lead_status: "quiz-completed",
+                    pipeline_stage: "Quiz Completed",
                     source: "Finally Fit Spokane Pilot Landing Page",
                     studio: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home',
                     gym: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home',
@@ -568,9 +584,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stripeBtn) {
             stripeBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Pass customer email dynamically to prefill Stripe Checkout if possible
-                const emailParam = answers['Email'] ? `?prefilled_email=${encodeURIComponent(answers['Email'])}` : '';
-                window.location.href = `${STRIPE_CHECKOUT_URL}${emailParam}`;
+                // Pass customer email dynamically to prefill Stripe Checkout & set client_reference_id for Make matching
+                let checkoutUrl = STRIPE_CHECKOUT_URL;
+                if (answers['Email']) {
+                    const email = encodeURIComponent(answers['Email']);
+                    checkoutUrl += `?prefilled_email=${email}&client_reference_id=${email}`;
+                }
+                window.location.href = checkoutUrl;
             });
         }
 
