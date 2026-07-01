@@ -628,11 +628,11 @@ document.addEventListener('DOMContentLoaded', () => {
             ` : '';
 
             return `
-            <div class="brutalist-card hover-lift" style="background: #111; border: 2px solid var(--color-border); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column;">
-                <div style="height: 140px; background: #222; overflow: hidden; border-bottom: 2px solid var(--color-border); position: relative;">
+            <div class="meal-card-premium hover-lift">
+                <div style="height: 140px; background: #222; overflow: hidden; border-bottom: 1.5px solid rgba(255,255,255,0.08); position: relative;">
                     <img src="${meal.img}" alt="${d.name}" style="width: 100%; height: 100%; object-fit: cover;">
                     <span class="meal-tag-label ${meal.class}" style="position: absolute; top: 10px; left: 10px; padding: 4px 8px; font-size: 0.7rem; font-weight: 700; border-radius: 2px;">${meal.tag}</span>
-                    <span style="position: absolute; top: 10px; right: 10px; background: #000; color: #fff; border: 1.5px solid var(--color-border); font-size: 0.8rem; font-weight: 700; padding: 3px 6px; border-radius: 2px;">$${d.price.toFixed(2)}</span>
+                    <span style="position: absolute; top: 10px; right: 10px; background: #000; color: #fff; border: 1px solid rgba(255,255,255,0.15); font-size: 0.8rem; font-weight: 700; padding: 3px 6px; border-radius: 2px;">$${d.price.toFixed(2)}</span>
                 </div>
                 <div style="padding: 15px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
@@ -648,8 +648,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
-    // Dynamic grocery list generator mapping client custom portions to 5-day prep targets (raw/cooked yields)
-    function generateGroceryListContent(plan) {
+    // Dynamic grocery list generator that opens a beautifully styled, print-ready checklist window
+    function printGroceryList(plan) {
         const targetP = plan.protein || 160;
         const targetC = plan.carbs || 140;
         const targetF = plan.fat || 55;
@@ -681,68 +681,195 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        let text = `=====================================================\n`;
-        text += `       FINALLY FIT SPOKANE - CUSTOM GROCERY LIST     \n`;
-        text += `=====================================================\n`;
-        text += `Calculated Target: ${plan.calories} Calories (${plan.tier} Tier)\n`;
-        text += `Daily Blueprint: ${plan.protein}g Protein | ${plan.carbs}g Carbs | ${plan.fat}g Fat\n`;
-        text += `Volume: 5-Day Meal Supply (25 Total Meal Containers)\n\n`;
-        text += `SHOPPING LIST (RAW INGREDIENTS TO PURCHASE):\n`;
-        text += `-----------------------------------------------------\n`;
+        const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            alert("Popup blocked! Please allow popups to download/print your grocery list.");
+            return;
+        }
         
-        Object.keys(totals).forEach(name => {
+        let rowsHtml = Object.keys(totals).map(name => {
             const cookedOz = totals[name];
             const cookedLbs = (cookedOz / 16).toFixed(1);
             
-            // Map Raw Yield Metrics (MANDATORY SHRINKAGE RULES)
             let yieldNote = "";
-            let rawOz = cookedOz;
             if (name.includes("Sirloin")) {
-                rawOz = Math.ceil(cookedOz / 0.708);
+                const rawOz = Math.ceil(cookedOz / 0.708);
                 const rawLbs = (rawOz / 16).toFixed(1);
-                yieldNote = ` (requires ${rawOz} oz / ${rawLbs} lbs RAW weight due to shrinkage)`;
+                yieldNote = `<span class="shrinkage-note">Requires <strong>${rawOz} oz</strong> / <strong>${rawLbs} lbs</strong> raw weight due to shrinkage</span>`;
             } else if (name.includes("Chicken Breast")) {
-                rawOz = Math.ceil(cookedOz / 0.769);
+                const rawOz = Math.ceil(cookedOz / 0.769);
                 const rawLbs = (rawOz / 16).toFixed(1);
-                yieldNote = ` (requires ${rawOz} oz / ${rawLbs} lbs RAW weight due to shrinkage)`;
+                yieldNote = `<span class="shrinkage-note">Requires <strong>${rawOz} oz</strong> / <strong>${rawLbs} lbs</strong> raw weight due to shrinkage</span>`;
             } else if (name.includes("Chicken Thigh")) {
-                rawOz = Math.ceil(cookedOz / 0.727);
+                const rawOz = Math.ceil(cookedOz / 0.727);
                 const rawLbs = (rawOz / 16).toFixed(1);
-                yieldNote = ` (requires ${rawOz} oz / ${rawLbs} lbs RAW weight due to shrinkage)`;
+                yieldNote = `<span class="shrinkage-note">Requires <strong>${rawOz} oz</strong> / <strong>${rawLbs} lbs</strong> raw weight due to shrinkage</span>`;
             }
 
-            text += `- [ ] ${name}: ${cookedOz} oz (${cookedLbs} lbs) cooked${yieldNote}\n`;
-        });
+            return `
+            <div class="grocery-item">
+                <div class="checkbox-box"></div>
+                <div class="item-details">
+                    <div class="item-name">${name}</div>
+                    <div class="item-weight">${cookedOz} oz (${cookedLbs} lbs) cooked ${yieldNote}</div>
+                </div>
+            </div>
+            `;
+        }).join('');
 
-        text += `\n-----------------------------------------------------\n`;
-        text += `Tired of the shopping, portion prep, cooking, and clean up?\n`;
-        text += `Let us prepare and cook these exact scaled portions for you!\n`;
-        text += `Unlock twice-weekly gym delivery here:\n`;
-        text += `➔ https://thefinallyfitproject.com/\n`;
-        text += `=====================================================\n`;
+        const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Finally Fit Spokane - Grocery List</title>
+            <style>
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                    color: #111;
+                    background: #fff;
+                    margin: 40px;
+                    line-height: 1.5;
+                }
+                .header {
+                    border-bottom: 3px solid #ff003c;
+                    padding-bottom: 15px;
+                    margin-bottom: 30px;
+                }
+                .brand-title {
+                    font-size: 26px;
+                    font-weight: 800;
+                    letter-spacing: 1px;
+                    color: #ff003c;
+                    margin: 0;
+                }
+                .brand-subtitle {
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    color: #666;
+                    letter-spacing: 2px;
+                    font-weight: 600;
+                    margin-top: 3px;
+                }
+                .meta-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 20px;
+                    margin: 20px 0;
+                    font-size: 13px;
+                    background: #f9f9f9;
+                    padding: 15px;
+                    border-radius: 6px;
+                    border: 1px solid #eee;
+                }
+                .meta-item strong {
+                    color: #333;
+                }
+                .title-sec {
+                    font-size: 18px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    margin-top: 30px;
+                    margin-bottom: 20px;
+                    color: #111;
+                    border-bottom: 1.5px solid #333;
+                    padding-bottom: 8px;
+                }
+                .grocery-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    padding: 12px 10px;
+                    border-bottom: 1px solid #f1f1f1;
+                }
+                .checkbox-box {
+                    width: 18px;
+                    height: 18px;
+                    border: 2px solid #333;
+                    border-radius: 3px;
+                    flex-shrink: 0;
+                }
+                .item-details {
+                    flex: 1;
+                }
+                .item-name {
+                    font-size: 15px;
+                    font-weight: 700;
+                    color: #111;
+                }
+                .item-weight {
+                    font-size: 13px;
+                    color: #555;
+                    margin-top: 2px;
+                }
+                .shrinkage-note {
+                    color: #e63946;
+                    font-weight: 500;
+                    margin-left: 5px;
+                }
+                .footer {
+                    margin-top: 50px;
+                    border-top: 1px solid #eee;
+                    padding-top: 20px;
+                    font-size: 12px;
+                    color: #777;
+                    text-align: center;
+                    line-height: 1.6;
+                }
+                @media print {
+                    body { margin: 20px; }
+                    .meta-grid { background: #fff !important; border: 1px solid #ccc; }
+                    .checkbox-box { border-color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1 class="brand-title">FINALLY FIT SPOKANE</h1>
+                <div class="brand-subtitle">Personalized Grocery Blueprint</div>
+            </div>
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <strong>Calorie Target:</strong> ${plan.calories} Calories (${plan.tier} Tier)<br>
+                    <strong>Macros:</strong> ${plan.protein}g Protein &bull; ${plan.carbs}g Carbs &bull; ${plan.fat}g Fat
+                </div>
+                <div class="meta-item">
+                    <strong>Quantity:</strong> 5-Day Supply (25 total containers)<br>
+                    <strong>Generated On:</strong> ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+               </div>
+            </div>
+            <h2 class="title-sec">Shopping List (Cooked vs. Raw Prep target)</h2>
+            <div class="items-list">
+                ${rowsHtml}
+            </div>
+            <div class="footer">
+                Tired of the shopping, portion prep, cooking, and clean up? Let us prepare and cook these exact scaled portions for you!<br>
+                Order at: <strong>https://thefinallyfitproject.com/</strong>
+            </div>
+        </body>
+        </html>
+        `;
 
-        return text;
-   }
+        printWindow.document.write(htmlContent);
+        printWindow.document.close();
+        printWindow.focus();
+        setTimeout(() => {
+            printWindow.print();
+            printWindow.close();
+        }, 500);
+    }
 
-   // Initialize click listener to download custom grocery list as a client-side TXT file
-   function setupGroceryDownload() {
-       const btn = document.getElementById('download-grocery-list-btn');
-       if (btn) {
-           btn.addEventListener('click', (e) => {
-               e.preventDefault();
-               const plan = JSON.parse(localStorage.getItem('ffp_macro_plan')) || calculatedPlan;
-               const textContent = generateGroceryListContent(plan);
-               
-               const element = document.createElement('a');
-               element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(textContent));
-               element.setAttribute('download', `Finally_Fit_Grocery_List.txt`);
-               element.style.display = 'none';
-               document.body.appendChild(element);
-               element.click();
-               document.body.removeChild(element);
-           });
-       }
-   }
+    // Initialize click listener to print styled grocery list
+    function setupGroceryDownload() {
+        const btn = document.getElementById('download-grocery-list-btn');
+        if (btn) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const plan = JSON.parse(localStorage.getItem('ffp_macro_plan')) || calculatedPlan;
+                printGroceryList(plan);
+            });
+        }
+    }
 
     // Check if user has already calculated macros in past session and load directly if wanted
     // We keep it clean to start quiz on load, but if they reload on results it can persist.

@@ -326,8 +326,14 @@ span.highlight {
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
 }
 
-/* Sleek Quiz Widget */
+/* Sleek Premium Quiz Widget (Glassmorphic dark-theme SaaS style) */
 .quiz-widget {
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 255, 255, 0.02);
     padding: 40px;
     position: relative;
     overflow: hidden;
@@ -339,12 +345,13 @@ span.highlight {
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--brand-red), #EF233C);
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-red), #ff5e3a);
+    box-shadow: 0 2px 20px rgba(217, 4, 41, 0.4);
 }
 
 .quiz-header {
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     padding-bottom: 16px;
     margin-bottom: 24px;
     display: flex;
@@ -358,7 +365,7 @@ span.highlight {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.45);
 }
 
 .quiz-progress-num {
@@ -369,7 +376,7 @@ span.highlight {
 }
 
 .quiz-progress-bar {
-    height: 3px;
+    height: 4px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     overflow: hidden;
@@ -379,9 +386,9 @@ span.highlight {
 .quiz-progress-fill {
     height: 100%;
     width: 0%;
-    background-color: var(--brand-red);
-    transition: width 0.4s ease;
-    box-shadow: 0 0 10px var(--brand-red);
+    background: linear-gradient(90deg, var(--brand-red), #ff5e3a);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 15px rgba(217, 4, 41, 0.4);
 }
 
 .quiz-step-pane {
@@ -413,17 +420,17 @@ span.highlight {
 }
 
 .quiz-btn-option {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--color-border);
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 20px;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 18px 20px;
+    border-radius: 10px;
     font-family: var(--font-primary);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1.0rem;
     text-align: left;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -431,22 +438,25 @@ span.highlight {
 
 .quiz-btn-option:hover {
     background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.25);
     color: var(--color-white);
+    transform: translateX(4px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .quiz-btn-option.selected {
-    background: var(--brand-red-light);
+    background: linear-gradient(135deg, rgba(217, 4, 41, 0.15) 0%, rgba(217, 4, 41, 0.05) 100%);
     border-color: var(--brand-red);
     color: var(--color-white);
-    box-shadow: 0 0 20px rgba(217, 4, 41, 0.1);
+    box-shadow: 0 0 25px rgba(217, 4, 41, 0.15);
+    font-weight: 700;
 }
 
 .quiz-btn-option::after {
     content: '→';
     opacity: 0;
     transform: translateX(-5px);
-    transition: var(--transition-fast);
+    transition: all 0.25s ease;
     color: var(--brand-red);
     font-weight: 700;
 }
@@ -460,27 +470,27 @@ span.highlight {
 /* Centered Input Styling like Kairos */
 .quiz-input-field {
     width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 16px 20px;
     font-family: var(--font-secondary);
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: var(--color-white);
     outline: none;
-    transition: var(--transition-fast);
-    margin-bottom: 12px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 15px;
     text-align: center;
 }
 
 .quiz-input-field::placeholder {
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .quiz-input-field:focus {
     border-color: var(--brand-red);
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 0 15px rgba(217, 4, 41, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 20px rgba(217, 4, 41, 0.25);
 }
 
 .quiz-input-grid {
@@ -509,21 +519,40 @@ span.highlight {
 .quiz-back-btn {
     flex: 1;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: rgba(255, 255, 255, 0.6);
-    padding: 14px;
-    border-radius: 6px;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 16px;
+    border-radius: 8px;
     font-family: var(--font-primary);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all 0.25s ease;
     text-transform: uppercase;
 }
 
 .quiz-back-btn:hover {
     border-color: rgba(255, 255, 255, 0.3);
     color: var(--color-white);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Premium Visual Meal Plan Cards */
+.meal-card-premium {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.meal-card-premium:hover {
+    transform: translateY(-5px);
+    border-color: rgba(217, 4, 41, 0.3) !important;
+    box-shadow: 0 20px 45px rgba(217, 4, 41, 0.15);
 }
 
 .quiz-next-btn {
