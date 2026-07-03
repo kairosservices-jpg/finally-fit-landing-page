@@ -206,8 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let isValid = true;
 
-        // Custom validation for step 2 (Gym step)
-        if (stepNum === 2) {
+        // Custom validation for step 3 (Gym step)
+        if (stepNum === 3) {
             const selectedOpt = pane.querySelector('.quiz-btn-option.selected');
             const customGym = pane.querySelector('#quiz-gym-input');
             const textVal = customGym ? customGym.value.trim() : '';
@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                if (currentStep === 7) {
+                if (currentStep === 8) {
                     // Contact Info step: trigger background webhook for abandonment tracking
                     const firstName = document.getElementById('input-first')?.value?.trim();
                     const lastName = document.getElementById('input-last')?.value?.trim();

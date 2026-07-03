@@ -70,9 +70,23 @@
                         </div>
                     </div>
 
-                    <!-- STEP 2: Gym Selector -->
+                    <!-- STEP 2: Specific Goal / Target Event (NEW) -->
                     <div class="quiz-step-pane" id="quiz-step-2" data-step-index="2">
-                        <h3 class="quiz-question-title">2. What gym do you train at?</h3>
+                        <h3 class="quiz-question-title">2. What specific event or target is driving this goal?</h3>
+                        <p style="font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; color: rgba(255, 255, 255, 0.65); font-weight: 300;">
+                            (e.g., wedding coming up, need to change, Ironman, Hyrox, overall health, etc.)
+                        </p>
+                        <input type="text" id="quiz-target-input" class="quiz-input-field" placeholder="Describe your target here..." data-question="Specific Target" required style="margin-bottom: 25px;">
+                        
+                        <div class="quiz-nav-row">
+                            <button class="quiz-back-btn">Back</button>
+                            <button class="brutalist-btn quiz-next-btn">Next Step</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Gym Selector -->
+                    <div class="quiz-step-pane" id="quiz-step-3" data-step-index="3">
+                        <h3 class="quiz-question-title">3. What gym do you train at?</h3>
                         <div class="quiz-options-group" style="margin-bottom: 20px;">
                             <button class="quiz-btn-option" data-question="Gym" data-val="At Home">At Home</button>
                             <button class="quiz-btn-option" data-question="Gym" data-val="I Currently Don't Have One">I Currently Don't Have One</button>
@@ -89,9 +103,9 @@
                         </div>
                     </div>
 
-                    <!-- STEP 3: Gender & Age -->
-                    <div class="quiz-step-pane" id="quiz-step-3" data-step-index="3">
-                        <h3 class="quiz-question-title">3. What is your gender & age?</h3>
+                    <!-- STEP 4: Gender & Age -->
+                    <div class="quiz-step-pane" id="quiz-step-4" data-step-index="4">
+                        <h3 class="quiz-question-title">4. What is your gender & age?</h3>
                         
                         <span style="font-family: var(--font-primary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; display: block;">Gender:</span>
                         <div class="quiz-options-group" style="margin-bottom: 20px;">
@@ -108,9 +122,9 @@
                         </div>
                     </div>
 
-                    <!-- STEP 4: Height & Weight -->
-                    <div class="quiz-step-pane" id="quiz-step-4" data-step-index="4">
-                        <h3 class="quiz-question-title">4. Height & Weight details:</h3>
+                    <!-- STEP 5: Height & Weight -->
+                    <div class="quiz-step-pane" id="quiz-step-5" data-step-index="5">
+                        <h3 class="quiz-question-title">5. Height & Weight details:</h3>
                         
                         <span style="font-family: var(--font-primary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; display: block;">Height:</span>
                         <div class="quiz-input-grid">
@@ -127,9 +141,9 @@
                         </div>
                     </div>
 
-                    <!-- STEP 5: Activity Level -->
-                    <div class="quiz-step-pane" id="quiz-step-5" data-step-index="5">
-                        <h3 class="quiz-question-title">5. Describe your daily activity:</h3>
+                    <!-- STEP 6: Activity Level -->
+                    <div class="quiz-step-pane" id="quiz-step-6" data-step-index="6">
+                        <h3 class="quiz-question-title">6. Describe your daily activity:</h3>
                         <div class="quiz-options-group">
                             <button class="quiz-btn-option" data-question="Activity" data-val="1.2">Sedentary (Desk Job, minimal walking)</button>
                             <button class="quiz-btn-option" data-question="Activity" data-val="1.375">Lightly Active (workout 1-2 times/wk)</button>
@@ -141,9 +155,9 @@
                         </div>
                     </div>
 
-                    <!-- STEP 6: Goal Timeline -->
-                    <div class="quiz-step-pane" id="quiz-step-6" data-step-index="6">
-                        <h3 class="quiz-question-title">6. What is your goal timeline?</h3>
+                    <!-- STEP 7: Goal Timeline -->
+                    <div class="quiz-step-pane" id="quiz-step-7" data-step-index="7">
+                        <h3 class="quiz-question-title">7. What is your goal timeline?</h3>
                         <div class="quiz-options-group">
                             <button class="quiz-btn-option" data-question="Timeline" data-val="4 Weeks">4 Weeks (Intense / Quick Results)</button>
                             <button class="quiz-btn-option" data-question="Timeline" data-val="8 Weeks">8 Weeks (Steady / Recommended)</button>
@@ -154,9 +168,9 @@
                         </div>
                     </div>
 
-                    <!-- STEP 7: Contact Information -->
-                    <div class="quiz-step-pane" id="quiz-step-7" data-step-index="7">
-                        <h3 class="quiz-question-title">7. Lock in your results & member offers:</h3>
+                    <!-- STEP 8: Contact Information -->
+                    <div class="quiz-step-pane" id="quiz-step-8" data-step-index="8">
+                        <h3 class="quiz-question-title">8. Lock in your results & member offers:</h3>
                         <p style="font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; color: rgba(255, 255, 255, 0.65); font-weight: 300;">
                             Enter your details to calculate your macros and secure your custom plan.
                         </p>
@@ -172,21 +186,7 @@
                         
                         <div class="quiz-nav-row">
                             <button type="button" class="quiz-back-btn">Back</button>
-                            <button type="button" class="brutalist-btn quiz-next-btn" id="contact-step-next-btn" style="flex: 2;">Next: Preferences</button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 8: Dietary Preferences -->
-                    <div class="quiz-step-pane" id="quiz-step-8" data-step-index="8">
-                        <h3 class="quiz-question-title">8. Select your dietary preferences:</h3>
-                        <div class="quiz-options-group">
-                            <button class="quiz-btn-option" data-question="Diet" data-val="Anything">No Restrictions (Anything)</button>
-                            <button class="quiz-btn-option" data-question="Diet" data-val="High Protein / Low Carb">High Protein / Low Carb</button>
-                            <button class="quiz-btn-option" data-question="Diet" data-val="Keto Friendly">Keto Friendly</button>
-                            <button class="quiz-btn-option" data-question="Diet" data-val="Vegetarian">Vegetarian</button>
-                        </div>
-                        <div class="quiz-nav-row">
-                            <button class="quiz-back-btn">Back</button>
+                            <button type="button" class="brutalist-btn quiz-next-btn" id="contact-step-next-btn" style="flex: 2;">Next Step</button>
                         </div>
                     </div>
 
@@ -316,9 +316,9 @@
                 <!-- Pricing Section Header -->
                 <div class="pricing-title-wrap">
                     <span class="sec-tag">Finally Fit Member Program</span>
-                    <h3>Join the Finally Fit 8-Week Challenge</h3>
+                    <h3>Join to have your meal plan totally done for you</h3>
                     <p style="max-width: 600px; margin: 8px auto 0 auto; font-size: 0.95rem;">
-                        Register for the 8-week challenge today to lock in your custom macro blueprint, chef-cooked fitness nutrition, and exclusive member-only meal discounts.
+                        Register today to lock in your custom macro blueprint, chef-cooked fitness nutrition, and have your meal planning, shopping, cooking, and portioning completely done for you.
                     </p>
                 </div>
 
@@ -329,7 +329,7 @@
                     <div class="pricing-card brutalist-card popular program-main-card">
                         <div class="pricing-badge">8-Week Challenge</div>
                         <h4 class="pricing-tier-name" style="font-size: 1.8rem; margin-bottom: 4px;">Finally Fit Access Pass</h4>
-                        <p class="pricing-tier-desc" style="margin-bottom: 16px;">Everything you need to automate your nutrition & results.</p>
+                        <p class="pricing-tier-desc" style="margin-bottom: 16px;">Everything you need to automate your nutrition & results. Benefits listed below:</p>
                         
                         <div class="pricing-price-wrap" style="margin-bottom: 24px;">
                             <span class="price-symbol">$</span>
