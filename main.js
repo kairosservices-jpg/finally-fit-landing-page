@@ -162,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     captureUTMs();
     updateProgress();
     setupGroceryDownload();
+    setupFaqAccordion();
 
     // Clear selected buttons in Step 2 if user starts typing in custom gym input
     const gymInput = document.getElementById('quiz-gym-input');
@@ -578,21 +579,48 @@ document.addEventListener('DOMContentLoaded', () => {
         renderDailyPlanDays();
 
 
+        // Highlight the recommended portion tier card based on calculations
+        const calculatedTier = plan.tier || 'L'; // S, L, XL
         
-        // Update checkout link to Stripe for the 8-Week Program purchase
-        const stripeBtn = document.getElementById('stripe-checkout-btn');
-        if (stripeBtn) {
-            stripeBtn.addEventListener('click', (e) => {
+        // Remove popular class from all pricing cards first
+        const sCard = document.getElementById('pricing-card-s');
+        const lCard = document.getElementById('pricing-card-l');
+        const xlCard = document.getElementById('pricing-card-xl');
+        
+        if (sCard) sCard.classList.remove('popular');
+        if (lCard) lCard.classList.remove('popular');
+        if (xlCard) xlCard.classList.remove('popular');
+        
+        // Add popular class and badge text to the matched recommended card
+        if (calculatedTier === 'S' && sCard) {
+            sCard.classList.add('popular');
+            const badge = sCard.querySelector('.pricing-badge');
+            if (badge) badge.innerHTML = `⭐ Recommended Portion: Small`;
+        } else if (calculatedTier === 'XL' && xlCard) {
+            xlCard.classList.add('popular');
+            const badge = xlCard.querySelector('.pricing-badge');
+            if (badge) badge.innerHTML = `⭐ Recommended Portion: X-Large`;
+        } else if (lCard) {
+            lCard.classList.add('popular');
+            const badge = lCard.querySelector('.pricing-badge');
+            if (badge) badge.innerHTML = `⭐ Recommended Portion: Large`;
+        }
+
+        // Update checkout link to Stripe for all portion tier checkout buttons
+        const checkoutBtns = document.querySelectorAll('.stripe-checkout-tier-btn');
+        checkoutBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
                 e.preventDefault();
+                const tier = btn.getAttribute('data-tier');
                 // Pass customer email dynamically to prefill Stripe Checkout & set client_reference_id for Make matching
                 let checkoutUrl = STRIPE_CHECKOUT_URL;
                 if (answers['Email']) {
                     const email = encodeURIComponent(answers['Email']);
-                    checkoutUrl += `?prefilled_email=${email}&client_reference_id=${email}`;
+                    checkoutUrl += `?prefilled_email=${email}&client_reference_id=${email}&utm_content=${tier}`;
                 }
                 window.location.href = checkoutUrl;
             });
-        }
+        });
 
         // Print / Save Meal Plan PDF button listener
         const printBtn = document.getElementById('print-meal-plan-btn');
@@ -889,6 +917,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 printGroceryList(plan);
             });
         }
+    }
+
+    // FAQ Accordion click toggles
+    function setupFaqAccordion() {
+        const triggers = document.querySelectorAll('.faq-trigger');
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                const item = trigger.closest('.faq-item');
+                const content = item.querySelector('.faq-content');
+                const isOpen = item.classList.contains('active');
+                
+                // Close all other FAQ items first
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                    const otherContent = otherItem.querySelector('.faq-content');
+                    if (otherContent) {
+                        otherContent.style.maxHeight = '0px';
+                        otherContent.style.padding = '0 24px';
+                    }
+                });
+                
+                // Toggle clicked item
+                if (!isOpen) {
+                    item.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.padding = '0 24px 20px 24px';
+                }
+            });
+        });
     }
 
     // Check if user has already calculated macros in past session and load directly if wanted

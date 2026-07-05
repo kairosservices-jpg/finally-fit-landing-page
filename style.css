@@ -3050,3 +3050,90 @@ span.highlight {
     line-height: 1.45;
 }
 
+/* ==========================================================================
+   LANDING PAGE FUNNEL UPGRADES (FAQ, TIMELINE, COMPARISON)
+   ========================================================================== */
+
+/* 1. Comparison Table */
+.comparison-wrap {
+    width: 100%;
+}
+.comparison-table {
+    border: 1px solid var(--color-border);
+}
+.comparison-table th {
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 2px solid var(--color-border);
+}
+.comparison-table tr:hover {
+    background: rgba(255, 255, 255, 0.01);
+}
+.comparison-table td, .comparison-table th {
+    border-right: 1px solid var(--color-border);
+}
+.comparison-table td:last-child, .comparison-table th:last-child {
+    border-right: none;
+}
+
+/* 2. Timeline Components */
+.timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    position: relative;
+    width: 100%;
+}
+
+.timeline-card {
+    padding: 30px 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.timeline-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--brand-red);
+    color: #fff;
+    font-family: var(--font-primary);
+    font-weight: 850;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    border: 2px solid #000;
+    box-shadow: 2px 2px 0px var(--color-border);
+}
+
+/* 3. FAQ Accordion */
+.faq-trigger:hover {
+    color: var(--brand-red) !important;
+}
+
+.faq-item.active .faq-chevron {
+    transform: rotate(180deg);
+}
+
+.faq-content {
+    transition: max-height 0.25s ease-out, padding 0.25s ease-out;
+}
+
+/* 4. Responsive adjustments for Checkout Grid & General Cards */
+@media (max-width: 900px) {
+    .program-checkout-grid {
+        grid-template-columns: 1fr !important;
+        max-width: 480px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    
+    .pricing-card.popular {
+        transform: scale(1.0) !important;
+    }
+}
+
+
