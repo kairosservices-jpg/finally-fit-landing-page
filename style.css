@@ -3125,7 +3125,6 @@ span.highlight {
 /* 4. Responsive adjustments for Checkout Grid & General Cards */
 @media (max-width: 900px) {
     .program-checkout-grid {
-        grid-template-columns: 1fr !important;
         max-width: 480px !important;
         margin-left: auto !important;
         margin-right: auto !important;
