@@ -4,7 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // 1. Ingredients & Meals Databases (Duplicated from main.js for calculations)
     const INGREDIENTS = {
         // Proteins
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'greek_yogurt': { name: "Vanilla Greek Yogurt", category: "protein", price_per_oz: 0.150, protein_per_oz: 3.0, carbs_per_oz: 1.0, fat_per_oz: 0, calories_per_oz: 16, yield_ratio: 1.000 },
         'cottage_cheese': { name: "Cottage Cheese", category: "protein", price_per_oz: 0.120, protein_per_oz: 3.5, carbs_per_oz: 1.0, fat_per_oz: 0.5, calories_per_oz: 23, yield_ratio: 1.000 },
         'lean_meat': { name: "Lean Meat", category: "protein", price_per_oz: 0.300, protein_per_oz: 7.5, carbs_per_oz: 0, fat_per_oz: 1.5, calories_per_oz: 45, yield_ratio: 1.000 },
-        
+
         // Carbs
         'mashed_potato': { name: "Garlic Mashed Potato", category: "carb", price_per_oz: 0.103, protein_per_oz: 0.6, carbs_per_oz: 5.0, fat_per_oz: 1.0, calories_per_oz: 31, yield_ratio: 1.000 },
         'sweet_potato': { name: "Mashed Sweet Potato", category: "carb", price_per_oz: 0.083, protein_per_oz: 0.6, carbs_per_oz: 6.0, fat_per_oz: 0, calories_per_oz: 26, yield_ratio: 1.000 },
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'pasta': { name: "Pasta Noodles", category: "carb", price_per_oz: 0.036, protein_per_oz: 1.5, carbs_per_oz: 8.0, fat_per_oz: 0.2, calories_per_oz: 40, yield_ratio: 1.000 },
         'granola': { name: "Granola", category: "carb", price_per_oz: 0.100, protein_per_oz: 0.5, carbs_per_oz: 6.0, fat_per_oz: 1.0, calories_per_oz: 35, yield_ratio: 1.000 },
         'pretzel': { name: "Pretzel Sticks", category: "carb", price_per_oz: 0.080, protein_per_oz: 0.8, carbs_per_oz: 7.0, fat_per_oz: 0.2, calories_per_oz: 33, yield_ratio: 1.000 },
-        
+
         // Veggies / Others
         'broccoli': { name: "Broccoli", category: "veg", price_per_oz: 0.133, protein_per_oz: 0.8, carbs_per_oz: 2.0, fat_per_oz: 0, calories_per_oz: 11, yield_ratio: 1.000 },
         'green_beans': { name: "Green Beans", category: "veg", price_per_oz: 0.099, protein_per_oz: 0.5, carbs_per_oz: 2.0, fat_per_oz: 0, calories_per_oz: 10, yield_ratio: 1.000 },
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Loaded Breakfast Bowl': { protein_id: 'eggs', carb_id: 'mashed_potato', veg_id: 'broccoli', category: 'breakfast', image_url: 'assets/KairosMealPrep-04.jpg' },
         'Yogurt Parfait': { protein_id: 'greek_yogurt', carb_id: 'granola', veg_id: 'green_beans', category: 'breakfast', image_url: 'assets/yogurt_parfait.png' },
         'Honey Sweet Cottage Cheese': { protein_id: 'cottage_cheese', carb_id: 'granola', veg_id: 'green_beans', category: 'breakfast', image_url: 'assets/KairosMealPrep-03.jpg' },
-        
+
         // Snack
         'Meat & Cheese-To-Go (Pack of 5)': { protein_id: 'lean_meat', carb_id: 'pretzel', veg_id: 'green_beans', category: 'snack', image_url: 'assets/meat_cheese_to_go.png' },
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const BASE_PREP_FEE = 5.00;
-    const INGREDIENT_MARKUP = 1.0; 
+    const INGREDIENT_MARKUP = 1.0;
 
     // Connection Settings variables (loaded from localStorage)
     let connectionMode = 'simulation';
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let activeSwapTarget = null; // { day, slot }
 
     const slots = ['breakfast', 'lunch_1', 'lunch_2', 'dinner', 'snack'];
-    
+
     const SLOT_LABELS = {
         'breakfast': 'BREAKFAST',
         'lunch_1': 'LUNCH #1',
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const vIng = INGREDIENTS[template.veg_id];
 
         let pOz = Math.round(targetMealProtein / pIng.protein_per_oz);
-        
+
         const cOzRaw = targetMealCarbs / cIng.carbs_per_oz;
         let cOz = Math.round(cOzRaw);
         if (fitnessGoal === 'Fat Loss') {
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (fitnessGoal === 'Muscle Gain') {
             cOz = Math.ceil(cOzRaw);
         }
-        
+
         let vOz = 2; // standard serving
 
         pOz = Math.max(4, Math.min(8, pOz));
@@ -166,29 +166,29 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadConnectionSettings() {
         const savedMode = localStorage.getItem('ff_conn_mode');
         if (savedMode) connectionMode = savedMode;
-        
+
         supabaseUrl = localStorage.getItem('ff_sb_url') || '';
         supabaseKey = localStorage.getItem('ff_sb_key') || '';
-        
+
         makeGetProfileUrl = localStorage.getItem('ff_make_get_url') || 'https://hook.us2.make.com/placeholder_get_profile';
         makePostSelectionsUrl = localStorage.getItem('ff_make_post_url') || 'https://hook.us2.make.com/placeholder_save_selections';
-        
+
         // Sync to DOM fields if they exist
         const modeSelect = document.getElementById('settings-connection-mode');
         if (modeSelect) modeSelect.value = connectionMode;
-        
+
         const sbUrlInput = document.getElementById('settings-supabase-url');
         if (sbUrlInput) sbUrlInput.value = supabaseUrl;
-        
+
         const sbKeyInput = document.getElementById('settings-supabase-key');
         if (sbKeyInput) sbKeyInput.value = supabaseKey;
-        
+
         const makeGetInput = document.getElementById('settings-make-get-url');
         if (makeGetInput) makeGetInput.value = makeGetProfileUrl;
-        
+
         const makePostInput = document.getElementById('settings-make-post-url');
         if (makePostInput) makePostInput.value = makePostSelectionsUrl;
-        
+
         toggleSettingsFieldGroups();
     }
 
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const mode = document.getElementById('settings-connection-mode')?.value || 'simulation';
         const makeGroup = document.getElementById('settings-fields-make');
         const supabaseGroup = document.getElementById('settings-fields-supabase');
-        
+
         if (makeGroup) makeGroup.style.display = mode === 'make' ? 'block' : 'none';
         if (supabaseGroup) supabaseGroup.style.display = mode === 'supabase' ? 'block' : 'none';
     }
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const saveBtn = document.getElementById('settings-save-btn');
         const testBtn = document.getElementById('settings-test-btn');
         const modeSelect = document.getElementById('settings-connection-mode');
-        
+
         // Hide API settings trigger button unless URL contains debug=true or admin=true
         const urlParams = new URLSearchParams(window.location.search);
         const isDebug = urlParams.get('debug') === 'true' || urlParams.get('admin') === 'true';
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 openBtn.style.display = 'none';
             }
         }
-        
+
         if (openBtn && drawer && overlay) {
             openBtn.addEventListener('click', () => {
                 drawer.classList.add('active');
@@ -228,19 +228,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadConnectionSettings();
             });
         }
-        
+
         const closeDrawer = () => {
             if (drawer) drawer.classList.remove('active');
             if (overlay) overlay.classList.remove('active');
         };
-        
+
         if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
         if (overlay) overlay.addEventListener('click', closeDrawer);
-        
+
         if (modeSelect) {
             modeSelect.addEventListener('change', toggleSettingsFieldGroups);
         }
-        
+
         if (saveBtn) {
             saveBtn.addEventListener('click', () => {
                 const mode = document.getElementById('settings-connection-mode').value;
@@ -249,40 +249,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sbKey = document.getElementById('settings-supabase-key').value.trim();
                 const makeGet = document.getElementById('settings-make-get-url').value.trim();
                 const makePost = document.getElementById('settings-make-post-url').value.trim();
-                
+
                 localStorage.setItem('ff_conn_mode', mode);
                 localStorage.setItem('ff_sb_url', sbUrl);
                 localStorage.setItem('ff_sb_key', sbKey);
                 localStorage.setItem('ff_make_get_url', makeGet);
                 localStorage.setItem('ff_make_post_url', makePost);
-                
+
                 connectionMode = mode;
                 supabaseUrl = sbUrl;
                 supabaseKey = sbKey;
                 makeGetProfileUrl = makeGet;
                 makePostSelectionsUrl = makePost;
-                
+
                 const status = document.getElementById('settings-status-message');
                 if (status) {
                     status.style.color = '#2ec4b6';
                     status.textContent = 'Connection settings saved!';
                     setTimeout(() => { status.textContent = ''; }, 3000);
                 }
-                
+
                 closeDrawer();
                 initializePortal(); // reload portal data with new settings!
             });
         }
-        
+
         if (testBtn) {
             testBtn.addEventListener('click', async () => {
                 const mode = document.getElementById('settings-connection-mode').value;
                 const status = document.getElementById('settings-status-message');
                 if (!status) return;
-                
+
                 status.style.color = '#fff';
                 status.textContent = 'Testing connection...';
-                
+
                 if (mode === 'simulation') {
                     status.style.color = '#2ec4b6';
                     status.textContent = 'Connection test passed (Simulation Mode)!';
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const testClient = supabase.createClient(sbUrl, sbKey);
                         const { data, error } = await testClient.from('customers').select('id').limit(1);
                         if (error) throw error;
-                        
+
                         status.style.color = '#2ec4b6';
                         status.textContent = 'Supabase database connected successfully!';
                     } catch (err) {
@@ -507,12 +507,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 const response = await fetch(`${makeGetProfileUrl}?customer_id=${customerId}`);
                 if (!response.ok) throw new Error(`Make webhook error: ${response.statusText}`);
-                
+
                 const data = await response.json();
                 customerData = data.customer;
                 weeklySelections = data.selections;
                 isSkipped = data.is_skipped || false;
-                
+
                 if (data.delivery_method) {
                     deliveryMethod = data.delivery_method;
                     if (deliveryMethod === 'studio_pickup' && data.pickup_location) {
@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="status-text">Status: <strong>Webhook Live</strong></span>
                     `;
                 }
-                
+
                 renderDashboard();
             } else {
                 // Simulation Mode
@@ -575,7 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnDelivery = document.getElementById('deliv-btn-delivery');
         const pickupWrap = document.getElementById('pickup-location-wrap');
         const deliveryWrap = document.getElementById('home-delivery-wrap');
-        
+
         if (!btnPickup || !btnDelivery || !pickupWrap || !deliveryWrap) return;
         if (deliveryMethod === 'studio_pickup') {
             btnPickup.classList.add('selected');
@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         calendarContainer.innerHTML = days.map(day => {
             const dayClass = isSkipped ? 'portal-day-row skipped-day' : 'portal-day-row';
-            
+
             return `
                 <div class="${dayClass}" data-day="${day}">
                     <div class="portal-day-header">
@@ -682,16 +682,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     <div class="portal-day-meals-grid">
                         ${slots.map(slot => {
-                            const targets = getSlotTargets(slot, customerData.protein, customerData.carbs, customerData.fat);
-                            const mealName = weeklySelections[`${day}-${slot}`];
-                            const d = calculateMealPortionsAndPricing(mealName, targets.protein, targets.carbs, targets.fat, customerData.goal);
-                            
-                            // Highlight Homemade Meal differently
-                            const isHomemade = mealName === 'Homemade Meal';
-                            const badgeStyle = isHomemade ? 'style="background: rgba(46, 196, 182, 0.1); border-color: rgba(46, 196, 182, 0.3); color: #2ec4b6;"' : '';
-                            const macroLabelStyle = isHomemade ? 'style="color: #ffaa00;"' : '';
+                const targets = getSlotTargets(slot, customerData.protein, customerData.carbs, customerData.fat);
+                const mealName = weeklySelections[`${day}-${slot}`];
+                const d = calculateMealPortionsAndPricing(mealName, targets.protein, targets.carbs, targets.fat, customerData.goal);
 
-                            return `
+                // Highlight Homemade Meal differently
+                const isHomemade = mealName === 'Homemade Meal';
+                const badgeStyle = isHomemade ? 'style="background: rgba(46, 196, 182, 0.1); border-color: rgba(46, 196, 182, 0.3); color: #2ec4b6;"' : '';
+                const macroLabelStyle = isHomemade ? 'style="color: #ffaa00;"' : '';
+
+                return `
                                 <div class="portal-meal-slot" data-slot="${slot}">
                                     <div class="portal-meal-header">
                                         <span class="portal-slot-label" style="color: var(--tag-${slot === 'lunch_1' || slot === 'lunch_2' ? 'lunch' : slot}-color);">${SLOT_LABELS[slot]}</span>
@@ -709,7 +709,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     </button>
                                 </div>
                             `;
-                        }).join('')}
+            }).join('')}
                     </div>
                 </div>
             `;
@@ -727,7 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updatePriceSummary() {
         let total = 0;
-        
+
         // Sum up each meal's calculated price
         Object.keys(weeklySelections).forEach(key => {
             const slot = key.split('-')[1]; // e.g. 'lunch_1'
@@ -738,14 +738,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const displayTotal = isSkipped ? 0 : total;
-        
+
         document.getElementById('portal-base-meals-price').textContent = `$${displayTotal.toFixed(2)}`;
         document.getElementById('portal-weekly-total').textContent = `$${displayTotal.toFixed(2)}`;
 
         // Handle skip display states
         const skipAlert = document.getElementById('skip-week-alert');
         const skipBtn = document.getElementById('skip-week-btn');
-        
+
         if (isSkipped) {
             skipAlert.style.display = 'block';
             skipBtn.textContent = 'Unskip Delivery';
@@ -767,7 +767,7 @@ document.addEventListener('DOMContentLoaded', () => {
         activeSwapTarget = { day, slot };
         const modal = document.getElementById('swap-modal');
         const titleNode = document.getElementById('modal-slot-tag');
-        
+
         titleNode.textContent = `${day.toUpperCase()} - ${SLOT_LABELS[slot]}`;
         modal.style.display = 'flex';
 
@@ -790,15 +790,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentMealName = weeklySelections[`${day}-${slot}`];
         const currentMealObj = calculateMealPortionsAndPricing(currentMealName, targets.protein, targets.carbs, targets.fat, customerData.goal);
 
-        // Filter menu items by slot category
-        const targetCategory = slot === 'snack' ? 'snack' : (slot === 'breakfast' ? 'breakfast' : 'lunch'); // Lunches/Dinners can swap between each other
-        
+        // Filter menu items by slot constraints (Breakfast -> breakfast, Chicken -> chicken, Steak -> sirloin)
         const filteredMeals = Object.keys(MEAL_TEMPLATES).filter(key => {
             const temp = MEAL_TEMPLATES[key];
-            if (targetCategory === 'lunch') {
-                return temp.category === 'lunch' || temp.category === 'dinner';
+            if (slot === 'breakfast') {
+                return temp.category === 'breakfast';
+            } else if (slot.startsWith('chicken')) {
+                return temp.protein_id === 'chicken_breast' || temp.protein_id === 'chicken_thigh';
+            } else if (slot === 'steak_meal') {
+                return temp.protein_id === 'sirloin';
             }
-            return temp.category === targetCategory;
+            return false;
         });
 
         // Add Homemade Meal Option
@@ -809,7 +811,7 @@ document.addEventListener('DOMContentLoaded', () => {
         listContainer.innerHTML = filteredMeals.map(mealKey => {
             const d = calculateMealPortionsAndPricing(mealKey, targets.protein, targets.carbs, targets.fat, customerData.goal);
             const isActive = mealKey === currentMealName;
-            
+
             // Calculate price difference
             const diff = d.price - currentMealObj.price;
             let diffHtml = '';
@@ -887,7 +889,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursor: pointer;
                 padding: 20px;
             `;
-            
+
             // Close on click
             lightbox.addEventListener('click', () => {
                 lightbox.style.opacity = '0';
@@ -895,10 +897,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     lightbox.style.display = 'none';
                 }, 250);
             });
-            
+
             document.body.appendChild(lightbox);
         }
-        
+
         lightbox.innerHTML = `
             <div style="position: absolute; top: 20px; right: 20px; color: #fff; font-size: 2.5rem; font-family: var(--font-primary); font-weight: 300; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">&times;</div>
             <div style="max-width: 90%; max-height: 85%; display: flex; flex-direction: column; align-items: center; gap: 16px; cursor: default;" onclick="event.stopPropagation()">
@@ -916,12 +918,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span style="color: #fff; font-family: var(--font-primary); font-weight: 850; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.6);">${mealName}</span>
             </div>
         `;
-        
+
         lightbox.style.display = 'flex';
         // Trigger reflow
         lightbox.offsetHeight;
         lightbox.style.opacity = '1';
-        
+
         // Trigger image zoom animation
         setTimeout(() => {
             const img = document.getElementById('lightbox-img');
@@ -954,12 +956,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Delivery / Pickup Preferences Controller
     let deliveryMethod = 'studio_pickup'; // 'studio_pickup' or 'home_delivery'
-    
+
     const btnPickup = document.getElementById('deliv-btn-pickup');
     const btnDelivery = document.getElementById('deliv-btn-delivery');
     const pickupWrap = document.getElementById('pickup-location-wrap');
     const deliveryWrap = document.getElementById('home-delivery-wrap');
-    
+
     if (btnPickup && btnDelivery) {
         btnPickup.addEventListener('click', (e) => {
             e.preventDefault();
@@ -969,7 +971,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pickupWrap.style.display = 'block';
             deliveryWrap.style.display = 'none';
         });
-        
+
         btnDelivery.addEventListener('click', (e) => {
             e.preventDefault();
             deliveryMethod = 'home_delivery';
@@ -1000,7 +1002,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const unit = document.getElementById('portal-address-unit').value.trim();
                 const city = document.getElementById('portal-address-city').value.trim();
                 const zip = document.getElementById('portal-address-zip').value.trim();
-                
+
                 if (!street || !city || !zip) {
                     alert('Please fill out all address fields for Home Delivery.');
                     saveBtn.disabled = false;
@@ -1008,10 +1010,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     statusNode.style.display = 'none';
                     return;
                 }
-                
+
                 shippingAddress = { street, unit, city, zip };
             }
-            
+
             const selectedStudio = document.getElementById('portal-pickup-select').value;
 
             try {
@@ -1020,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         throw new Error("Supabase client SDK not loaded.");
                     }
                     const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-                    
+
                     // 1. Update customer profile delivery defaults
                     const custUpdate = {};
                     if (deliveryMethod === 'studio_pickup') {
@@ -1131,7 +1133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (template) {
                                 const pIng = INGREDIENTS[template.protein_id];
                                 const cIng = INGREDIENTS[template.carb_id];
-                                
+
                                 proteinOz = Math.round(targets.protein / pIng.protein_per_oz);
                                 const cOzRaw = targets.carbs / cIng.carbs_per_oz;
                                 carbOz = Math.round(cOzRaw);
@@ -1141,7 +1143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     carbOz = Math.ceil(cOzRaw);
                                 }
                                 vegOz = 2; // standard serving
-                                
+
                                 proteinOz = Math.max(4, Math.min(8, proteinOz));
                                 carbOz = Math.max(3, Math.min(10, carbOz));
                             }
@@ -1203,7 +1205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } finally {
                 saveBtn.disabled = false;
                 saveBtn.textContent = originalText;
-                
+
                 setTimeout(() => {
                     statusNode.style.display = 'none';
                 }, 4000);
@@ -1216,14 +1218,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (skipBtn) {
         skipBtn.addEventListener('click', () => {
             isSkipped = !isSkipped;
-            
+
             const statusNode = document.getElementById('portal-save-status');
             statusNode.style.display = 'block';
             statusNode.style.color = isSkipped ? '#ffaa00' : '#2ec4b6';
             statusNode.textContent = isSkipped ? '⚠️ Delivery marked to skip next week. Make sure to click save.' : '✓ Delivery resumed!';
-            
+
             renderDashboard();
-            
+
             setTimeout(() => {
                 statusNode.style.display = 'none';
             }, 3000);

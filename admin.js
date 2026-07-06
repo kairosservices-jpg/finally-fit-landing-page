@@ -63,28 +63,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const BASE_PREP_FEE = 5.00;
     const INGREDIENT_MARKUP = 1.0;
 
-    const slots = ['breakfast', 'lunch_1', 'lunch_2', 'dinner', 'snack'];
+    const slots = ['breakfast', 'chicken_1', 'chicken_2', 'steak_meal'];
     
     const SLOT_LABELS = {
         'breakfast': 'Breakfast',
-        'lunch_1': 'Lunch #1',
-        'lunch_2': 'Lunch #2',
-        'dinner': 'Dinner',
-        'snack': 'Snack'
+        'chicken_1': 'Chicken #1',
+        'chicken_2': 'Chicken #2',
+        'steak_meal': 'Steak'
     };
 
-    // Helper to calculate target macros for snack vs main meals
+    // Helper to calculate target macros for the 4 meals
     function getSlotTargets(slot, totalProtein, totalCarbs, totalFat) {
-        const isSnack = slot === 'snack';
-        if (isSnack) {
-            return { protein: 25, carbs: 20, fat: 10 };
-        } else {
-            return {
-                protein: (totalProtein - 25) / 4,
-                carbs: (totalCarbs - 20) / 4,
-                fat: (totalFat - 10) / 4
-            };
-        }
+        return {
+            protein: totalProtein / 4,
+            carbs: totalCarbs / 4,
+            fat: totalFat / 4
+        };
     }
 
     // Dynamic Ounces portion calculator
@@ -189,13 +183,13 @@ document.addEventListener('DOMContentLoaded', () => {
             shipping_address: null,
             is_skipped: false,
             selections: {
-                'Monday-breakfast': 'Steak and Eggs', 'Monday-lunch_1': 'Teriyaki Chicken', 'Monday-lunch_2': 'Homemade Meal', 'Monday-dinner': 'Steak n Mash', 'Monday-snack': 'Meat & Cheese-To-Go',
-                'Tuesday-breakfast': 'Yogurt Parfait', 'Tuesday-lunch_1': 'Chicken Fried Rice', 'Tuesday-lunch_2': 'Teriyaki Chicken', 'Tuesday-dinner': 'Spaghetti and Meatballs', 'Tuesday-snack': 'Meat & Cheese-To-Go',
-                'Wednesday-breakfast': 'Honey Sweet Cottage Cheese', 'Wednesday-lunch_1': 'Chili Margarita', 'Wednesday-lunch_2': 'Homemade Meal', 'Wednesday-dinner': 'Chicken Pesto Pasta', 'Wednesday-snack': 'Meat & Cheese-To-Go',
-                'Thursday-breakfast': 'Morning Grand Slam', 'Thursday-lunch_1': 'Asian Zing Chicken Thigh', 'Thursday-lunch_2': 'Sweet Chili Chicken Thigh', 'Thursday-dinner': 'BBQ Chicken Thigh', 'Thursday-snack': 'Meat & Cheese-To-Go',
-                'Friday-breakfast': 'Steak and Eggs', 'Friday-lunch_1': 'Teriyaki Chicken', 'Friday-lunch_2': 'Chili Margarita', 'Friday-dinner': 'Sweet Chili Chicken Thigh', 'Friday-snack': 'Meat & Cheese-To-Go',
-                'Saturday-breakfast': 'Yogurt Parfait', 'Saturday-lunch_1': 'Chicken Fried Rice', 'Saturday-lunch_2': 'Homemade Meal', 'Saturday-dinner': 'Steak n Mash', 'Saturday-snack': 'Meat & Cheese-To-Go',
-                'Sunday-breakfast': 'Honey Sweet Cottage Cheese', 'Sunday-lunch_1': 'Homemade Meal', 'Sunday-lunch_2': 'Chicken Pesto Pasta', 'Sunday-dinner': 'Homemade Meal', 'Sunday-snack': 'Meat & Cheese-To-Go'
+                'Monday-breakfast': 'Steak and Eggs', 'Monday-chicken_1': 'Teriyaki Chicken', 'Monday-chicken_2': 'Chile Margarita', 'Monday-steak_meal': 'Steak n Mash',
+                'Tuesday-breakfast': 'Yogurt Parfait', 'Tuesday-chicken_1': 'Chicken Fried Rice', 'Tuesday-chicken_2': 'Teriyaki Chicken', 'Tuesday-steak_meal': 'Steak n Mash',
+                'Wednesday-breakfast': 'Honey Sweet Cottage Cheese', 'Wednesday-chicken_1': 'Chile Margarita', 'Wednesday-chicken_2': 'Teriyaki Chicken', 'Wednesday-steak_meal': 'Steak n Mash',
+                'Thursday-breakfast': 'Loaded Breakfast Bowl', 'Thursday-chicken_1': 'Asian Zing', 'Thursday-chicken_2': 'Sweet Chili Chicken Thigh', 'Thursday-steak_meal': 'Steak n Mash',
+                'Friday-breakfast': 'Steak and Eggs', 'Friday-chicken_1': 'Teriyaki Chicken', 'Friday-chicken_2': 'Chile Margarita', 'Friday-steak_meal': 'Steak n Mash',
+                'Saturday-breakfast': 'Yogurt Parfait', 'Saturday-chicken_1': 'Chicken Fried Rice', 'Saturday-chicken_2': 'Teriyaki Chicken', 'Saturday-steak_meal': 'Steak n Mash',
+                'Sunday-breakfast': 'Honey Sweet Cottage Cheese', 'Sunday-chicken_1': 'Teriyaki Chicken', 'Sunday-chicken_2': 'Chicken Fried Rice', 'Sunday-steak_meal': 'Steak n Mash'
             }
         },
         {
@@ -212,13 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
             shipping_address: null,
             is_skipped: false,
             selections: {
-                'Monday-breakfast': 'Steak and Eggs', 'Monday-lunch_1': 'Steak n Mash', 'Monday-lunch_2': 'Teriyaki Chicken', 'Monday-dinner': 'Steak n Mash', 'Monday-snack': 'Meat & Cheese-To-Go',
-                'Tuesday-breakfast': 'Morning Grand Slam', 'Tuesday-lunch_1': 'Chicken Fried Rice', 'Tuesday-lunch_2': 'Homemade Meal', 'Tuesday-dinner': 'Spaghetti and Meatballs', 'Tuesday-snack': 'Meat & Cheese-To-Go',
-                'Wednesday-breakfast': 'Steak and Eggs', 'Wednesday-lunch_1': 'Chili Margarita', 'Wednesday-lunch_2': 'Chicken Fried Rice', 'Wednesday-dinner': 'Spaghetti and Meatballs', 'Wednesday-snack': 'Meat & Cheese-To-Go',
-                'Thursday-breakfast': 'Morning Grand Slam', 'Thursday-lunch_1': 'BBQ Chicken Thigh', 'Thursday-lunch_2': 'Sweet Chili Chicken Thigh', 'Thursday-dinner': 'BBQ Chicken Thigh', 'Thursday-snack': 'Meat & Cheese-To-Go',
-                'Friday-breakfast': 'Steak and Eggs', 'Friday-lunch_1': 'Teriyaki Chicken', 'Friday-lunch_2': 'Steak n Mash', 'Friday-dinner': 'Sweet Chili Chicken Thigh', 'Friday-snack': 'Meat & Cheese-To-Go',
-                'Saturday-breakfast': 'Morning Grand Slam', 'Saturday-lunch_1': 'Chicken Fried Rice', 'Saturday-lunch_2': 'Teriyaki Chicken', 'Saturday-dinner': 'Steak n Mash', 'Saturday-snack': 'Meat & Cheese-To-Go',
-                'Sunday-breakfast': 'Steak and Eggs', 'Sunday-lunch_1': 'Chili Margarita', 'Sunday-lunch_2': 'Homemade Meal', 'Sunday-dinner': 'Chicken Pesto Pasta', 'Sunday-snack': 'Meat & Cheese-To-Go'
+                'Monday-breakfast': 'Steak and Eggs', 'Monday-chicken_1': 'Teriyaki Chicken', 'Monday-chicken_2': 'Chicken Fried Rice', 'Monday-steak_meal': 'Steak n Mash',
+                'Tuesday-breakfast': 'Loaded Breakfast Bowl', 'Tuesday-chicken_1': 'Chicken Fried Rice', 'Tuesday-chicken_2': 'Teriyaki Chicken', 'Tuesday-steak_meal': 'Steak n Mash',
+                'Wednesday-breakfast': 'Steak and Eggs', 'Wednesday-chicken_1': 'Chile Margarita', 'Wednesday-chicken_2': 'Chicken Fried Rice', 'Wednesday-steak_meal': 'Steak n Mash',
+                'Thursday-breakfast': 'Loaded Breakfast Bowl', 'Thursday-chicken_1': 'BBQ Chicken Thigh', 'Thursday-chicken_2': 'Sweet Chili Chicken Thigh', 'Thursday-steak_meal': 'Steak n Mash',
+                'Friday-breakfast': 'Steak and Eggs', 'Friday-chicken_1': 'Teriyaki Chicken', 'Friday-chicken_2': 'Chicken Fried Rice', 'Friday-steak_meal': 'Steak n Mash',
+                'Saturday-breakfast': 'Loaded Breakfast Bowl', 'Saturday-chicken_1': 'Chicken Fried Rice', 'Saturday-chicken_2': 'Teriyaki Chicken', 'Saturday-steak_meal': 'Steak n Mash',
+                'Sunday-breakfast': 'Steak and Eggs', 'Sunday-chicken_1': 'Chile Margarita', 'Sunday-chicken_2': 'Teriyaki Chicken', 'Sunday-steak_meal': 'Steak n Mash'
             }
         },
         {
@@ -235,13 +229,13 @@ document.addEventListener('DOMContentLoaded', () => {
             shipping_address: { street: "104 Main St", unit: "Apt 302", city: "Spokane", zip: "99201" },
             is_skipped: false,
             selections: {
-                'Monday-breakfast': 'Steak and Eggs', 'Monday-lunch_1': 'Teriyaki Chicken', 'Monday-lunch_2': 'Chicken Fried Rice', 'Monday-dinner': 'Steak n Mash', 'Monday-snack': 'Meat & Cheese-To-Go',
-                'Tuesday-breakfast': 'Yogurt Parfait', 'Tuesday-lunch_1': 'Chicken Fried Rice', 'Tuesday-lunch_2': 'Teriyaki Chicken', 'Tuesday-dinner': 'Spaghetti and Meatballs', 'Tuesday-snack': 'Meat & Cheese-To-Go',
-                'Wednesday-breakfast': 'Honey Sweet Cottage Cheese', 'Wednesday-lunch_1': 'Chili Margarita', 'Wednesday-lunch_2': 'Chicken Fried Rice', 'Wednesday-dinner': 'Chicken Pesto Pasta', 'Wednesday-snack': 'Meat & Cheese-To-Go',
-                'Thursday-breakfast': 'Morning Grand Slam', 'Thursday-lunch_1': 'Asian Zing Chicken Thigh', 'Thursday-lunch_2': 'Sweet Chili Chicken Thigh', 'Thursday-dinner': 'BBQ Chicken Thigh', 'Thursday-snack': 'Meat & Cheese-To-Go',
-                'Friday-breakfast': 'Steak and Eggs', 'Friday-lunch_1': 'Teriyaki Chicken', 'Friday-lunch_2': 'Chili Margarita', 'Friday-dinner': 'Sweet Chili Chicken Thigh', 'Friday-snack': 'Meat & Cheese-To-Go',
-                'Saturday-breakfast': 'Yogurt Parfait', 'Saturday-lunch_1': 'Chicken Fried Rice', 'Saturday-lunch_2': 'Steak n Mash', 'Saturday-dinner': 'Steak n Mash', 'Saturday-snack': 'Meat & Cheese-To-Go',
-                'Sunday-breakfast': 'Honey Sweet Cottage Cheese', 'Sunday-lunch_1': 'Chili Margarita', 'Sunday-lunch_2': 'Chicken Pesto Pasta', 'Sunday-dinner': 'Chicken Pesto Pasta', 'Sunday-snack': 'Meat & Cheese-To-Go'
+                'Monday-breakfast': 'Steak and Eggs', 'Monday-chicken_1': 'Teriyaki Chicken', 'Monday-chicken_2': 'Chicken Fried Rice', 'Monday-steak_meal': 'Steak n Mash',
+                'Tuesday-breakfast': 'Yogurt Parfait', 'Tuesday-chicken_1': 'Chicken Fried Rice', 'Tuesday-chicken_2': 'Teriyaki Chicken', 'Tuesday-steak_meal': 'Steak n Mash',
+                'Wednesday-breakfast': 'Honey Sweet Cottage Cheese', 'Wednesday-chicken_1': 'Chile Margarita', 'Wednesday-chicken_2': 'Chicken Fried Rice', 'Wednesday-steak_meal': 'Steak n Mash',
+                'Thursday-breakfast': 'Loaded Breakfast Bowl', 'Thursday-chicken_1': 'Asian Zing', 'Thursday-chicken_2': 'Sweet Chili Chicken Thigh', 'Thursday-steak_meal': 'Steak n Mash',
+                'Friday-breakfast': 'Steak and Eggs', 'Friday-chicken_1': 'Teriyaki Chicken', 'Friday-chicken_2': 'Chile Margarita', 'Friday-steak_meal': 'Steak n Mash',
+                'Saturday-breakfast': 'Yogurt Parfait', 'Saturday-chicken_1': 'Chicken Fried Rice', 'Saturday-chicken_2': 'Steak n Mash', 'Saturday-steak_meal': 'Steak n Mash',
+                'Sunday-breakfast': 'Honey Sweet Cottage Cheese', 'Sunday-chicken_1': 'Chile Margarita', 'Sunday-chicken_2': 'Teriyaki Chicken', 'Sunday-steak_meal': 'Steak n Mash'
             }
         },
         {
@@ -258,13 +252,13 @@ document.addEventListener('DOMContentLoaded', () => {
             shipping_address: null,
             is_skipped: false,
             selections: {
-                'Monday-breakfast': 'Yogurt Parfait', 'Monday-lunch_1': 'Homemade Meal', 'Monday-lunch_2': 'Homemade Meal', 'Monday-dinner': 'Steak n Mash', 'Monday-snack': 'Meat & Cheese-To-Go',
-                'Tuesday-breakfast': 'Yogurt Parfait', 'Tuesday-lunch_1': 'Chicken Fried Rice', 'Tuesday-lunch_2': 'Homemade Meal', 'Tuesday-dinner': 'Spaghetti and Meatballs', 'Tuesday-snack': 'Meat & Cheese-To-Go',
-                'Wednesday-breakfast': 'Honey Sweet Cottage Cheese', 'Wednesday-lunch_1': 'Homemade Meal', 'Wednesday-lunch_2': 'Homemade Meal', 'Wednesday-dinner': 'Chicken Pesto Pasta', 'Wednesday-snack': 'Meat & Cheese-To-Go',
-                'Thursday-breakfast': 'Yogurt Parfait', 'Thursday-lunch_1': 'Asian Zing Chicken Thigh', 'Thursday-lunch_2': 'Homemade Meal', 'Thursday-dinner': 'BBQ Chicken Thigh', 'Thursday-snack': 'Meat & Cheese-To-Go',
-                'Friday-breakfast': 'Yogurt Parfait', 'Friday-lunch_1': 'Teriyaki Chicken', 'Friday-lunch_2': 'Homemade Meal', 'Friday-dinner': 'Sweet Chili Chicken Thigh', 'Friday-snack': 'Meat & Cheese-To-Go',
-                'Saturday-breakfast': 'Yogurt Parfait', 'Saturday-lunch_1': 'Chicken Fried Rice', 'Saturday-lunch_2': 'Homemade Meal', 'Saturday-dinner': 'Steak n Mash', 'Saturday-snack': 'Meat & Cheese-To-Go',
-                'Sunday-breakfast': 'Honey Sweet Cottage Cheese', 'Sunday-lunch_1': 'Homemade Meal', 'Sunday-lunch_2': 'Chicken Pesto Pasta', 'Sunday-dinner': 'Chicken Pesto Pasta', 'Sunday-snack': 'Meat & Cheese-To-Go'
+                'Monday-breakfast': 'Yogurt Parfait', 'Monday-chicken_1': 'Teriyaki Chicken', 'Monday-chicken_2': 'Chicken Fried Rice', 'Monday-steak_meal': 'Steak n Mash',
+                'Tuesday-breakfast': 'Yogurt Parfait', 'Tuesday-chicken_1': 'Chicken Fried Rice', 'Tuesday-chicken_2': 'Teriyaki Chicken', 'Tuesday-steak_meal': 'Steak n Mash',
+                'Wednesday-breakfast': 'Honey Sweet Cottage Cheese', 'Wednesday-chicken_1': 'Chile Margarita', 'Wednesday-chicken_2': 'Teriyaki Chicken', 'Wednesday-steak_meal': 'Steak n Mash',
+                'Thursday-breakfast': 'Yogurt Parfait', 'Thursday-chicken_1': 'Asian Zing', 'Thursday-chicken_2': 'Sweet Chili Chicken Thigh', 'Thursday-steak_meal': 'Steak n Mash',
+                'Friday-breakfast': 'Yogurt Parfait', 'Friday-chicken_1': 'Teriyaki Chicken', 'Friday-chicken_2': 'Chicken Fried Rice', 'Friday-steak_meal': 'Steak n Mash',
+                'Saturday-breakfast': 'Yogurt Parfait', 'Saturday-chicken_1': 'Chicken Fried Rice', 'Saturday-chicken_2': 'Teriyaki Chicken', 'Saturday-steak_meal': 'Steak n Mash',
+                'Sunday-breakfast': 'Honey Sweet Cottage Cheese', 'Sunday-chicken_1': 'Teriyaki Chicken', 'Sunday-chicken_2': 'Chicken Fried Rice', 'Sunday-steak_meal': 'Steak n Mash'
             }
         },
         {
@@ -281,13 +275,13 @@ document.addEventListener('DOMContentLoaded', () => {
             shipping_address: { street: "220 Division St", unit: "", city: "Spokane", zip: "99202" },
             is_skipped: false,
             selections: {
-                'Monday-breakfast': 'Steak and Eggs', 'Monday-lunch_1': 'Teriyaki Chicken', 'Monday-lunch_2': 'Chicken Fried Rice', 'Monday-dinner': 'Steak n Mash', 'Monday-snack': 'Meat & Cheese-To-Go',
-                'Tuesday-breakfast': 'Yogurt Parfait', 'Tuesday-lunch_1': 'Chicken Fried Rice', 'Tuesday-lunch_2': 'Teriyaki Chicken', 'Tuesday-dinner': 'Spaghetti and Meatballs', 'Tuesday-snack': 'Meat & Cheese-To-Go',
-                'Wednesday-breakfast': 'Honey Sweet Cottage Cheese', 'Wednesday-lunch_1': 'Chili Margarita', 'Wednesday-lunch_2': 'Chicken Fried Rice', 'Wednesday-dinner': 'Chicken Pesto Pasta', 'Wednesday-snack': 'Meat & Cheese-To-Go',
-                'Thursday-breakfast': 'Morning Grand Slam', 'Thursday-lunch_1': 'Asian Zing Chicken Thigh', 'Thursday-lunch_2': 'Sweet Chili Chicken Thigh', 'Thursday-dinner': 'BBQ Chicken Thigh', 'Thursday-snack': 'Meat & Cheese-To-Go',
-                'Friday-breakfast': 'Steak and Eggs', 'Friday-lunch_1': 'Teriyaki Chicken', 'Friday-lunch_2': 'Chili Margarita', 'Friday-dinner': 'Sweet Chili Chicken Thigh', 'Friday-snack': 'Meat & Cheese-To-Go',
-                'Saturday-breakfast': 'Yogurt Parfait', 'Saturday-lunch_1': 'Chicken Fried Rice', 'Saturday-lunch_2': 'Steak n Mash', 'Saturday-dinner': 'Steak n Mash', 'Saturday-snack': 'Meat & Cheese-To-Go',
-                'Sunday-breakfast': 'Honey Sweet Cottage Cheese', 'Sunday-lunch_1': 'Chili Margarita', 'Sunday-lunch_2': 'Chicken Pesto Pasta', 'Sunday-dinner': 'Chicken Pesto Pasta', 'Sunday-snack': 'Meat & Cheese-To-Go'
+                'Monday-breakfast': 'Steak and Eggs', 'Monday-chicken_1': 'Teriyaki Chicken', 'Monday-chicken_2': 'Chicken Fried Rice', 'Monday-steak_meal': 'Steak n Mash',
+                'Tuesday-breakfast': 'Yogurt Parfait', 'Tuesday-chicken_1': 'Chicken Fried Rice', 'Tuesday-chicken_2': 'Teriyaki Chicken', 'Tuesday-steak_meal': 'Steak n Mash',
+                'Wednesday-breakfast': 'Honey Sweet Cottage Cheese', 'Wednesday-chicken_1': 'Chile Margarita', 'Wednesday-chicken_2': 'Chicken Fried Rice', 'Wednesday-steak_meal': 'Steak n Mash',
+                'Thursday-breakfast': 'Loaded Breakfast Bowl', 'Thursday-chicken_1': 'Asian Zing', 'Thursday-chicken_2': 'Sweet Chili Chicken Thigh', 'Thursday-steak_meal': 'Steak n Mash',
+                'Friday-breakfast': 'Steak and Eggs', 'Friday-chicken_1': 'Teriyaki Chicken', 'Friday-chicken_2': 'Chile Margarita', 'Friday-steak_meal': 'Steak n Mash',
+                'Saturday-breakfast': 'Yogurt Parfait', 'Saturday-chicken_1': 'Chicken Fried Rice', 'Saturday-chicken_2': 'Steak n Mash', 'Saturday-steak_meal': 'Steak n Mash',
+                'Sunday-breakfast': 'Honey Sweet Cottage Cheese', 'Sunday-chicken_1': 'Chile Margarita', 'Sunday-chicken_2': 'Teriyaki Chicken', 'Sunday-steak_meal': 'Steak n Mash'
             }
         }
     ];

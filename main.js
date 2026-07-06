@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'eggs': { name: "Whole Eggs", category: "protein", price_per_oz: 0.180, protein_per_oz: 3.6, carbs_per_oz: 0.3, fat_per_oz: 2.8, calories_per_oz: 41 },
         'greek_yogurt': { name: "Greek Yogurt", category: "protein", price_per_oz: 0.150, protein_per_oz: 3.0, carbs_per_oz: 1.0, fat_per_oz: 0, calories_per_oz: 16 },
         'cottage_cheese': { name: "Cottage Cheese", category: "protein", price_per_oz: 0.120, protein_per_oz: 3.5, carbs_per_oz: 1.0, fat_per_oz: 0.5, calories_per_oz: 23 },
-        
+
         // carbs
         'chopped_potato': { name: "Chopped Potato", category: "carb", price_per_oz: 0.150, protein_per_oz: 0.7, carbs_per_oz: 6.0, fat_per_oz: 0.5, calories_per_oz: 31 },
         'mashed_potato': { name: "Mashed Potato", category: "carb", price_per_oz: 0.103, protein_per_oz: 0.6, carbs_per_oz: 5.0, fat_per_oz: 1.0, calories_per_oz: 31 },
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'jasmine_rice': { name: "Jasmine Rice", category: "carb", price_per_oz: 0.021, protein_per_oz: 0.7, carbs_per_oz: 8.0, fat_per_oz: 0, calories_per_oz: 35 },
         'pasta': { name: "Spaghetti Pasta", category: "carb", price_per_oz: 0.036, protein_per_oz: 1.5, carbs_per_oz: 8.0, fat_per_oz: 0.2, calories_per_oz: 40 },
         'granola': { name: "Granola/Fruit", category: "carb", price_per_oz: 0.100, protein_per_oz: 0.5, carbs_per_oz: 6.0, fat_per_oz: 1.0, calories_per_oz: 35 },
-        
+
         // veggies
         'broccoli': { name: "Broccoli", category: "veg", price_per_oz: 0.133, protein_per_oz: 0.8, carbs_per_oz: 2.0, fat_per_oz: 0, calories_per_oz: 11 },
         'green_beans': { name: "Green Beans", category: "veg", price_per_oz: 0.099, protein_per_oz: 0.5, carbs_per_oz: 2.0, fat_per_oz: 0, calories_per_oz: 10 }
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Yogurt Parfait': { protein_id: 'greek_yogurt', carb_id: 'granola', veg_id: 'broccoli' },
         'Honey Sweet Cottage Cheese': { protein_id: 'cottage_cheese', carb_id: 'granola', veg_id: 'green_beans' },
         'Morning Grand Slam': { protein_id: 'eggs', carb_id: 'sweet_potato', veg_id: 'broccoli' },
-        
+
         // Snacks
         'Meat & Cheese-To-Go': { protein_id: 'pork_shoulder', carb_id: 'mashed_potato', veg_id: 'green_beans' },
 
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Determine required ounces by dividing target meal macros by the ingredient macros per cooked ounce
         let pOz = Math.round(targetMealProtein / pIng.protein_per_oz);
-        
+
         // Carb rounding based on fitness goal (floor for Fat Loss, ceil for Muscle Gain, round for Maintain)
         const answers = JSON.parse(localStorage.getItem('ffp_user_answers')) || userAnswers;
         const fitnessGoal = answers['Goal'] || 'Maintain';
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (fitnessGoal === 'Muscle Gain') {
             cOz = Math.ceil(cOzRaw);
         }
-        
+
         let vOz = 2; // standard serving of 2 oz
 
         // Use min/max guardrails only *after* macro division and rounding are complete
@@ -140,10 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const fillBar = document.getElementById('progress-fill');
     const progressText = document.getElementById('progress-text');
     const progressNum = document.getElementById('progress-num');
-    
+
     // Webhook Configuration (matching user's verified Kairos Make integration)
-    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/634ao2dslkl43sfihn02hn9quq9s6pml';
-    
+    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/2p5li29o1by9kjksn4h0lnpgghjma3qa';
+
     // Stripe Checkout link for the $200 8-Week Program (User replaces this with live link)
     const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/28EbJ14Mh3lRg7g0na1ck07';
 
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         steps.forEach(pane => {
             pane.classList.remove('active');
         });
-        
+
         const nextPane = document.getElementById(`quiz-step-${stepNum}`);
         if (nextPane) {
             nextPane.classList.add('active');
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 2. Event Listeners for Quiz Buttons & Navigation
-    
+
     // Handle Option Button Clicks (Goals, Gender, Activity, Studio)
     const optionButtons = document.querySelectorAll('.quiz-btn-option');
     optionButtons.forEach(btn => {
@@ -248,10 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const parentPane = btn.closest('.quiz-step-pane');
             const question = btn.getAttribute('data-question');
             const val = btn.getAttribute('data-val');
-            
+
             // Save state
             userAnswers[question] = val;
-            
+
             // Toggle visual selection
             parentPane.querySelectorAll('.quiz-btn-option').forEach(b => {
                 b.classList.remove('selected');
@@ -313,13 +313,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     const lastName = document.getElementById('input-last')?.value?.trim();
                     const email = document.getElementById('input-email')?.value?.trim();
                     const phone = document.getElementById('input-phone')?.value?.trim();
-                    
+
                     if (firstName && lastName && email && phone) {
                         userAnswers['First Name'] = firstName;
                         userAnswers['Last Name'] = lastName;
                         userAnswers['Email'] = email;
                         userAnswers['Phone'] = phone;
-                        
+
                         const payload = {
                             ...userAnswers,
                             partial: true,
@@ -408,14 +408,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // High-Protein Macronutrient Breakdown
             // Protein: 1.0g per lb of body weight (4 kcal/g)
             let proteinGrams = Math.round(userAnswers['Weight']);
-            
+
             // Apply absolute gender-specific protein caps (220g for men, 160g for women)
             if (gender === 'Male') {
                 if (proteinGrams > 220) proteinGrams = 220;
             } else {
                 if (proteinGrams > 160) proteinGrams = 160;
             }
-            
+
             // Limit protein to maximum of 40% total calories for safety margins
             if (proteinGrams * 4 > targetCalories * 0.4) {
                 proteinGrams = Math.round((targetCalories * 0.4) / 4);
@@ -460,13 +460,13 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Calculating Plan & Opening Offers...';
 
             try {
-                // Calculate targets for the 4 main meals (Breakfast, Lunch #1, Lunch #2, Dinner)
-                // Deducting snack (25g Protein, 20g Carbs, 10g Fat) and dividing the rest by 4
-                const mealTargetP = (proteinGrams - 25) / 4;
-                const mealTargetC = (carbGrams - 20) / 4;
-                const mealTargetF = (fatGrams - 10) / 4;
+                // Calculate target macros for the 4 daily meals (divided evenly)
+                const mealTargetP = proteinGrams / 4;
+                const mealTargetC = carbGrams / 4;
+                const mealTargetF = fatGrams / 4;
 
                 // Calculate dynamic portions for signature meals for webhook mapping
+                const eggsDetails = calculateMealPortionsAndPricing('Steak and Eggs', mealTargetP, mealTargetC, mealTargetF);
                 const steakDetails = calculateMealPortionsAndPricing('Steak n Mash', mealTargetP, mealTargetC, mealTargetF);
                 const chickenDetails = calculateMealPortionsAndPricing('Teriyaki Chicken', mealTargetP, mealTargetC, mealTargetF);
 
@@ -480,6 +480,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     studio: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home',
                     gym: userAnswers['Gym'] || userAnswers['Studio'] || 'At Home',
                     // Portion & Pricing details for Make/Google Sheets integration
+                    eggs_meal_name: eggsDetails.name,
+                    eggs_meal_portions: eggsDetails.detailsHtml,
+                    eggs_meal_protein: eggsDetails.protein,
+                    eggs_meal_carbs: eggsDetails.carbs,
+                    eggs_meal_fat: eggsDetails.fat,
+                    eggs_meal_calories: eggsDetails.calories,
+                    
                     steak_meal_name: steakDetails.name,
                     steak_meal_price: steakDetails.price,
                     steak_meal_portions: steakDetails.detailsHtml,
@@ -510,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
-                
+
                 // Hide Quiz Widget & Show Custom Tiers / Pricing
                 revealDashboardResults();
             }
@@ -521,13 +528,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function revealDashboardResults() {
         const answers = JSON.parse(localStorage.getItem('ffp_user_answers')) || userAnswers;
         const plan = JSON.parse(localStorage.getItem('ffp_macro_plan')) || calculatedPlan;
-        
+
         // Hide Main Hero Header and Hero Grid
         const heroSection = document.querySelector('.hero-sec');
         if (heroSection) {
             heroSection.style.padding = '40px 0 60px 0'; // Tighten padding
         }
-        
+
         const heroGrid = document.querySelector('.hero-grid');
         if (heroGrid) {
             heroGrid.style.display = 'none'; // Clear out the form view
@@ -537,7 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultsPane = document.getElementById('results-pane');
         if (resultsPane) {
             resultsPane.style.display = 'block'; // Make results visible
-            
+
             // Smooth scroll to results header
             resultsPane.scrollIntoView({ behavior: 'smooth' });
         }
@@ -548,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const proteinNode = document.getElementById('macro-val-protein');
         const carbNode = document.getElementById('macro-val-carbs');
         const fatNode = document.getElementById('macro-val-fat');
-        
+
         if (nameNode) nameNode.textContent = answers['First Name'] || 'Athlete';
         if (calNode) calNode.textContent = plan.calories;
         if (proteinNode) proteinNode.textContent = `${plan.protein}g`;
@@ -638,7 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const mealTargetC = isSnack ? 20 : (targetC - 20) / 4;
             const mealTargetF = isSnack ? 10 : (targetF - 10) / 4;
             const d = calculateMealPortionsAndPricing(meal.name, mealTargetP, mealTargetC, mealTargetF);
-            
+
             // Format details to display cooked specs cleanly
             const portionsHtml = d.portions ? `
                 <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px; line-height: 1.4;">
@@ -691,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const mealTargetC = isSnack ? 20 : (targetC - 20) / 4;
             const mealTargetF = isSnack ? 10 : (targetF - 10) / 4;
             const d = calculateMealPortionsAndPricing(m.name, mealTargetP, mealTargetC, mealTargetF);
-            
+
             if (d.portions) {
                 Object.keys(d.portions).forEach(key => {
                     const item = d.portions[key];
@@ -707,11 +714,11 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Popup blocked! Please allow popups to download/print your grocery list.");
             return;
         }
-        
+
         let rowsHtml = Object.keys(totals).map(name => {
             const cookedOz = totals[name];
             const cookedLbs = (cookedOz / 16).toFixed(1);
-            
+
             let yieldNote = "";
             if (name.includes("Sirloin")) {
                 const rawOz = Math.ceil(cookedOz / 0.708);
@@ -901,7 +908,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const item = trigger.closest('.faq-item');
                 const content = item.querySelector('.faq-content');
                 const isOpen = item.classList.contains('active');
-                
+
                 // Close all other FAQ items first
                 document.querySelectorAll('.faq-item').forEach(otherItem => {
                     otherItem.classList.remove('active');
@@ -911,7 +918,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         otherContent.style.padding = '0 24px';
                     }
                 });
-                
+
                 // Toggle clicked item
                 if (!isOpen) {
                     item.classList.add('active');
