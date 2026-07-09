@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'chopped_potato': { name: "Chopped Potato", category: "carb", price_per_oz: 0.150, protein_per_oz: 0.7, carbs_per_oz: 6.0, fat_per_oz: 0.5, calories_per_oz: 31 },
         'mashed_potato': { name: "Mashed Potato", category: "carb", price_per_oz: 0.103, protein_per_oz: 0.6, carbs_per_oz: 5.0, fat_per_oz: 1.0, calories_per_oz: 31 },
         'sweet_potato': { name: "Sweet Potato", category: "carb", price_per_oz: 0.083, protein_per_oz: 0.6, carbs_per_oz: 6.0, fat_per_oz: 0, calories_per_oz: 26 },
-        'jasmine_rice': { name: "Jasmine Rice", category: "carb", price_per_oz: 0.021, protein_per_oz: 0.7, carbs_per_oz: 8.0, fat_per_oz: 0, calories_per_oz: 35 },
+        'jasmine_rice': { name: "Cooked Jasmine Rice", category: "carb", price_per_oz: 0.021, protein_per_oz: 0.8, carbs_per_oz: 8.0, fat_per_oz: 0.1, calories_per_oz: 37 },
         'pasta': { name: "Spaghetti Pasta", category: "carb", price_per_oz: 0.036, protein_per_oz: 1.5, carbs_per_oz: 8.0, fat_per_oz: 0.2, calories_per_oz: 40 },
         'granola': { name: "Granola/Fruit", category: "carb", price_per_oz: 0.100, protein_per_oz: 0.5, carbs_per_oz: 6.0, fat_per_oz: 1.0, calories_per_oz: 35 },
         
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Use min/max guardrails only *after* macro division and rounding are complete
         pOz = Math.max(4, Math.min(8, pOz));
-        cOz = Math.max(3, Math.min(10, cOz));
+        cOz = Math.max(3, Math.min(5, cOz));
 
         // Recompute actual meal macros using these clamped whole ounces
         const mealP = Math.round((pOz * pIng.protein_per_oz) + (cOz * cIng.protein_per_oz) + (vOz * vIng.protein_per_oz));
