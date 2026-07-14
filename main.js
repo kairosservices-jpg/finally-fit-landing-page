@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { limit: 40, text: "Calculating macronutrient splits (Protein/Carbs/Fat)..." },
                 { limit: 60, text: "Creating customized meal portion guides..." },
                 { limit: 80, text: "Syncing with your local kitchen database..." },
-                { limit: 99, text: "Generating your 12-week roadmap plan..." }
+                { limit: 99, text: "Final Touches on Your Meal Plan..." }
             ];
 
             const progressInterval = setInterval(() => {
