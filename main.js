@@ -563,6 +563,51 @@ document.addEventListener('DOMContentLoaded', () => {
         if (carbNode) carbNode.textContent = `${plan.carbs}g`;
         if (fatNode) fatNode.textContent = `${plan.fat}g`;
 
+        // Populate personalized roadmap profile
+        const roadmapWeight = document.getElementById('roadmap-current-weight');
+        const roadmapWeightLoss = document.getElementById('roadmap-weight-loss');
+        const roadmapActivity = document.getElementById('roadmap-activity');
+        const roadmapCalories = document.getElementById('roadmap-calories');
+        const roadmapTimeline = document.getElementById('roadmap-timeline');
+
+        const currentWeight = answers['Weight'] || '--';
+        const weightLossText = answers['Weight Goal'] || '10-20 lbs';
+        
+        let weightLossDigits = '10-20';
+        let timelineWeeks = '8-12';
+        if (weightLossText.includes('1-10')) {
+            weightLossDigits = '1-10';
+            timelineWeeks = '4-6';
+        } else if (weightLossText.includes('10-20')) {
+            weightLossDigits = '10-20';
+            timelineWeeks = '8-12';
+        } else if (weightLossText.includes('20-30')) {
+            weightLossDigits = '20-30';
+            timelineWeeks = '12-16';
+        } else if (weightLossText.includes('30+')) {
+            weightLossDigits = '30+';
+            timelineWeeks = '16+';
+        }
+
+        let activityLabel = 'Lightly Active';
+        const rawActivity = answers['Activity'] || '1.375';
+        const rawActivityStr = String(rawActivity).toLowerCase();
+        if (rawActivityStr.includes('sitting') || rawActivityStr.includes('desk') || rawActivityStr === '1.2') {
+            activityLabel = 'Desk Job / Inactive';
+        } else if (rawActivityStr.includes('lightly') || rawActivityStr === '1.375') {
+            activityLabel = 'Lightly Active';
+        } else if (rawActivityStr.includes('moderately') || rawActivityStr === '1.55') {
+            activityLabel = 'Moderately Active';
+        } else if (rawActivityStr.includes('very') || rawActivityStr === '1.725') {
+            activityLabel = 'Very Active';
+        }
+
+        if (roadmapWeight) roadmapWeight.textContent = currentWeight;
+        if (roadmapWeightLoss) roadmapWeightLoss.textContent = weightLossDigits;
+        if (roadmapActivity) roadmapActivity.textContent = activityLabel;
+        if (roadmapCalories) roadmapCalories.textContent = plan.calories;
+        if (roadmapTimeline) roadmapTimeline.textContent = timelineWeeks;
+
         // Render dynamic Client Weekly Meal Plan metadata
         const planClientNameNode = document.getElementById('plan-client-name');
         const planWeekDateNode = document.getElementById('plan-week-date');
