@@ -206,6 +206,22 @@
                         </form>
                     </div>
 
+                    <!-- STEP LOADING: Dynamic progress loading -->
+                    <div class="quiz-step-pane" id="quiz-step-loading" data-step-index="loading" style="display: none; text-align: center; padding: 30px 10px;">
+                        <span style="font-family: var(--font-primary); font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 12px; font-weight: 700; text-transform: uppercase;">Creating Your Plan</span>
+                        <h3 class="quiz-question-title" style="margin-bottom: 20px; font-size: 1.5rem;">Building Your Personalized Roadmap...</h3>
+                        
+                        <!-- Progress Bar Container -->
+                        <div style="width: 100%; max-width: 450px; height: 10px; background: rgba(255, 255, 255, 0.08); border: 2px solid #fff; border-radius: 0; margin: 0 auto 20px auto; overflow: hidden; position: relative;">
+                            <div id="loading-bar-progress" style="width: 0%; height: 100%; background: var(--brand-red); transition: width 0.1s linear;"></div>
+                        </div>
+                        
+                        <!-- Dynamic Loading Text -->
+                        <p id="loading-step-text" style="color: rgba(255, 255, 255, 0.8); font-size: 0.95rem; font-weight: 300; min-height: 24px; margin: 0 auto; max-width: 450px; line-height: 1.4;">
+                            Analyzing your daily calorie needs...
+                        </p>
+                    </div>
+
                 </div>
 
             </div>
