@@ -358,6 +358,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Phone number validation (digits must be between 10 and 15)
+            const cleanPhone = phone.replace(/\D/g, '');
+            if (cleanPhone.length < 10 || cleanPhone.length > 15) {
+                alert('Please enter a valid phone number (minimum 10 digits).');
+                document.getElementById('input-phone').focus();
+                return;
+            }
+
             // Capture last set of inputs
             userAnswers['First Name'] = firstName;
             userAnswers['Last Name'] = lastName;
