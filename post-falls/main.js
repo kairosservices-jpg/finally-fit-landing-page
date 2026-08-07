@@ -589,26 +589,20 @@ document.addEventListener('DOMContentLoaded', () => {
         renderDailyPlanDays();
 
         // Render new personalized elements
-        const nameNode2 = document.getElementById('result-user-name-2');
-        if (nameNode2) nameNode2.textContent = answers['First Name'] || 'Athlete';
+        const transNameNode = document.getElementById('trans-user-name');
+        if (transNameNode) {
+            transNameNode.textContent = (answers['First Name'] || 'ATHLETE').toUpperCase();
+        }
 
-        const goalNode = document.getElementById('result-user-goal');
-        if (goalNode) goalNode.textContent = answers['Weight Goal'] || '10-20 lbs';
-
-        const cardGoalNode = document.getElementById('card-user-goal');
-        if (cardGoalNode) cardGoalNode.textContent = answers['Weight Goal'] || '10-20 lbs';
-
-        const cardCalNode = document.getElementById('card-user-calories');
-        if (cardCalNode) cardCalNode.textContent = plan.calories;
-
-        const cardProteinNode = document.getElementById('card-user-protein');
-        if (cardProteinNode) cardProteinNode.textContent = plan.protein;
-
-        const cardCarbNode = document.getElementById('card-user-carbs');
-        if (cardCarbNode) cardCarbNode.textContent = plan.carbs;
-
-        const cardFatNode = document.getElementById('card-user-fat');
-        if (cardFatNode) cardFatNode.textContent = plan.fat;
+        const bookingGoalCopyNode = document.getElementById('booking-goal-copy');
+        if (bookingGoalCopyNode) {
+            const rawGoal = answers['Weight Goal'] || 'weight';
+            let goalPhrase = 'losing weight';
+            if (rawGoal.includes('lbs') || rawGoal.includes('+')) {
+                goalPhrase = `losing ${rawGoal}`;
+            }
+            bookingGoalCopyNode.textContent = `We'll review the plan you just received, talk about your goals, and I'll show you what your first 28 days toward ${goalPhrase} could look like.`;
+        }
 
         // Update Strategy Session booking CTA links
         const bookingBtns = document.querySelectorAll('.cta-btn-strategy');
