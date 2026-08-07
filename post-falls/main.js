@@ -387,6 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 Activity: activityMultiplier
             }));
             localStorage.setItem('ffp_macro_plan', JSON.stringify(calculatedPlan));
+            localStorage.setItem('ffp_results_view_count', '0');
 
             // Hide Step 13, Show loading step pane
             const stepEmail = document.getElementById('quiz-step-email');
@@ -947,4 +948,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Check if user has already calculated macros and handle the 3-reload limit
+    const savedAnswers = localStorage.getItem('ffp_user_answers');
+    const savedPlan = localStorage.getItem('ffp_macro_plan');
+    if (savedAnswers && savedPlan) {
+        let viewCount = parseInt(localStorage.getItem('ffp_results_view_count')) || 0;
+        if (viewCount < 3) {
+            localStorage.setItem('ffp_results_view_count', viewCount + 1);
+            revealDashboardResults();
+        } else {
+            // Reached reload limit, reset local storage to show fresh quiz
+            localStorage.removeItem('ffp_user_answers');
+            localStorage.removeItem('ffp_macro_plan');
+            localStorage.removeItem('ffp_results_view_count');
+        }
+    }
 });
