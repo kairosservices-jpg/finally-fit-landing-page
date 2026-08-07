@@ -926,10 +926,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Check if user has already calculated macros in past session and load directly if wanted
-    const savedAnswers = localStorage.getItem('ffp_user_answers');
-    const savedPlan = localStorage.getItem('ffp_macro_plan');
-    if (savedAnswers && savedPlan) {
-        revealDashboardResults();
-    }
 });
