@@ -141,6 +141,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Stripe Checkout link for the $200 8-Week Program
     const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/28EbJ14Mh3lRg7g0na1ck07';
 
+    // Strategy Session Booking URL
+    const STRATEGY_SESSION_BOOKING_URL = 'https://calendar.app.google/egZH5unsZwM9oJwYA';
+
     // Capture UTM parameters from URL for GHL attribution tracking
     function captureUTMs() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -584,20 +587,38 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render dynamic Daily Meal Plan Blueprint
         renderDailyPlanDays();
 
-        // Update checkout link to Stripe for the Access Pass program purchase
-        const stripeBtn = document.getElementById('stripe-checkout-btn');
-        if (stripeBtn) {
-            stripeBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const calculatedTier = plan.tier || 'L';
-                let checkoutUrl = STRIPE_CHECKOUT_URL;
-                if (answers['Email']) {
-                    const email = encodeURIComponent(answers['Email']);
-                    checkoutUrl += `?prefilled_email=${email}&client_reference_id=${email}&utm_content=${calculatedTier}`;
-                }
-                window.location.href = checkoutUrl;
-            });
-        }
+        // Render new personalized elements
+        const nameNode2 = document.getElementById('result-user-name-2');
+        if (nameNode2) nameNode2.textContent = answers['First Name'] || 'Athlete';
+
+        const goalNode = document.getElementById('result-user-goal');
+        if (goalNode) goalNode.textContent = answers['Weight Goal'] || '10-20 lbs';
+
+        const cardGoalNode = document.getElementById('card-user-goal');
+        if (cardGoalNode) cardGoalNode.textContent = answers['Weight Goal'] || '10-20 lbs';
+
+        const cardCalNode = document.getElementById('card-user-calories');
+        if (cardCalNode) cardCalNode.textContent = plan.calories;
+
+        const cardProteinNode = document.getElementById('card-user-protein');
+        if (cardProteinNode) cardProteinNode.textContent = plan.protein;
+
+        const cardCarbNode = document.getElementById('card-user-carbs');
+        if (cardCarbNode) cardCarbNode.textContent = plan.carbs;
+
+        const cardFatNode = document.getElementById('card-user-fat');
+        if (cardFatNode) cardFatNode.textContent = plan.fat;
+
+        // Update Strategy Session booking CTA links
+        const bookingBtns = document.querySelectorAll('.cta-btn-strategy');
+        bookingBtns.forEach(btn => {
+            let bookingUrl = STRATEGY_SESSION_BOOKING_URL;
+            if (answers['Email']) {
+                const email = encodeURIComponent(answers['Email']);
+                bookingUrl += `?email=${email}`;
+            }
+            btn.href = bookingUrl;
+        });
 
         // Print / Save Meal Plan PDF button listener
         const printBtn = document.getElementById('print-meal-plan-btn');
