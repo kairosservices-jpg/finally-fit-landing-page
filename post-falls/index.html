@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Meal Plan & Delivery | Finally Fit Post Falls</title>
+    <meta name="description" content="Calculate your personalized daily macros, unlock member-pricing, and get chef-cooked high-protein meals delivered fresh. Done-for-you fitness nutrition.">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=3.4">
+    
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Script defer -->
+    <script src="main.js?v=3.4" defer></script>
+</head>
+<body>
+
+
+    <!-- MAIN BRAND HEADER -->
+    <header class="header-nav">
+        <div class="container nav-flex">
+            <a href="#" class="logo-link">
+                <img src="../assets/kairos_logo.png" alt="Kairos Logo" class="logo-img" onerror="this.style.display='none'">
+            </a>
+            
+            <div style="margin-left: auto;">
+                <a href="https://kairosmealpreps.bottle.com" target="_blank" class="nav-link-item" style="color: var(--color-white); text-decoration: none; font-family: var(--font-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;">Order Weekly Meals</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION & INTEGRATED LEAD CAPTURE QUIZ -->
+    <section class="hero-sec" id="quiz-anchor">
+        <div class="container">
+            <div class="quiz-hero-container">
+                <!-- Centered Bold Header -->
+                <h1 class="hero-post-falls-title">Post Falls Residents</h1>
+                
+                <!-- Centered Step-by-Step Lead Magnet Quiz Widget -->
+                <div class="lead-magnet-content quiz-container" id="lead-quiz">
+
+                    <!-- Step 1 -->
+                    <div class="quiz-step active" id="quiz-step-1">
+                        <h2 class="font-heading" style="font-size: 2.2rem; margin-bottom: 1rem; text-align: center;">Free Finally Fit Meal Plan</h2>
+                        <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem; max-width: 500px; margin-inline: auto; text-align: center;">Take this quick 30-second quiz! You’ll get a free meal and grocery list that will help you lose 10, 15, 20+ pounds without spending hours in the kitchen or the gym.</p>
+                        
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">1. What’s your ZIP code?</h3>
+                        <div class="quiz-options">
+                            <input type="text" class="lead-input" placeholder="e.g. 83854" data-question="What's your ZIP code?" required style="margin-bottom: 0;" />
+                            <button class="btn btn-secondary text-next-btn" data-next="quiz-step-2" style="margin-top: 1rem; width: 100%;">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="quiz-step" id="quiz-step-2" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 2 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">2. How old are you?</h3>
+                        <div class="quiz-options">
+                            <input type="number" class="lead-input" placeholder="e.g. 35" data-question="How old are you?" required style="margin-bottom: 0;" />
+                            <button class="btn btn-secondary text-next-btn" data-next="quiz-step-3" style="margin-top: 1rem; width: 100%;">Next</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-1" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="quiz-step" id="quiz-step-3" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 3 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">3. Are you:</h3>
+                        <div class="quiz-options">
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-4">Male</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-4">Female</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-2" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="quiz-step" id="quiz-step-4" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 4 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">4. How tall are you?</h3>
+                        <div class="quiz-options">
+                            <div class="split-inputs-container">
+                                <input type="number" class="lead-input" placeholder="Feet" data-question="Height (Feet)" required style="flex: 1; margin-bottom: 0;" />
+                                <input type="number" class="lead-input" placeholder="Inches" data-question="Height (Inches)" required style="flex: 1; margin-bottom: 0;" />
+                            </div>
+                            <button class="btn btn-secondary text-next-btn" data-next="quiz-step-5" style="margin-top: 1rem; width: 100%;">Next</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-3" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="quiz-step" id="quiz-step-5" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 5 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">5. What is your current weight?</h3>
+                        <div class="quiz-options">
+                            <input type="text" class="lead-input" placeholder="e.g. 180 lbs" data-question="What is your current weight?" required style="margin-bottom: 0;" />
+                            <button class="btn btn-secondary text-next-btn" data-next="quiz-step-6" style="margin-top: 1rem; width: 100%;">Next</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-4" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="quiz-step" id="quiz-step-6" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 6 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">6. Which best describes your activity level?</h3>
+                        <div class="quiz-options">
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-7">Mostly sitting / desk job</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-7">Lightly active</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-7">Moderately active</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-7">Very active</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-5" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+
+                    <!-- Step 7 -->
+                    <div class="quiz-step" id="quiz-step-7" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 7 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">7. How much weight would you like to lose?</h3>
+                        <div class="quiz-options">
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-8">1-10 lbs</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-8">10-20 lbs</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-8">20-30 lbs</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-8">30+ lbs</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-6" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+
+                    <!-- Step 8 -->
+                    <div class="quiz-step" id="quiz-step-8" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 8 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">8. How many hours do you work each week?</h3>
+                        <div class="quiz-options">
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-10">Under 40</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-10">40-50</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-10">50-60</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-10">60+</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-7" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+
+                    <!-- Step 10 -->
+                    <div class="quiz-step" id="quiz-step-10" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 10 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">10. How important is losing this weight to you right now?</h3>
+                        <div class="quiz-options">
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-11">1 - Not very important</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-11">2 - I know I should, but I'm not ready</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-11">3 - I want to make a change</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-11">4 - I'm serious about it</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-11">5 - I need to do this now</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-8" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+
+                    <!-- Step 11 -->
+                    <div class="quiz-step" id="quiz-step-11" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 11 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">11. What is your biggest struggle right now?</h3>
+                        <div class="quiz-options">
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-12">I don't have time</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-12">I can't stay consistent</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-12">I don't know what to eat</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-12">I'm too tired after work</button>
+                            <button class="btn btn-secondary quiz-btn" data-next="quiz-step-12">I lose weight, then gain it back</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-10" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+                    
+                    <!-- Step 12 -->
+                    <div class="quiz-step" id="quiz-step-12" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Step 12 of 13</span>
+                        <h3 class="font-heading" style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">12. What is your name?</h3>
+                        <div class="quiz-options">
+                            <div class="split-inputs-container">
+                                <input type="text" class="lead-input" placeholder="First Name" data-question="What's your first name?" required style="flex: 1; margin-bottom: 0;" />
+                                <input type="text" class="lead-input" placeholder="Last Name" data-question="What's your last name?" required style="flex: 1; margin-bottom: 0;" />
+                            </div>
+                            <button class="btn btn-secondary text-next-btn" data-next="quiz-step-email" style="margin-top: 1rem; width: 100%;">Next</button>
+                        </div>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-11" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+
+                    <!-- Step 13 (Email + Phone) -->
+                    <div class="quiz-step" id="quiz-step-email" style="display: none;">
+                        <span class="font-heading" style="font-size: 0.85rem; letter-spacing: 0.2em; color: var(--brand-red); display: block; margin-bottom: 0.5rem; text-align: center;">Results Ready</span>
+                        <h2 class="font-heading" style="font-size: 2.2rem; margin-bottom: 1rem; text-align: center;">Your Plan is Ready!</h2>
+                        <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem; max-width: 500px; margin-inline: auto; text-align: center;">Enter your email and phone number to instantly receive your customized workout and meal plan</p>
+                        
+                        <form class="lead-magnet-form" id="quiz-form">
+                            <input type="email" id="quiz-email" class="lead-input" placeholder="Enter your best email address" required style="margin-bottom: 1rem;" />
+                            <input type="tel" id="quiz-phone" class="lead-input" placeholder="Enter your best phone number" required style="margin-bottom: 1rem;" />
+                            
+                            <div class="sms-disclaimer" style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.45); margin-top: 8px; margin-bottom: 12px; line-height: 1.4; text-align: left; font-weight: 300;">
+                                By clicking below, you consent to receive text messages from Finally Fit for order reminders, meal swaps, and updates. Msg & data rates may apply. Msg frequency varies. Reply STOP to opt-out. View our <a href="https://kairosmealpreps.com/privacy" target="_blank" style="color: var(--brand-red); text-decoration: underline;">Privacy Policy</a>.
+                            </div>
+
+                            <button type="submit" class="btn btn-primary lead-btn" style="width: 100%;">Reveal My Results & Get Guide</button>
+                        </form>
+                        <button class="btn btn-secondary quiz-back-btn" data-prev="quiz-step-12" style="margin-top: 1.5rem; width: 100%; opacity: 0.7;">Back</button>
+                    </div>
+                    
+                    <!-- Step 14 (Loading Screen) -->
+                    <div class="quiz-step" id="quiz-step-loading" style="display: none; text-align: center; padding: 40px 20px;">
+                        <span class="font-heading" style="font-size: 0.9rem; letter-spacing: 0.25em; color: var(--brand-red); display: block; margin-bottom: 1.5rem; text-transform: uppercase;">Creating Your Plan</span>
+                        <h2 class="font-heading" style="font-size: 2rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px;">Building Your Personalized Meal Plan...</h2>
+                        
+                        <!-- Progress Bar Container -->
+                        <div style="width: 100%; max-width: 450px; height: 12px; background: rgba(255, 255, 255, 0.08); border: 2px solid #fff; border-radius: 0; margin: 0 auto 2.5rem auto; overflow: hidden; position: relative;">
+                            <div id="loading-bar-progress" style="width: 0%; height: 100%; background: var(--brand-red); transition: width 0.1s linear;"></div>
+                        </div>
+                        
+                        <!-- Dynamic Loading Text -->
+                        <p id="loading-step-text" style="color: rgba(255, 255, 255, 0.85); font-size: 1.05rem; font-weight: 300; height: 30px; margin: 0 auto; max-width: 500px;">
+                            Analyzing your daily calorie needs...
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- DYNAMIC RESULTS & PRICING PANEL (Initially hidden, revealed on submit) -->
+            <div class="results-pane" id="results-pane">
+                
+                <!-- Results Header Box -->
+                <div class="results-header-box">
+                    <h2>Congratulations <span id="result-user-name">Athlete</span>! Your Plan is Ready.</h2>
+                    <p style="font-size: 1.05rem; color: rgba(255, 255, 255, 0.7); font-weight: 300; margin-top: -5px; margin-bottom: 25px;">
+                        A complete PDF copy of your meal plan has also been emailed to you!
+                    </p>
+
+                    
+                    <div class="macro-box-grid">
+                        <div class="macro-stat-card calorie-card">
+                            <div class="macro-val" id="macro-val-calories">1,850</div>
+                            <div class="macro-label">Calories</div>
+                        </div>
+                        <div class="macro-stat-card">
+                            <div class="macro-val" style="color: var(--brand-red);" id="macro-val-protein">175g</div>
+                            <div class="macro-label">Protein</div>
+                        </div>
+                        <div class="macro-stat-card">
+                            <div class="macro-val" id="macro-val-carbs">125g</div>
+                            <div class="macro-label">Carbs</div>
+                        </div>
+                        <div class="macro-stat-card">
+                            <div class="macro-val" id="macro-val-fat">55g</div>
+                            <div class="macro-label">Fat</div>
+                        </div>
+                    </div>
+
+                    <!-- Personalized Roadmap Context Section -->
+                    <div class="roadmap-context-box" style="margin-top: 35px; margin-bottom: 30px; text-align: left; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 25px 30px; max-width: 650px; margin-inline: auto;">
+                        <h4 style="font-family: var(--font-heading); font-size: 1.15rem; color: #fff; margin-top: 0; margin-bottom: 15px; text-align: center;">
+                            Imagine Where You Could Be In Less Than 12 Weeks From Now
+                        </h4>
+                        <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin-bottom: 14px; font-weight: 300;">
+                            Your meal plan tells you what to eat. But lasting results come from having a system you can actually stick to.
+                        </p>
+                        
+                        <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.6; margin-bottom: 18px; font-weight: 300;">
+                            During your free Finally Fit Roadmap Call, we'll help you build a realistic plan around your life so you can stop starting over and finally make lasting progress:
+                        </p>
+                        <ul style="list-style-type: none; padding-left: 0; margin: 0 0 20px 0; background: none; border-left: none; border-radius: 0; padding: 0;">
+                            <li style="margin-bottom: 10px; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5; padding-left: 20px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--brand-red);">•</span> Stop wondering what to eat every day.
+                            </li>
+                            <li style="margin-bottom: 10px; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5; padding-left: 20px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--brand-red);">•</span> Build healthy habits that fit your work schedule and family life.
+                            </li>
+                            <li style="margin-bottom: 10px; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5; padding-left: 20px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--brand-red);">•</span> Lose weight without constantly starting over every Monday.
+                            </li>
+                            <li style="margin-bottom: 10px; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5; padding-left: 20px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--brand-red);">•</span> Remove the biggest obstacles that have held you back in the past.
+                            </li>
+                            <li style="margin-bottom: 10px; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5; padding-left: 20px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--brand-red);">•</span> Create a plan you can actually see yourself following six months from now.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Google Meet call scheduler -->
+                    <div style="margin-top: 35px; text-align: center; max-width: 650px; margin-inline: auto;">
+                        <a href="https://calendar.app.google/egZH5unsZwM9oJwYA" target="_blank" rel="noopener noreferrer" class="brutalist-btn" id="google-meet-btn-primary" style="width: 100%; font-size: 1.5rem; padding: 24px 28px; display: block; text-align: center; text-decoration: none; font-weight: 900; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 8px; box-shadow: 0 0 30px rgba(227, 39, 38, 0.45);">Claim My Roadmap Session</a>
+                    </div>
+
+                    <!-- VSL Video Presentation -->
+                    <div class="vsl-wrap" style="margin-top: 35px; text-align: center; display: none;">
+                        <h4 style="font-family: var(--font-primary); font-size: 1.1rem; text-transform: uppercase; color: var(--brand-red); margin-bottom: 12px; letter-spacing: 0.5px;">
+                            📺 Step-by-Step System Walkthrough
+                        </h4>
+                        <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); max-width: 500px; margin: 0 auto 20px auto; font-weight: 300; line-height: 1.4;">
+                            Watch this brief 3-minute video to see how your macro blueprint is cooked, delivered, and managed inside your Client Portal.
+                        </p>
+                        
+                        <div class="vsl-video-wrapper">
+                            <!-- Responsive Video Embed Placeholder (Iframe) -->
+                            <iframe 
+                                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                                title="Finally Fit Post Falls System Walkthrough" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <!-- Chef Meal Showcase Section -->
+                <div class="meal-showcase-wrap" style="margin-top: 40px; margin-bottom: 80px; display: none;">
+                    <div class="meal-showcase-title">
+                        <span class="sec-tag">Chef's Featured Meals</span>
+                        <h3>Have your meal plan freshly prepped, customized and delivered to you</h3>
+                        <p style="max-width: 600px; margin: 8px auto 0 auto; font-size: 0.95rem;">
+                            Here are some of the high-protein, calorie-calibrated meals you can choose from our weekly expanding menu.
+                        </p>
+                    </div>
+
+                    <div class="meal-showcase-grid">
+                        
+                        <!-- Meal 1: Close up of prepped meals -->
+                        <div class="meal-item-card brutalist-card hover-lift" style="overflow: hidden; height: 260px;">
+                            <img src="../assets/kairosmealpreps2.jpg" alt="Kairos Meal Prep 2" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Meal 2: Steak n Mash (Prepped in rows) - Centered -->
+                        <div class="meal-item-card brutalist-card hover-lift" style="overflow: hidden; height: 260px;">
+                            <img src="../assets/steaknmash.png" alt="Steak n Mash Prepped" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Meal 3: Close up of spaghetti & meatballs -->
+                        <div class="meal-item-card brutalist-card hover-lift" style="overflow: hidden; height: 260px;">
+                            <img src="../assets/kairosmealpreps5.jpg" alt="Kairos Meal Prep 5" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+
+                    </div>
+                </div>
+
+                 <!-- Time & Cost Comparison Section -->
+                  <div class="comparison-wrap" style="margin-top: 60px; margin-bottom: 80px; display: none;">
+                     <div class="sec-title-wrap" style="text-align: center; margin-bottom: 40px;">
+                         <span class="sec-tag">Why Choose Finally Fit</span>
+                         <h3>Doing It Yourself vs. Finally Fit Post Falls</h3>
+                         <p style="max-width: 600px; margin: 8px auto 0 auto; font-size: 0.95rem;">
+                             Time and financial stats based on Bureau of Labor Statistics food-prep time indexes and average grocery spoilage rates.
+                         </p>
+                     </div>
+                     
+                     <div class="brutalist-card" style="padding: 0; overflow-x: auto;">
+                         <table class="comparison-table" style="width: 100%; border-collapse: collapse; text-align: left; font-family: var(--font-primary);">
+                             <thead>
+                                 <tr style="background: rgba(255, 255, 255, 0.03); border-bottom: 2px solid var(--color-border);">
+                                     <th style="padding: 18px 24px; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Weekly Metric</th>
+                                     <th style="padding: 18px 24px; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; color: rgba(255, 255, 255, 0.6);">Doing It Yourself</th>
+                                     <th style="padding: 18px 24px; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; color: var(--brand-red);">Finally Fit Post Falls</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr style="border-bottom: 1px solid var(--color-border);">
+                                     <td style="padding: 16px 24px; font-weight: 600;">Planning & Shopping</td>
+                                     <td style="padding: 16px 24px; color: rgba(255, 255, 255, 0.75);">1.5 Hours</td>
+                                     <td style="padding: 16px 24px; color: var(--brand-red); font-weight: 700;">0 Minutes</td>
+                                 </tr>
+                                 <tr style="border-bottom: 1px solid var(--color-border);">
+                                     <td style="padding: 16px 24px; font-weight: 600;">Cooking & Cleaning</td>
+                                     <td style="padding: 16px 24px; color: rgba(255, 255, 255, 0.75);">5.0 Hours</td>
+                                     <td style="padding: 16px 24px; color: var(--brand-red); font-weight: 700;">0 Minutes</td>
+                                 </tr>
+                                 <tr style="border-bottom: 1px solid var(--color-border);">
+                                     <td style="padding: 16px 24px; font-weight: 600;">Grocery Ingredient Spoilage</td>
+                                     <td style="padding: 16px 24px; color: rgba(255, 255, 255, 0.75);">~22% Wasted (Spoiled food)</td>
+                                     <td style="padding: 16px 24px; color: var(--brand-red); font-weight: 700;">0% Waste</td>
+                                 </tr>
+                                 <tr style="border-bottom: 1px solid var(--color-border);">
+                                     <td style="padding: 16px 24px; font-weight: 600;">Macro Calibrations</td>
+                                     <td style="padding: 16px 24px; color: rgba(255, 255, 255, 0.75);">Manual weighing & food-scale math</td>
+                                     <td style="padding: 16px 24px; color: var(--brand-red); font-weight: 700;">Pre-weighed & exact to your plan</td>
+                                 </tr>
+                                 <tr>
+                                     <td style="padding: 16px 24px; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px;">Real Weekly Cost</td>
+                                     <td style="padding: 16px 24px; color: rgba(255, 255, 255, 0.75); font-weight: 600;">~$190 (including grocery waste)</td>
+                                     <td style="padding: 16px 24px; color: #2ec4b6; font-weight: 700; font-size: 1.1rem;">$149 - $159 / wk</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                 </div>
+
+                 <!-- How It Works Timeline Section -->
+                  <div class="timeline-wrap" style="margin-top: 60px; margin-bottom: 80px; display: none;">
+                     <div class="sec-title-wrap" style="text-align: center; margin-bottom: 40px;">
+                         <span class="sec-tag">Your Weekly Cadence</span>
+                         <h3>How Your Program Operates</h3>
+                         <p style="max-width: 600px; margin: 8px auto 0 auto; font-size: 0.95rem;">
+                             Hitting your custom nutrition goals is as simple as heat, eat, and repeat.
+                         </p>
+                     </div>
+                     
+                     <div class="timeline-grid">
+                         <div class="timeline-card brutalist-card">
+                             <div class="timeline-badge">1</div>
+                             <h4 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--brand-red);">Chef Preps on Thursdays</h4>
+                             <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.5; font-weight: 300; margin: 0;">
+                                 Our professional kitchen preps, weighs, and seals your custom-macro meals fresh in Spokane Valley.
+                             </p>
+                         </div>
+                         <div class="timeline-card brutalist-card">
+                             <div class="timeline-badge">2</div>
+                             <h4 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--brand-red);">Sunday Fresh Delivery</h4>
+                             <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.5; font-weight: 300; margin: 0;">
+                                 Meals are hand-delivered directly to your door or gym in insulated coolers, ready for your training week ahead.
+                             </p>
+                         </div>
+                         <div class="timeline-card brutalist-card">
+                             <div class="timeline-badge">3</div>
+                             <h4 style="font-size: 1.15rem; margin-bottom: 8px; color: var(--brand-red);">Heat, Eat & Swap</h4>
+                             <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.5; font-weight: 300; margin: 0;">
+                                 Heat for 2 minutes to eat. Every Wednesday, use your text-delivered portal link to choose or swap meals with a single click.
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+
+                 <!-- Taste Guarantee Section -->
+                  <div class="guarantee-shield-wrap" style="text-align: center; max-width: 650px; margin: 80px auto 40px auto; padding: 30px; border: 2px solid var(--brand-red); background: rgba(255, 94, 0, 0.03); border-radius: 4px; width: 100%; display: none;">
+                     <div style="font-size: 3rem; color: var(--brand-red); margin-bottom: 15px;">🛡️</div>
+                     <h3 style="font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">The Finally Fit Post Falls Taste Guarantee</h3>
+                     <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.85); line-height: 1.6; font-weight: 300; margin: 0;">
+                         We cook with high-quality ingredients and deliver fresh (never frozen). If you don't absolutely love the taste, portion sizes, or freshness of your meals in your first week, tell us. We will refund <strong>100% of your first week's subscription</strong>. Zero risk, zero questions asked.
+                     </p>
+                     <!-- Pricing Section Header -->
+                     <div class="pricing-title-wrap" style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
+                         <span class="sec-tag">Flexible Membership</span>
+                         <h3>Get Started on Your Program</h3>
+                         <p style="max-width: 600px; margin: 8px auto 0 auto; font-size: 0.95rem;">
+                             No long-term contracts. Pause, skip, or cancel your custom meal service anytime directly in your portal.
+                         </p>
+                     </div>
+                 </div>
+
+                 <!-- Program Purchase & Savings Info Grid -->
+                  <div class="program-checkout-grid" style="display: flex; justify-content: center; margin: 0 auto 60px auto; max-width: 620px; width: 100%; display: none;">
+                     
+                     <!-- Program Entry Card -->
+                     <div class="pricing-card brutalist-card popular program-main-card" style="width: 100%;">
+                         <div class="pricing-badge" style="background: var(--brand-red); color: #fff;">Program Access Pass</div>
+                         <h4 class="pricing-tier-name" style="font-size: 1.8rem; margin-bottom: 4px;">Finally Fit Access Pass</h4>
+                         <p class="pricing-tier-desc" style="margin-bottom: 16px;">Everything you need to automate your custom nutrition & get your meals cooked for you.</p>
+                         
+                         <div class="pricing-price-wrap" style="margin-bottom: 24px;">
+                              <span class="price-symbol">$</span>
+                              <span class="price-num">200</span>
+                              <span class="price-period" style="color: #2ec4b6; font-weight: 700; display: block; font-size: 0.9rem; margin-top: 4px;">100% credited to your digital wallet!</span>
+                          </div>
+                          
+                          <ul class="pricing-features-list" style="margin-bottom: 24px; padding-left: 0; list-style: none;">
+                              <li style="margin-bottom: 12px; display: flex; align-items: flex-start; line-height: 1.4; color: #2ec4b6;"><span style="font-weight: 700; margin-right: 10px; font-size: 1.1rem;">★</span> <span><strong>$200 Instantly Credited:</strong> 100% of your deposit goes straight into your digital wallet to fund your meals</span></li>
+                              <li style="margin-bottom: 12px; display: flex; align-items: flex-start; line-height: 1.4;"><span style="color: var(--brand-red); font-weight: 700; margin-right: 10px; font-size: 1.1rem;">✓</span> <span><strong>Custom Daily Portions:</strong> Meals automatically portioned to fit your calculated macros (Protein, Carbs, Fat) by our chefs</span></li>
+                              <li style="margin-bottom: 12px; display: flex; align-items: flex-start; line-height: 1.4;"><span style="color: var(--brand-red); font-weight: 700; margin-right: 10px; font-size: 1.1rem;">✓</span> <span><strong>Interactive Client Portal:</strong> Log in weekly to swap meals, pause delivery, or adjust quantities with one click</span></li>
+                              <li style="margin-bottom: 12px; display: flex; align-items: flex-start; line-height: 1.4;"><span style="color: var(--brand-red); font-weight: 700; margin-right: 10px; font-size: 1.1rem;">✓</span> <span><strong>Weekly Delivery to Door/Gym:</strong> Meals cooked fresh and hand-delivered twice weekly in insulated cooler bags</span></li>
+                              <li style="margin-bottom: 12px; display: flex; align-items: flex-start; line-height: 1.4;"><span style="color: var(--brand-red); font-weight: 700; margin-right: 10px; font-size: 1.1rem;">✓</span> <span><strong>No Grocery Shopping, Cooking, or Cleanup:</strong> Zero food prep chores. Reclaim 6+ hours of your week</span></li>
+                          </ul>
+
+                          <!-- Wallet System Explanation Block -->
+                          <div class="offset-math-notice" style="margin-bottom: 24px; padding: 16px 20px; background: rgba(46, 196, 182, 0.05); border: 1px dashed rgba(46, 196, 182, 0.25); border-radius: 8px; text-align: left;">
+                              <p style="font-size: 0.9rem; color: #2ec4b6; margin: 0 0 8px 0; line-height: 1.5; font-weight: 700;">
+                                  💡 How Weekly Meal Payments Work:
+                              </p>
+                              <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.8); margin: 0; line-height: 1.5; font-weight: 300;">
+                                  Your $200 signup deposit goes <strong>100% directly into your digital wallet</strong> as meal prep credits. This fully covers your entire first week of customized meals (with leftover credit for week 2!). Setup, onboarding, and macro calibrations are 100% free.
+                              </p>
+                          </div>
+                         
+                         <a href="https://calendar.app.google/egZH5unsZwM9oJwYA" target="_blank" rel="noopener noreferrer" class="brutalist-btn" id="google-meet-btn" style="width: 100%; font-size: 1.1rem; padding: 18px 24px; display: block; text-align: center; text-decoration: none;">Schedule your Finally Fit Roadmap Call</a>
+                         
+                         <p class="post-checkout-hint" style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); text-align: center; margin-top: 14px; line-height: 1.4; font-weight: 300;">
+                             Schedule your onboarding call above. We will discuss your custom meal plans and set up your delivery schedule.
+                         </p>
+                     </div>
+
+                 </div>
+
+                 <!-- FAQ Accordion Section -->
+                  <div class="faq-wrap" style="margin-top: 80px; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; width: 100%; display: none;">
+                     <div class="sec-title-wrap" style="text-align: center; margin-bottom: 40px;">
+                         <span class="sec-tag">Common Inquiries</span>
+                         <h3>Frequently Asked Questions</h3>
+                     </div>
+                     
+                     <div class="faq-accordion">
+                         <div class="faq-item brutalist-card" style="margin-bottom: 15px; padding: 0;">
+                             <button class="faq-trigger" style="width: 100%; background: none; border: none; text-align: left; padding: 20px 24px; color: #fff; font-family: var(--font-primary); font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                 <span>What if I am not home when delivery arrives?</span>
+                                 <span class="faq-chevron" style="transition: transform 0.2s; display: inline-block;">▼</span>
+                             </button>
+                             <div class="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; padding: 0 24px; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.6; font-weight: 300;">
+                                 <p style="padding-bottom: 20px; margin: 0;">
+                                     Not a problem! We deliver our meals in insulated thermal bags packed with ice packs. Your meals will remain fresh and chilled on your doorstep for up to 6-8 hours.
+                                 </p>
+                             </div>
+                         </div>
+
+                         <div class="faq-item brutalist-card" style="margin-bottom: 15px; padding: 0;">
+                             <button class="faq-trigger" style="width: 100%; background: none; border: none; text-align: left; padding: 20px 24px; color: #fff; font-family: var(--font-primary); font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                 <span>Can I customize my meals or swap things out?</span>
+                                 <span class="faq-chevron" style="transition: transform 0.2s; display: inline-block;">▼</span>
+                             </button>
+                             <div class="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; padding: 0 24px; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.6; font-weight: 300;">
+                                 <p style="padding-bottom: 20px; margin: 0;">
+                                     Yes! Every Wednesday, you will receive an automated text reminder with a direct link to your private Client Portal. With one click, you can swap out any meal on your custom menu for another favorite on our weekly active menu.
+                                 </p>
+                             </div>
+                         </div>
+
+                         <div class="faq-item brutalist-card" style="margin-bottom: 15px; padding: 0;">
+                             <button class="faq-trigger" style="width: 100%; background: none; border: none; text-align: left; padding: 20px 24px; color: #fff; font-family: var(--font-primary); font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                 <span>Where is the food prepped and cooked?</span>
+                                 <span class="faq-chevron" style="transition: transform 0.2s; display: inline-block;">▼</span>
+                             </button>
+                             <div class="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; padding: 0 24px; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.6; font-weight: 300;">
+                                 <p style="padding-bottom: 20px; margin: 0;">
+                                     All Finally Fit meals are cooked fresh weekly by local chefs inside our licensed commercial kitchen facility located in Spokane Valley, WA. We source ingredients locally whenever possible and never freeze our meals.
+                                 </p>
+                             </div>
+                         </div>
+
+                         <div class="faq-item brutalist-card" style="margin-bottom: 15px; padding: 0;">
+                             <button class="faq-trigger" style="width: 100%; background: none; border: none; text-align: left; padding: 20px 24px; color: #fff; font-family: var(--font-primary); font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                                 <span>How do I pause, skip, or cancel my subscription?</span>
+                                 <span class="faq-chevron" style="transition: transform 0.2s; display: inline-block;">▼</span>
+                             </button>
+                             <div class="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; padding: 0 24px; color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; line-height: 1.6; font-weight: 300;">
+                                 <p style="padding-bottom: 20px; margin: 0;">
+                                     There are zero contracts or cancellation fees. You can pause your subscription, skip an upcoming delivery week, or cancel completely by logging into your portal or sending a direct text message to our support number.
+                                 </p>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS & THREE PROMISES -->
+    <section class="promise-sec" id="how-it-works">
+        <div class="container">
+            <div class="sec-title-wrap">
+                <span class="sec-tag">Our Promise</span>
+                <h2>The Finally Fit System</h2>
+                <p style="font-size: 1.2rem; font-weight: 500; color: var(--brand-red); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 10px; margin-bottom: 0;">Simple. Personalized. Sustainable.</p>
+            </div>
+
+            <div class="promise-grid">
+                
+                <!-- Promise 1 -->
+                <div class="promise-card brutalist-card">
+                    <div class="promise-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><line x1="9" y1="14" x2="15" y2="14"></line><line x1="9" y1="18" x2="15" y2="18"></line><path d="m9 10 2 2 4-4"></path></svg>
+                    </div>
+                    <h3>1. Complete Your Assessment</h3>
+                    <p>Tell us about your goals, lifestyle, and current habits so we can build a plan that's actually designed for you.</p>
+                </div>
+
+                <!-- Promise 2 -->
+                <div class="promise-card brutalist-card">
+                    <div class="promise-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+                    </div>
+                    <h3>2. Receive Your Personalized Roadmap</h3>
+                    <p>We'll create your nutrition strategy, review it together, and map out your next 12 weeks based on your schedule, goals, and lifestyle.</p>
+                </div>
+
+                <!-- Promise 3 -->
+                <div class="promise-card brutalist-card">
+                    <div class="promise-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                    </div>
+                    <h3>3. Follow Your Plan With Expert Support</h3>
+                    <p>Follow your plan with expert coaching, accountability, and nutrition support until your goals become your lifestyle.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SUCCESS STORIES / TESTIMONIALS -->
+    <section class="reviews-sec" id="reviews">
+        <div class="container">
+            <div class="sec-title-wrap">
+                <span class="sec-tag">Member Results</span>
+                <h2>Real Results With Kairos</h2>
+                <p>Hear from active members who made nutrition effortless with our premium freshly cooked meal preps.</p>
+            </div>
+
+            <div class="reviews-grid">
+                
+                <!-- Review 1 -->
+                <div class="review-card brutalist-card hover-lift">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        "My favorite meal preps I've ever tried! It's so nice to have freshly made and never frozen meals each week. The customer service has gone above and beyond my expectations."
+                    </p>
+                    <div class="review-author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <span class="author-name">Savannah J.</span>
+                            <span class="author-tag">Active Kairos Member</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card brutalist-card hover-lift">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        "I've had 15+ meals with Kairos already and they have all been delicious with the right macros. Meals are affordable and delivery is easy."
+                    </p>
+                    <div class="review-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <span class="author-name">Matthew D.</span>
+                            <span class="author-tag">Active Kairos Member</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card brutalist-card hover-lift">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">
+                        "Dropped from 295 to 220 pounds by combining Kairos meals with a consistent routine. It makes nutrition effortless."
+                    </p>
+                    <div class="review-author">
+                        <div class="author-avatar">D</div>
+                        <div class="author-info">
+                            <span class="author-name">Duane B.</span>
+                            <span class="author-tag">Active Kairos Member</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER SECTION -->
+    <footer class="footer-sec">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3 style="font-family: var(--font-primary); font-size: 1.5rem; letter-spacing: 0.5px;">KAIROS NUTRITION</h3>
+                    <p>Post Falls, Spokane & Coeur d'Alene's premium done-for-you fitness meal prep service. We partner with elite studios to make hitting your health and body targets simple, consistent, and chef-cooked.</p>
+                </div>
+                <div class="footer-links-col">
+                    <a href="#how-it-works" class="footer-link">How It Works</a>
+                    <a href="#reviews" class="footer-link">Testimonials</a>
+                    <a href="https://kairosmealpreps.bottle.com" target="_blank" class="footer-link" style="color: var(--brand-red);">Order Weekly Meals</a>
+                </div>
+            </div>
+            
+            <div class="footer-copyright">
+                <span>© 2026 KAIROS NUTRITION. ALL RIGHTS RESERVED.</span>
+                <span>POST FALLS / SPOKANE / COEUR D'ALENE</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GoHighLevel Chat Widget for A2P Compliance -->
+    <script
+        src="https://widgets.leadconnectorhq.com/loader.js" 
+        data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" 
+        data-widget-id="6a4711e6e972e21b60c16e5" 
+        data-source="WEB_USER">
+    </script>
+
+</body>
+</html>
