@@ -624,11 +624,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetF = plan.fat || 55;
 
         const dayMeals = [
-            { tag: "BREAKFAST", name: "Steak and Eggs", img: "../assets/steak_eggs.png", class: "tag-breakfast" },
-            { tag: "LUNCH #1", name: "Teriyaki Chicken", img: "../assets/teriyaki_chicken.png", class: "tag-lunch" },
-            { tag: "LUNCH #2", name: "Chicken Fried Rice", img: "../assets/chicken_fried_rice.png", class: "tag-lunch" },
-            { tag: "DINNER", name: "Steak n Mash", img: "../assets/steak_n_mash.png", class: "tag-dinner" },
-            { tag: "SNACK", name: "Meat & Cheese-To-Go (Pack of 5)", img: "../assets/meat_cheese_to_go.png", class: "tag-snack" }
+            { tag: "BREAKFAST", name: "Steak and Eggs", img: "/assets/steak_eggs.png", class: "tag-breakfast" },
+            { tag: "LUNCH #1", name: "Teriyaki Chicken", img: "/assets/teriyaki_chicken.png", class: "tag-lunch" },
+            { tag: "LUNCH #2", name: "Chicken Fried Rice", img: "/assets/chicken_fried_rice.png", class: "tag-lunch" },
+            { tag: "DINNER", name: "Steak n Mash", img: "/assets/steak_n_mash.png", class: "tag-dinner" },
+            { tag: "SNACK", name: "Meat & Cheese-To-Go (Pack of 5)", img: "/assets/meat_cheese_to_go.png", class: "tag-snack" }
         ];
 
         // Format grid styles for visual daily layout
