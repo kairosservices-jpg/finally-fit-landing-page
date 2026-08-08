@@ -68,13 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     carb: { name: "", oz: 0 },
                     veg: { name: "", oz: 0 }
                 },
-                detailsHtml: "Prepare at home"
+                detailsHtml: "Prepare at home",
+                recipePortions: "Prepare at home"
             };
         }
 
         const template = MEAL_TEMPLATES[mealName];
         if (!template) {
-            return { name: mealName, price: 9.95, protein: 30, carbs: 30, fat: 10, calories: 330, detailsHtml: "" };
+            return { name: mealName, price: 9.95, protein: 30, carbs: 30, fat: 10, calories: 330, detailsHtml: "", recipePortions: "" };
         }
 
         const pIng = INGREDIENTS[template.protein_id];
@@ -125,7 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 carb: { name: cIng.name, oz: cOz },
                 veg: { name: vIng.name, oz: vOz }
             },
-            detailsHtml: `${pOz}oz ${pIng.name}, ${cOz}oz ${cIng.name}, ${vOz}oz ${vIng.name}`
+            detailsHtml: `${pOz}oz ${pIng.name}, ${cOz}oz ${cIng.name}, ${vOz}oz ${vIng.name}`,
+            recipePortions: `${pOz}oz ${pIng.name}, ${cOz}oz ${cIng.name}`
         };
     }
 
@@ -524,6 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Portion & Pricing details for Make/Google Sheets integration
                     eggs_meal_name: eggsDetails.name,
                     eggs_meal_portions: eggsDetails.detailsHtml,
+                    eggs_recipe_portions: eggsDetails.recipePortions,
                     eggs_meal_protein: eggsDetails.protein,
                     eggs_meal_carbs: eggsDetails.carbs,
                     eggs_meal_fat: eggsDetails.fat,
@@ -532,6 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     steak_meal_name: steakDetails.name,
                     steak_meal_price: steakDetails.price,
                     steak_meal_portions: steakDetails.detailsHtml,
+                    steak_recipe_portions: steakDetails.recipePortions,
                     steak_meal_protein: steakDetails.protein,
                     steak_meal_carbs: steakDetails.carbs,
                     steak_meal_fat: steakDetails.fat,
@@ -540,6 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     chicken_meal_name: chickenDetails.name,
                     chicken_meal_price: chickenDetails.price,
                     chicken_meal_portions: chickenDetails.detailsHtml,
+                    chicken_recipe_portions: chickenDetails.recipePortions,
                     chicken_meal_protein: chickenDetails.protein,
                     chicken_meal_carbs: chickenDetails.carbs,
                     chicken_meal_fat: chickenDetails.fat,
