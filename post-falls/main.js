@@ -532,7 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultsPane = document.getElementById('results-pane');
         if (resultsPane) {
             resultsPane.style.display = 'block';
-            resultsPane.scrollIntoView({ behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Render calculated metrics in UI

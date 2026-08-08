@@ -609,7 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resultsPane.style.display = 'block'; // Make results visible
             
             // Smooth scroll to results header
-            resultsPane.scrollIntoView({ behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Render calculated metrics in UI
