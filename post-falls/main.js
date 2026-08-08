@@ -196,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (parentPane && nextPane) {
                 parentPane.style.display = 'none';
                 nextPane.style.display = 'block';
+                window.scrollTo(0, 0);
                 const stepMatch = nextStepId.match(/\d+/);
                 if (stepMatch) {
                     currentStep = parseInt(stepMatch[0]);
@@ -217,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (parentPane && prevPane) {
                 parentPane.style.display = 'none';
                 prevPane.style.display = 'block';
+                window.scrollTo(0, 0);
                 const stepMatch = prevStepId.match(/\d+/);
                 if (stepMatch) {
                     currentStep = parseInt(stepMatch[0]);
@@ -259,6 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (parentPane && nextPane) {
                     parentPane.style.display = 'none';
                     nextPane.style.display = 'block';
+                    window.scrollTo(0, 0);
                     const stepMatch = nextStepId.match(/\d+/);
                     if (stepMatch) {
                         currentStep = parseInt(stepMatch[0]);

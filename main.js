@@ -203,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nextPane) {
             nextPane.classList.add('active');
             currentStep = stepNum;
+            window.scrollTo(0, 0);
             updateProgress();
         }
     }
