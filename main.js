@@ -514,6 +514,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const steakDetails = calculateMealPortionsAndPricing('Steak n Mash', mealTargetP, mealTargetC, mealTargetF);
                 const chickenDetails = calculateMealPortionsAndPricing('Teriyaki Chicken', mealTargetP, mealTargetC, mealTargetF);
 
+                const budgets = calculateStoreBudgets({
+                    protein: proteinGrams,
+                    carbs: carbGrams,
+                    fat: fatGrams,
+                    tier: calculatedPlan.tier
+                });
+
                 // Execute webhook submission
                 const payload = {
                     ...userAnswers,
@@ -548,7 +555,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     chicken_meal_protein: chickenDetails.protein,
                     chicken_meal_carbs: chickenDetails.carbs,
                     chicken_meal_fat: chickenDetails.fat,
-                    chicken_meal_calories: chickenDetails.calories
+                    chicken_meal_calories: chickenDetails.calories,
+
+                    super1_grocery_list: budgets.super1List,
+                    super1_total_cost: budgets.super1Total,
+                    yokes_grocery_list: budgets.yokesList,
+                    yokes_total_cost: budgets.yokesTotal,
+                    walmart_grocery_list: budgets.walmartList,
+                    walmart_total_cost: budgets.walmartTotal
                 };
 
                 await fetch(MAKE_WEBHOOK_URL, {
@@ -1015,6 +1029,175 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+    }
+
+    function calculateStoreBudgets(plan) {
+        const targetP = plan.protein || 160;
+        const targetC = plan.carbs || 140;
+        const targetF = plan.fat || 55;
+        const tier = plan.tier || 'S';
+
+        // Calculate meal structures
+        const mealTargetP = (targetP - 25) / 4;
+        const mealTargetC = (targetC - 20) / 4;
+        const mealTargetF = (targetF - 10) / 4;
+
+        const chickenDetails = calculateMealPortionsAndPricing('Teriyaki Chicken', mealTargetP, mealTargetC, mealTargetF);
+        const steakDetails = calculateMealPortionsAndPricing('Steak n Mash', mealTargetP, mealTargetC, mealTargetF);
+
+        // Get cooked portions
+        const chickenBreastOz = chickenDetails.portions.protein.oz;
+        const chickenThighOz = chickenDetails.portions.protein.oz; // Ranch Chicken Thigh has same protein target
+        const triTipOz = steakDetails.portions.protein.oz;
+        const jasmineRiceOz = chickenDetails.portions.carb.oz;
+        const mashedPotatoOz = steakDetails.portions.carb.oz;
+
+        // Calculate 7-day cooked needs
+        const totalChickenBreastCookedOz = chickenBreastOz * 7;
+        const totalChickenThighCookedOz = chickenThighOz * 7;
+        const totalTriTipCookedOz = triTipOz * 7;
+        const totalRiceCookedOz = jasmineRiceOz * 14; // used in lunch 1 and dinner
+        const totalMashedPotatoCookedOz = mashedPotatoOz * 7; // used in dinner
+
+        // Convert cooked to raw weights
+        const rawChickenBreastLbs = (totalChickenBreastCookedOz / 0.769) / 16;
+        const rawChickenThighLbs = (totalChickenThighCookedOz / 0.727) / 16;
+        const rawTriTipLbs = (totalTriTipCookedOz / 0.708) / 16;
+        const rawDryRiceLbs = (totalRiceCookedOz / 3.0) / 16; // 1oz dry yields 3oz cooked
+        
+        // Yogurt and Granola needs
+        const yogurtOz = (tier === 'S') ? 35 : 56;
+        const yogurtTubs = Math.ceil(yogurtOz / 32); // 32oz (2lb) tubs
+        const granolaOz = (tier === 'S') ? 7 : 14;
+        const granolaBags = Math.ceil(granolaOz / 11); // 11oz bags
+
+        // Mashed Potato packets (1.5lb / 24oz per packet)
+        const mashedPotatoPacks = Math.ceil(totalMashedPotatoCookedOz / 24);
+
+        // Produce and Frozen
+        const bellPeppersCount = 4;
+        const onionsLbs = 2;
+        const babyCarrotsBags = 1; // 1lb bag
+        const mixedVeggiesBags = 2; // 12oz bags
+        const peasCarrotsBags = 2; // 12oz bags
+        
+        // Broccoli bags calculations based on store pack sizes:
+        // Super 1: 24oz bag, Yokes: 16oz bag, Walmart: 32oz bag
+        // 7 cups of broccoli = approx 21oz of broccoli needed
+        const broccoliOzNeeded = 21;
+        const super1BroccoliBags = Math.ceil(broccoliOzNeeded / 24);
+        const yokesBroccoliBags = Math.ceil(broccoliOzNeeded / 16);
+        const walmartBroccoliBags = Math.ceil(broccoliOzNeeded / 32);
+
+        // Helper to format item line
+        function itemLine(name, qty, cost) {
+            return `- **${name}**: ${qty} (Est. $${cost.toFixed(2)})`;
+        }
+
+        // --- SUPER 1 BUDGET ---
+        const super1Cost = {
+            triTip: rawTriTipLbs * 10.98,
+            chickenBreast: rawChickenBreastLbs * 2.98,
+            chickenThigh: rawChickenThighLbs * 2.98,
+            yogurt: yogurtTubs * 6.98,
+            rice: Math.ceil(rawDryRiceLbs / 2) * 3.48, // sold as 2lb bags
+            granola: granolaBags * 2.98,
+            mashedPotato: mashedPotatoPacks * 2.98, // fallback to Walmart price
+            bellPepper: bellPeppersCount * 1.50,
+            onion: onionsLbs * 1.79,
+            babyCarrots: babyCarrotsBags * 2.98,
+            mixedVeggies: mixedVeggiesBags * 1.18,
+            peasCarrots: peasCarrotsBags * 2.58,
+            broccoli: super1BroccoliBags * 2.88
+        };
+        const super1Total = Object.values(super1Cost).reduce((a, b) => a + b, 0);
+        const super1List = [
+            itemLine("Tri-Tip", `${rawTriTipLbs.toFixed(1)} lbs raw`, super1Cost.triTip),
+            itemLine("Chicken Breast", `${rawChickenBreastLbs.toFixed(1)} lbs raw`, super1Cost.chickenBreast),
+            itemLine("Chicken Thighs", `${rawChickenThighLbs.toFixed(1)} lbs raw`, super1Cost.chickenThigh),
+            itemLine("Vanilla Oikos Yogurt", `${yogurtTubs} x 2lb tub(s)`, super1Cost.yogurt),
+            itemLine("Jasmine Rice", `${Math.ceil(rawDryRiceLbs / 2) * 2} lbs (dry)`, super1Cost.rice),
+            itemLine("Granola", `${granolaBags} x 11oz bag(s)`, super1Cost.granola),
+            itemLine("Mashed Potatoes", `${mashedPotatoPacks} x 1.5lb pack(s)`, super1Cost.mashedPotato),
+            itemLine("Bell Peppers", `${bellPeppersCount} count`, super1Cost.bellPepper),
+            itemLine("Onions", `${onionsLbs} lbs`, super1Cost.onion),
+            itemLine("Baby Carrots", `${babyCarrotsBags} x 1lb bag(s)`, super1Cost.babyCarrots),
+            itemLine("Frozen Mixed Veggies", `${mixedVeggiesBags} x 12oz bag(s)`, super1Cost.mixedVeggies),
+            itemLine("Frozen Peas & Carrots", `${peasCarrotsBags} x 12oz bag(s)`, super1Cost.peasCarrots),
+            itemLine("Frozen Broccoli", `${super1BroccoliBags} x 24oz bag(s)`, super1Cost.broccoli)
+        ].join('\n');
+
+        // --- YOKE'S BUDGET ---
+        const yokesCost = {
+            triTip: rawTriTipLbs * 8.99,
+            chickenBreast: rawChickenBreastLbs * 2.99,
+            chickenThigh: rawChickenThighLbs * 3.99,
+            yogurt: yogurtTubs * 7.29,
+            rice: Math.ceil(rawDryRiceLbs / 2) * 3.69, // sold as 2lb bags
+            granola: granolaBags * 3.69,
+            mashedPotato: mashedPotatoPacks * 5.29,
+            bellPepper: bellPeppersCount * 1.79,
+            onion: onionsLbs * 0.99,
+            babyCarrots: babyCarrotsBags * 1.79,
+            mixedVeggies: mixedVeggiesBags * 1.79,
+            peasCarrots: peasCarrotsBags * 1.18,
+            broccoli: yokesBroccoliBags * 2.49
+        };
+        const yokesTotal = Object.values(yokesCost).reduce((a, b) => a + b, 0);
+        const yokesList = [
+            itemLine("Tri-Tip", `${rawTriTipLbs.toFixed(1)} lbs raw`, yokesCost.triTip),
+            itemLine("Chicken Breast", `${rawChickenBreastLbs.toFixed(1)} lbs raw`, yokesCost.chickenBreast),
+            itemLine("Chicken Thighs", `${rawChickenThighLbs.toFixed(1)} lbs raw`, yokesCost.chickenThigh),
+            itemLine("Vanilla Oikos Yogurt", `${yogurtTubs} x 2lb tub(s)`, yokesCost.yogurt),
+            itemLine("Jasmine Rice", `${Math.ceil(rawDryRiceLbs / 2) * 2} lbs (dry)`, yokesCost.rice),
+            itemLine("Granola", `${granolaBags} x 11oz bag(s)`, yokesCost.granola),
+            itemLine("Mashed Potatoes", `${mashedPotatoPacks} x 1.5lb pack(s)`, yokesCost.mashedPotato),
+            itemLine("Bell Peppers", `${bellPeppersCount} count`, yokesCost.bellPepper),
+            itemLine("Onions", `${onionsLbs} lbs`, yokesCost.onion),
+            itemLine("Baby Carrots", `${babyCarrotsBags} x 1lb bag(s)`, yokesCost.babyCarrots),
+            itemLine("Frozen Mixed Veggies", `${mixedVeggiesBags} x 12oz bag(s)`, yokesCost.mixedVeggies),
+            itemLine("Frozen Peas & Carrots", `${peasCarrotsBags} x 12oz bag(s)`, yokesCost.peasCarrots),
+            itemLine("Frozen Broccoli", `${yokesBroccoliBags} x 16oz bag(s)`, yokesCost.broccoli)
+        ].join('\n');
+
+        // --- WALMART BUDGET ---
+        const walmartCost = {
+            triTip: rawTriTipLbs * 10.72,
+            chickenBreast: rawChickenBreastLbs * 2.57,
+            chickenThigh: rawChickenThighLbs * 3.22,
+            yogurt: yogurtTubs * 6.27,
+            rice: Math.ceil(rawDryRiceLbs / 5) * 6.88, // sold as 5lb bag
+            granola: granolaBags * 2.67,
+            mashedPotato: mashedPotatoPacks * 2.98,
+            bellPepper: bellPeppersCount * 1.50,
+            onion: onionsLbs * 0.96,
+            babyCarrots: babyCarrotsBags * 1.44,
+            mixedVeggies: mixedVeggiesBags * 0.98,
+            peasCarrots: peasCarrotsBags * 0.98,
+            broccoli: walmartBroccoliBags * 2.28
+        };
+        const walmartTotal = Object.values(walmartCost).reduce((a, b) => a + b, 0);
+        const walmartList = [
+            itemLine("Tri-Tip", `${rawTriTipLbs.toFixed(1)} lbs raw`, walmartCost.triTip),
+            itemLine("Chicken Breast", `${rawChickenBreastLbs.toFixed(1)} lbs raw`, walmartCost.chickenBreast),
+            itemLine("Chicken Thighs", `${rawChickenThighLbs.toFixed(1)} lbs raw`, walmartCost.chickenThigh),
+            itemLine("Vanilla Oikos Yogurt", `${yogurtTubs} x 2lb tub(s)`, walmartCost.yogurt),
+            itemLine("Jasmine Rice", `${Math.ceil(rawDryRiceLbs / 5) * 5} lbs (dry)`, walmartCost.rice),
+            itemLine("Granola", `${granolaBags} x 11oz bag(s)`, walmartCost.granola),
+            itemLine("Mashed Potatoes", `${mashedPotatoPacks} x 1.5lb pack(s)`, walmartCost.mashedPotato),
+            itemLine("Bell Peppers", `${bellPeppersCount} count`, walmartCost.bellPepper),
+            itemLine("Onions", `${onionsLbs} lbs`, walmartCost.onion),
+            itemLine("Baby Carrots", `${babyCarrotsBags} x 1lb bag(s)`, walmartCost.babyCarrots),
+            itemLine("Frozen Mixed Veggies", `${mixedVeggiesBags} x 12oz bag(s)`, walmartCost.mixedVeggies),
+            itemLine("Frozen Peas & Carrots", `${peasCarrotsBags} x 12oz bag(s)`, walmartCost.peasCarrots),
+            itemLine("Frozen Broccoli", `${walmartBroccoliBags} x 32oz bag(s)`, walmartCost.broccoli)
+        ].join('\n');
+
+        return {
+            super1List, super1Total: super1Total.toFixed(2),
+            yokesList, yokesTotal: yokesTotal.toFixed(2),
+            walmartList, walmartTotal: walmartTotal.toFixed(2)
+        };
     }
 
     // Check if user has already calculated macros in past session and load directly if wanted
