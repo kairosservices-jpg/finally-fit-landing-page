@@ -4,6 +4,11 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Force browser to start at the top of the page on reload
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
     // 0. Cooked Food & Meal Databases (Macros per cooked oz, price per oz)
     const INGREDIENTS = {
         // proteins
