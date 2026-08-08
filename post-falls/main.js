@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const calculatedPlan = {};
 
     // Webhook Configuration
-    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/634ao2dslkl43sfihn02hn9quq9s6pml';
+    const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/xts7oxvhmg8lhx6bwmnfb4fwly539fmi';
     
     // Stripe Checkout link for the $200 8-Week Program
     const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/28EbJ14Mh3lRg7g0na1ck07';
