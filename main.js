@@ -1059,11 +1059,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalRiceCookedOz = jasmineRiceOz * 14; // used in lunch 1 and dinner
         const totalMashedPotatoCookedOz = mashedPotatoOz * 7; // used in dinner
 
-        // Convert cooked to raw weights
-        const rawChickenBreastLbs = (totalChickenBreastCookedOz / 0.769) / 16;
-        const rawChickenThighLbs = (totalChickenThighCookedOz / 0.727) / 16;
-        const rawTriTipLbs = (totalTriTipCookedOz / 0.708) / 16;
-        const rawDryRiceLbs = (totalRiceCookedOz / 3.0) / 16; // 1oz dry yields 3oz cooked
+        // Convert cooked to raw weights and round to the nearest whole or half pound (minimum 0.5 lbs)
+        const rawChickenBreastLbs = Math.max(0.5, Math.round(((totalChickenBreastCookedOz / 0.769) / 16) * 2) / 2);
+        const rawChickenThighLbs = Math.max(0.5, Math.round(((totalChickenThighCookedOz / 0.727) / 16) * 2) / 2);
+        const rawTriTipLbs = Math.max(0.5, Math.round(((totalTriTipCookedOz / 0.708) / 16) * 2) / 2);
+        const rawDryRiceLbs = Math.max(0.5, Math.round(((totalRiceCookedOz / 3.0) / 16) * 2) / 2);
         
         // Yogurt and Granola needs
         const yogurtOz = (tier === 'S') ? 35 : 56;
