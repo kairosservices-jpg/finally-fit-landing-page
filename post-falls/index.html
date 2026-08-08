@@ -214,47 +214,46 @@
 
                 </div>
             </div>
-            
-            <!-- DYNAMIC RESULTS & PRICING PANEL (Initially hidden, revealed on submit) -->
-            <div class="results-pane" id="results-pane" style="display: none; padding: 2rem 0;">
+                     <!-- DYNAMIC RESULTS & PRICING PANEL (Initially hidden, revealed on submit) -->
+            <div class="results-pane" id="results-pane" style="display: none; padding: 0.75rem 0;">
                 
                 <!-- SECTION 1 — PERSONALIZED RESULTS -->
-                <div class="results-header-box" style="text-align: center; max-width: 650px; margin: 0 auto; padding: 2rem 1.5rem;">
-                    <h2 style="font-family: var(--font-primary); font-weight: 900; font-size: clamp(1.8rem, 4vw, 3rem); text-transform: uppercase; color: #fff; margin-bottom: 0.75rem; line-height: 1.15;">
+                <div class="results-header-box" style="text-align: center; max-width: 650px; margin: 0 auto; padding: 0.5rem 1.5rem;">
+                    <h2 style="font-family: var(--font-primary); font-weight: 900; font-size: clamp(1.8rem, 4vw, 3rem); text-transform: uppercase; color: #fff; margin-bottom: 0.5rem; line-height: 1.15;">
                         CONGRATULATIONS <span id="result-user-name">Athlete</span>! YOUR PLAN IS READY.
                     </h2>
-                    <p style="font-size: 1.05rem; color: rgba(255, 255, 255, 0.7); font-weight: 300; margin-top: 5px; margin-bottom: 2rem; line-height: 1.45;">
+                    <p style="font-size: 1.02rem; color: rgba(255, 255, 255, 0.7); font-weight: 300; margin-top: 5px; margin-bottom: 1.25rem; line-height: 1.45;">
                         Your personalized meal plan, recipes, and Post Falls grocery list have been sent to your email.
                     </p>
                     
-
-
-                    <div class="macro-box-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 600px; margin: 0 auto 2.5rem auto;">
-                        <div class="macro-stat-card calorie-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; text-align: center;">
-                            <div class="macro-val" id="macro-val-calories" style="font-size: 2.2rem; font-weight: 900; color: #fff;">1,850</div>
-                            <div class="macro-label" style="font-size: 0.85rem; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 5px;">Calories</div>
+ 
+ 
+                    <div class="macro-box-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 500px; margin: 0 auto 1.5rem auto;">
+                        <div class="macro-stat-card calorie-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 0.5rem; border-radius: 8px; text-align: center;">
+                            <div class="macro-val" id="macro-val-calories" style="font-size: 1.7rem; font-weight: 900; color: #fff;">1,850</div>
+                            <div class="macro-label" style="font-size: 0.8rem; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 3px;">Calories</div>
                         </div>
-                        <div class="macro-stat-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; text-align: center;">
-                            <div class="macro-val" id="macro-val-protein" style="font-size: 2.2rem; font-weight: 900; color: var(--brand-red);">175g</div>
-                            <div class="macro-label" style="font-size: 0.85rem; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 5px;">Protein</div>
+                        <div class="macro-stat-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 0.5rem; border-radius: 8px; text-align: center;">
+                            <div class="macro-val" id="macro-val-protein" style="font-size: 1.7rem; font-weight: 900; color: var(--brand-red);">175g</div>
+                            <div class="macro-label" style="font-size: 0.8rem; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 3px;">Protein</div>
                         </div>
-                        <div class="macro-stat-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; text-align: center;">
-                            <div class="macro-val" id="macro-val-carbs" style="font-size: 2.2rem; font-weight: 900; color: #fff;">125g</div>
-                            <div class="macro-label" style="font-size: 0.85rem; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 5px;">Carbs</div>
+                        <div class="macro-stat-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 0.5rem; border-radius: 8px; text-align: center;">
+                            <div class="macro-val" id="macro-val-carbs" style="font-size: 1.7rem; font-weight: 900; color: #fff;">125g</div>
+                            <div class="macro-label" style="font-size: 0.8rem; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 3px;">Carbs</div>
                         </div>
-                        <div class="macro-stat-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; text-align: center;">
-                            <div class="macro-val" id="macro-val-fat" style="font-size: 2.2rem; font-weight: 900; color: #fff;">55g</div>
-                            <div class="macro-label" style="font-size: 0.85rem; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 5px;">Fat</div>
+                        <div class="macro-stat-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 0.5rem; border-radius: 8px; text-align: center;">
+                            <div class="macro-val" id="macro-val-fat" style="font-size: 1.7rem; font-weight: 900; color: #fff;">55g</div>
+                            <div class="macro-label" style="font-size: 0.8rem; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 3px;">Fat</div>
                         </div>
                     </div>
-
+ 
                 </div>
                 <!-- SECTION 1 — TRANSITION -->
-                <div class="section-transition" style="text-align: center; max-width: 650px; margin: 6rem auto; padding: 0 1.5rem;">
-                    <h4 id="transition-small-headline" style="font-family: var(--font-primary); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; color: var(--brand-red); letter-spacing: 0.15em; margin-bottom: 1rem;">
+                <div class="section-transition" style="text-align: center; max-width: 650px; margin: 3rem auto 2rem auto; padding: 0 1.5rem;">
+                    <h4 id="transition-small-headline" style="font-family: var(--font-primary); font-weight: 800; font-size: 1.1rem; text-transform: uppercase; color: var(--brand-red); letter-spacing: 0.15em; margin-bottom: 0.5rem;">
                         <span id="trans-user-name">ATHLETE</span>, YOU HAVE THE PLAN.
                     </h4>
-                    <h2 style="font-family: var(--font-primary); font-weight: 900; font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; color: #fff; margin-bottom: 2rem; line-height: 1.15; letter-spacing: -0.5px;">
+                    <h2 style="font-family: var(--font-primary); font-weight: 900; font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; color: #fff; margin-bottom: 1rem; line-height: 1.15; letter-spacing: -0.5px;">
                         WOULD YOU LIKE IT ALL DONE FOR YOU?
                     </h2>
                 </div>
