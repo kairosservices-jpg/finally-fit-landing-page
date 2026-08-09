@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/28EbJ14Mh3lRg7g0na1ck07';
 
     // Strategy Session Booking URL
-    const STRATEGY_SESSION_BOOKING_URL = 'https://calendar.app.google/egZH5unsZwM9oJwYA';
+    const STRATEGY_SESSION_BOOKING_URL = 'https://calendar.app.google/Ku4h9mVZbAeVrSJt8';
 
     // Capture UTM parameters from URL for GHL attribution tracking
     function captureUTMs() {
