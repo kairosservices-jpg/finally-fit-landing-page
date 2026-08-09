@@ -15,6 +15,19 @@
     
     <!-- Script defer -->
     <script src="/post-falls/main.js?v=4.3" defer></script>
+    <style>
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+        @media (max-width: 576px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -324,22 +337,41 @@
                     </a>
                 </div>
 
-                <!-- SECTION 4 — OPTIONAL TRUST SECTION -->
-                <div class="section-trust" style="max-width: 650px; margin: 6rem auto; padding: 0 1.5rem; text-align: center;">
-                    <h3 style="font-family: var(--font-primary); font-weight: 900; font-size: 1.8rem; text-transform: uppercase; color: #fff; margin-bottom: 1.5rem; line-height: 1.25; letter-spacing: -0.5px;">
-                        YOUR PLAN IS YOURS EITHER WAY.
-                    </h3>
-                    <p style="font-size: 1.1rem; color: rgba(255,255,255,0.85); line-height: 1.6; font-weight: 300; margin-bottom: 1.25rem; text-align: left;">
-                        Your personalized meal plan and grocery list are already yours.
-                    </p>
-                    <p style="font-size: 1.1rem; color: rgba(255,255,255,0.85); line-height: 1.6; font-weight: 300; margin-bottom: 3rem; text-align: left;">
-                        The in-person assessment is simply the next step if you'd like help putting the plan into action.
-                    </p>
-
-                    <!-- Repeat Primary Booking CTA button -->
-                    <a href="https://calendar.app.google/Ku4h9mVZbAeVrSJt8" target="_blank" class="btn btn-primary cta-btn-strategy" style="width: 100%; font-size: 1.2rem; padding: 1.25rem 2rem; border-radius: 6px; box-shadow: 0 0 30px var(--brand-red-glow); text-decoration: none; display: block; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
-                        BOOK MY IN-PERSON ASSESSMENT
-                    </a>
+                <!-- SECTION 4 — TESTIMONIALS -->
+                <div class="section-testimonials" style="max-width: 650px; margin: 6rem auto 3rem auto; padding: 0 1.5rem; text-align: center;">
+                    <h2 style="font-family: var(--font-primary); font-weight: 900; font-size: clamp(1.8rem, 5vw, 2.5rem); text-transform: uppercase; color: #fff; margin-bottom: 2rem; line-height: 1.15; letter-spacing: -0.5px;">
+                        Real Results From Real Members
+                    </h2>
+                    
+                    <div class="testimonial-grid" style="text-align: left; margin-bottom: 2rem;">
+                        <!-- Testimonial 1 -->
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                            <div>
+                                <div style="color: #ffb703; font-size: 0.95rem; margin-bottom: 0.75rem;">⭐⭐⭐⭐⭐</div>
+                                <p style="font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.5; font-style: italic; font-weight: 300; margin: 0 0 1.25rem 0;">
+                                    "The meals made all the difference. I didn't have to think about what to cook or count macros—it was all done for me."
+                                </p>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.95rem; color: #fff; text-transform: uppercase; letter-spacing: 0.5px;">Sarah M.</div>
+                                <div style="font-size: 0.8rem; color: var(--brand-red); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Lost 18 lbs in 28 Days</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Testimonial 2 -->
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                            <div>
+                                <div style="color: #ffb703; font-size: 0.95rem; margin-bottom: 0.75rem;">⭐⭐⭐⭐⭐</div>
+                                <p style="font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.5; font-style: italic; font-weight: 300; margin: 0 0 1.25rem 0;">
+                                    "Highly recommend booking the assessment. It gave me the exact structure and guidance I was missing to stay consistent."
+                                </p>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.95rem; color: #fff; text-transform: uppercase; letter-spacing: 0.5px;">Marcus T.</div>
+                                <div style="font-size: 0.8rem; color: var(--brand-red); font-weight: 700; text-transform: uppercase; margin-top: 2px;">Lost 22 lbs in 28 Days</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
