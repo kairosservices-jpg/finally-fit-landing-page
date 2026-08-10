@@ -504,6 +504,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
+
+                // Fire Meta Pixel Lead event on successful submission
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead');
+                }
             } catch (err) {
                 console.warn('Webhook transmission error:', err);
             } finally {
