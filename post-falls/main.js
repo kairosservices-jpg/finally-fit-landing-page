@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Height Feet": heightFeet,
                 "Height Inches": heightInches,
                 Goal: "Fat Loss",
-                "Weight Goal": userAnswers["How much weight would you like to lose?"] || "10-20 lbs",
+                "Weight Goal": userAnswers["7. How much weight would you like to lose?"] || userAnswers["How much weight would you like to lose?"] || "10-20 lbs",
                 Activity: activityMultiplier
             }));
             localStorage.setItem('ffp_macro_plan', JSON.stringify(calculatedPlan));
@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const roadmapTimeline = document.getElementById('roadmap-timeline');
 
         const currentWeight = answers['Weight'] || '--';
-        const weightLossText = answers['Weight Goal'] || '10-20 lbs';
+        const weightLossText = answers['7. How much weight would you like to lose?'] || answers['Weight Goal'] || '10-20 lbs';
         
         let weightLossDigits = '10-20';
         let timelineWeeks = '8-12';
@@ -623,7 +623,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const bookingGoalCopyNode = document.getElementById('booking-goal-copy');
         if (bookingGoalCopyNode) {
-            const rawGoal = answers['Weight Goal'] || 'weight';
+            const rawGoal = answers['7. How much weight would you like to lose?'] || answers['Weight Goal'] || '10-20 lbs';
             let goalPhrase = 'losing weight';
             if (rawGoal.includes('lbs') || rawGoal.includes('+')) {
                 goalPhrase = `losing ${rawGoal}`;
