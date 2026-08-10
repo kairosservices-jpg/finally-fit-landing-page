@@ -628,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (rawGoal.includes('lbs') || rawGoal.includes('+')) {
                 goalPhrase = `losing ${rawGoal}`;
             }
-            bookingGoalCopyNode.textContent = `We'll review the plan you just received, talk about your goals, and I'll show you what your first 28 days toward ${goalPhrase} could look like.`;
+            bookingGoalCopyNode.textContent = `We'll review the plan you just received, talk about your goals, and I'll show you what your first 12 weeks toward ${goalPhrase} could look like.`;
         }
 
         // Update Strategy Session booking CTA links
