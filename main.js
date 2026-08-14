@@ -415,8 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fitnessGoal === 'Fat Loss') {
                 targetCalories = Math.round(TDEE - 500);
                 // Safe minimums
-                if (gender === 'Female' && targetCalories < 1200) targetCalories = 1200;
-                if (gender === 'Male' && targetCalories < 1500) targetCalories = 1500;
+                if (targetCalories < 1500) targetCalories = 1500;
             } else if (fitnessGoal === 'Muscle Gain') {
                 targetCalories = Math.round(TDEE + 300);
             }

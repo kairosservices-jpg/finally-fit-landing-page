@@ -341,8 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let targetCalories = Math.round(TDEE - 500);
 
             // Safe minimums
-            if (gender === 'Female' && targetCalories < 1200) targetCalories = 1200;
-            if (gender === 'Male' && targetCalories < 1500) targetCalories = 1500;
+            if (targetCalories < 1500) targetCalories = 1500;
 
             // Macros
             let proteinGrams = Math.round(weightNum);
